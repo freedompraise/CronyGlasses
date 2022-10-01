@@ -2,7 +2,7 @@
 <h3> A web app that presents the most demanded drinks in India and allows you to place orders </h3>
 
 
-<h3>Copyright 2020 Sanskar Tiwari</h3>
+<h3>Copyright 2022 Praise Freedom Dike and Mayur Chaure</h3>
 
 <p>Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
