@@ -1,5 +1,3 @@
-{% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CronyGlasses</title>
-    <link rel="stylesheet" href="{% static 'styles/index.css' %}">
-    <link rel="stylesheet" href="{% static 'styles/mobile.css' %}">
+    <link rel="stylesheet" href="/styles/index.css">
+    <link rel="stylesheet" href="/styles/mobile.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="shortcut icon" type="image/x-icon" href="{% static '/drawable/icon-circle.png' %}"/>
+    <link rel="shortcut icon" type="image/x-icon" href="drawable/icon-circle.png"/>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/2f6992b10e.js" crossorigin="anonymous"></script>
-    <script src="{% static 'js/myScript.js' %}"></script>
+    <script src="/js/myScript.js"></script>
 
 </head>
 <body>
@@ -32,7 +30,7 @@
             <div class="full-logo">
             <ul class="menu">
                 <a href="{% url 'home' %}">
-                <img src="{% static '/drawable/icon-circle.png' %}" alt="">
+                <img src="drawable/icon-circle.png" alt="">
                <h4>CronyGlasses</h4></a>
             </ul>
         </div>
@@ -92,15 +90,15 @@
 
     <!-- Full-width images with number and caption text -->
     <div class="mySlides fade">
-      <img src="{% static 'drawable/banner_img3.png' %}">
+      <img src="drawable/banner_img3.png">
     </div>
   
     <div class="mySlides fade">
-      <img src="{% static 'drawable/banner_img1.png' %}">
+      <img src="drawable/banner_img1.png">
     </div>
   
     <div class="mySlides fade">
-      <img src="{% static 'drawable/banner_img2.jpg' %}">
+      <img src="drawable/banner_img2.jpg">
     </div>
   
     <!-- Next and previous buttons -->
@@ -116,7 +114,7 @@
     <span class="dot" onclick="currentSlide(3)"></span>
   </div>
 
-  <script src="{% static 'js/slider.js' %}"></script>
+  <script src="js/slider.js"></script>
 
 </section>
 
@@ -141,7 +139,7 @@
 
                 <div class="product">
                     <div class="product-img">
-                        <img src="{% static '/drawable/products/badam.png' %}">
+                        <img src="drawable/products/badam.png">
                     </div>
                     <div class="product-name">
                         <span>Badam Shake</span>
@@ -159,7 +157,7 @@
 
                 <div class="product">
                     <div class="product-img">
-                        <img src="{% static '/drawable/products/fizz.png' %}">
+                        <img src="drawable/products/fizz.png">
                     </div>
                     <div class="product-name">
                         <span>Fizz Appy</span>
@@ -177,7 +175,7 @@
 
                 <div class="product">
                     <div class="product-img">
-                        <img src="{% static '/drawable/products/lassi.png' %}">
+                        <img src="drawable/products/lassi.png">
                     </div>
                     <div class="product-name">
                         <span>Best Lassi</span>
@@ -195,7 +193,7 @@
 
                 <div class="product">
                     <div class="product-img">
-                        <img src="{% static '/drawable/products/nimbu-pani.png' %}">
+                        <img src="drawable/products/nimbu-pani.png">
                     </div>
                     <div class="product-name">
                         <span>Nimbu Pani</span>
@@ -237,7 +235,7 @@
 
                 <div class="product">
                     <div class="product-img">
-                        <img src="{% static '/drawable/products/rum.png' %}">
+                        <img src="drawable/products/rum.png">
                     </div>
                     <div class="product-name">
                         <span>Rum</span>
@@ -255,7 +253,7 @@
 
                 <div class="product">
                     <div class="product-img">
-                        <img src="{% static '/drawable/products/vodaka.png' %}">
+                        <img src="drawable/products/vodaka.png">
                     </div>
                     <div class="product-name">
                         <span>Vodaka</span>
@@ -273,7 +271,7 @@
 
                 <div class="product">
                     <div class="product-img">
-                        <img src="{% static '/drawable/products/wine.png' %}">
+                        <img src="drawable/products/wine.png">
                     </div>
                     <div class="product-name">
                         <span>Wine</span>
@@ -291,7 +289,7 @@
 
                 <div class="product">
                     <div class="product-img">
-                        <img src="{% static '/drawable/products/beer.png' %}">
+                        <img src="drawable/products/beer.png">
                     </div>
                     <div class="product-name">
                         <span>Beer</span>
@@ -329,7 +327,7 @@
 
                 <div class="mail-box">
                     <input required="" type="email" name="text" placeholder="Email" name="text" autocomplete="off" class="input">
-                    <!-- <label class="user-label" >Email</label> -->
+                     <label class="user-label" >Email</label> -->
                 <!-- </div>
 
 
@@ -363,7 +361,7 @@
     <div class="footer">
         <div class="footer-sec1">
             <div class="footer-logo">
-                <img src="{% static '/drawable/icon.png' %}">
+                <img src="drawable/icon.png">
             </div>
             <div class="legal">
                 <span>LEGAL</span>
@@ -395,14 +393,11 @@
                 <span>© 2022 CronyGlasses Ltd</span>
             </div>
             <div class="payment-icons">
-                <img src="{% static '/drawable/paypal.png' %}">
+                <img src="drawable/paypal.png">
             </div>
         </div>
     </div>
 </section>
-
-
-
 
 
 
