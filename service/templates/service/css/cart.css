@@ -11,7 +11,7 @@
 
 
 .main-div{
-    height: 600px;  /*  --- auto ---- */
+    height: auto;  /*  --- auto ---- */
     width: 85%;
     margin-left: 112px;
     background-color: rgb(241, 235, 235);
@@ -280,6 +280,7 @@
     font-size: 14px;
     padding-left: 110px;
     margin-top: 30px;
+    padding-bottom: 50px;
 }
 
 .continue-shopping a{
@@ -289,4 +290,77 @@
 
 .footer{
   height: auto;
+}
+
+
+
+/* -------------------------------------------Mobile View-------------------------------------- */
+
+
+
+@media screen and (min-device-width: 320px) and (max-device-width: 425px){
+  .cart-name-sec{
+    margin-left: 35px;
+}
+
+.section-title{
+    width: 100%;
+}
+
+.main-div{
+  margin-left: 20px;
+  width: 90%;
+}
+
+.cart-product{
+  width: 100%;
+}
+
+.product-img img{
+  margin-left: 10px;
+}
+
+.p-name{
+  font-size: 20px;
+}
+
+.p-price{
+  font-size: 17px;
+}
+
+.p-Total{
+  font-size: 17px;
+}
+
+.payment-options{
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.subtotal{
+  margin-left: 6px;
+}
+
+.desc{
+  font-size: 14px;
+  margin-left: 6px;
+}
+
+.checkout{
+  width: 280px;
+  margin-top: 30px;
+  margin-left: 28px;
+}
+
+.paypal{
+  width: 280px;
+  margin-top: 30px;
+  margin-left: 28px;
+}
+
+
+
+
+
 }
