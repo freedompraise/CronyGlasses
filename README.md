@@ -51,6 +51,7 @@ pip install -r requirements.txt
 --> To run the App, we use :
 ```bash
 python manage.py runserver
+```
 
 <div style = "background-colour:black" > 
 <h3>Copyright 2022 <a href = "https://github.com/freedompraise" >Praise Freedom Dike</a> and <a href = "https://github.com/mr-mayurchaure" >Mayur Chaure</a></h3>
