@@ -1,5 +1,5 @@
 # Booking-App
-<h3> A web app that presents the most demanded drinks in India and allows you to place orders </h3>
+<h3> Select your favourite of the most demanded drinks in India and have them delivered to yor door </h3>
 
 
    <div align="center">
