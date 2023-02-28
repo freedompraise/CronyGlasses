@@ -1,159 +1,31 @@
-@import url('https://fonts.googleapis.com/css2?family=Jost:wght@100;300;400;700&display=swap');
-
 body {
-  font-family: 'Jost', sans-serif;
-  background-color: #f8f8f8;
-  transition: 0.5s;
+  background-color: #cfc2c4;
 }
 
-body.dark-mode {
-  background-color: #121212;
-}
-
-.login-box {
-  background-color: white;
-  width: 25%;
-  border-radius: 10px;
-  margin: auto;
-  margin-top: 50px;
-  padding-top: 10px;
-  padding-bottom: 30px;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, .1);
-  transition: 0.5s;
-}
-
-@media only screen and (max-width: 768px) {
-  .login-box {
-    width: 75%;
-  }
-}
-
-@media only screen and (max-width: 1366px) {
-  .login-box {
-    width: 40%;
-  }
-}
-
-.login-box.dark-mode {
-  background-color: #2b2b2b;
-}
-
-.login-box h1 {
-  text-align: center;
-  color: #6b6b6b;
-  transition: 0.5s;
-}
-
-.register-text h4.dark-mode{
-  color: white;
-}
-
-.login-box h1.dark-mode {
-  color: white;
-}
-
-form {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 30px;
-  margin-bottom: 0;
-}
-
-.register-text {
-  width: 100%;
-  text-align: center;
-  margin-top: 10px;
-}
-
-input {
-  width: 80%;
-  margin-bottom: 20px;
+.card {
+  margin: 50px auto;
   border: none;
-  background-color: #f3f3f3;
-  border-radius: 10px;
-  padding: 10px;
-  font-size: 14px;
-  transition: 0.5s;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-input.dark-mode {
-  background-color: #424242;
-  color: white;
-}
-
-input:focus {
-  outline: none;
-}
-
-form button {
-  width: 20%;
-  border: none;
-  background-color: #007bff;
-  border-radius: 10px;
-  padding: 10px;
-  font-size: 16px;
-  font-weight: bold;
-  color: white;
-  transition: 0.5s;
-}
-
-form button.dark-mode {
-  background-color: #794bc4;
-}
-
-form button:hover {
-  cursor: pointer;
-  background-color: #0069d9;
-}
-
-form button.dark-mode:hover {
-  background-color: #875ad1;
-}
-
-form button:focus {
-  outline: none;
-}
-
-h2 {
+.card-title {
   text-align: center;
-  color: #6b6b6b;
-  transition: 0.5s;
+  font-size: 24px;
+  color: #4f4f4f;
 }
 
-h2::before {
-  content: 'Switch to Dark Mode';
+.form-control {
+  border: none;
+  background-color: #f4f4f4;
+  box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.1);
+  color: #4f4f4f;
 }
 
-h2.dark-mode{
-  color: white;
+.btn-primary {
+  background-color: #0e0f0f;
+  border: none;
 }
 
-h2.dark-mode::before {
-  content: 'Switch to Light Mode';
+.btn-primary:hover {
+  background-color: #4f4f4f;
 }
-
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-  margin-left: 48%;
-}
-
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-} 
-
