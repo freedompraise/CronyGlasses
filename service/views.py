@@ -26,7 +26,6 @@ def login_view(request):
     return render(request, 'service/login.html', {'form': form})
 
 
-
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -37,5 +36,5 @@ def register(request):
             return redirect('home')
     else:
         form = UserCreationForm()
-    return render(request, 'registration.html', {'form': form})
+    return render(request, 'service/register.html', {'form': form})
 
