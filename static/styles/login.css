@@ -1,9 +1,13 @@
 body {
   background-color: #cfc2c4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
 
 .card {
-  margin: 50px auto;
+  margin-top: 50px;
   border: none;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
