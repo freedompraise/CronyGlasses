@@ -31,24 +31,19 @@ def register(request):
     if request.method == 'POST':
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
-        username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
-        confirm_password = request.POST['confirm_password']
+        # confirm_password = request.POST['confirm_password']
 
-        if password != confirm_password:
-            context = {'error': 'Passwords do not match'}
-            return render(request, 'registration/register.html', context)
-
-        if User.objects.filter(username=username).exists():
-            context = {'error': 'Username already exists'}
-            return render(request, 'registration/register.html', context)
+        # if password != confirm_password:
+        #     context = {'error': 'Passwords do not match'}
+        #     return render(request, 'registration/register.html', context)
 
         if User.objects.filter(email=email).exists():
             context = {'error': 'Email already exists'}
             return render(request, 'registration/register.html', context)
 
-        user = User.objects.create_user(first_name = first_name, last_name = last_name, username=username, email=email, password=password)
+        user = User.objects.create_user(first_name = first_name, last_name = last_name, email=email, password=password)
         login(request, user)
         return redirect('home')
         
