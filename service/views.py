@@ -12,7 +12,7 @@ def index(request):
 
 
 def login_view(request):
-    form = AuthenticationForm
+    form = AuthenticationForm(request.POST)
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
@@ -29,13 +29,28 @@ def login_view(request):
 
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            # log the user in
-            login(request, user)
-            return redirect('home')
-    else:
-        form = UserCreationForm()
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+        confirm_password = request.POST['confirm_password']
+
+        if password != confirm_password:
+            context = {'error': 'Passwords do not match'}
+            return render(request, 'registration/register.html', context)
+
+        if User.objects.filter(username=username).exists():
+            context = {'error': 'Username already exists'}
+            return render(request, 'registration/register.html', context)
+
+        if User.objects.filter(email=email).exists():
+            context = {'error': 'Email already exists'}
+            return render(request, 'registration/register.html', context)
+
+        user = User.objects.create_user(first_name = first_name, last_name = last_name, username=username, email=email, password=password)
+        login(request, user)
+        return redirect('home')
+        
     return render(request, 'service/register.html', {'form': form})
 
