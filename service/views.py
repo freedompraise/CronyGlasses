@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from .models import *
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import authenticate, login
-
+from django.contrib import messages
 # Create your views here.
 
 def index(request):
