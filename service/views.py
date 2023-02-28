@@ -41,9 +41,9 @@ def register(request):
 
         if User.objects.filter(email=email).exists():
             context = {'error': 'Email already exists'}
-            return render(request, 'registration/register.html', context)
+            return render(request, 'service/register.html', context)
 
-        user = User.objects.create_user(first_name = first_name, last_name = last_name, email=email, password=password)
+        user = User.objects.create(email=email, first_name = first_name, last_name = last_name, password=password)
         login(request, user)
         return redirect('home')
         
