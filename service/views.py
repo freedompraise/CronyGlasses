@@ -12,6 +12,7 @@ def index(request):
 
 
 def login_view(request):
+    form = AuthenticationForm
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
