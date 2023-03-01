@@ -47,5 +47,5 @@ def register(request):
         login(request, user)
         return redirect('home')
         
-    return render(request, 'service/register.html', {'form': form})
+    return render(request, 'service/register.html',{})
 
