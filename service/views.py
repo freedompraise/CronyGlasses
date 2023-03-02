@@ -3,6 +3,7 @@ from .models import *
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def index(request):
@@ -49,7 +50,7 @@ def register(request):
         
     return render(request, 'service/register.html',{})
 
-
+@login_required(login_url='login')
 def cart(request):
     cart = request.session.get('cart', {})
     cart_items = []
@@ -73,4 +74,3 @@ def cart(request):
     }
 
     return render(request, 'cart.html', context)
-
