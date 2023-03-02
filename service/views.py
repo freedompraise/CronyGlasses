@@ -50,7 +50,7 @@ def register(request):
         
     return render(request, 'service/register.html',{})
 
-@login_required(login_url='login')
+@login_required
 def cart(request):
     cart = request.session.get('cart', {})
     cart_items = []
