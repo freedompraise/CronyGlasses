@@ -13,6 +13,17 @@ class Drink(models.Model):
     def __str__(self):
         return self.name
 
+class RelatedDrink(models.Model):
+    drink = models.ForeignKey(Drink, on_delete=models.CASCADE, related_name='related_drinks')
+    related_drink = models.ForeignKey(Drink, on_delete=models.CASCADE, related_name='related_to')
+    score = models.FloatField()
+
+    class Meta:
+        unique_together = ('drink', 'related_drink')
+
+    def __str__(self):
+        return f'{self.drink.name} related to {self.related_drink.name}'
+
 
 class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
