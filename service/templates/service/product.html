@@ -1,6 +1,16 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block content %}
+{% block extrahead %}
+
+<head>
+    <title>Sign Up - CronyGlasses</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/product.css' %}">
+    <link rel="stylesheet" href="https://kit.fontawesome.com/50e0af0f47.css" crossorigin="anonymous">
+    {% endblock extrahead %}
+  </head>
+
+  {% block content %}
   <div class="container my-4">
     <div class="row">
       <div class="col-md-6 mb-4 mb-md-0">

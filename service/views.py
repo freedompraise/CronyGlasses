@@ -82,7 +82,7 @@ def product_page(request, pk):
     # Query related drinks based on similarity metric
     # related_drinks = Drink.objects.filter(flavor=drink.flavor).exclude(pk=drink_id)[:4]
 
-    return render(request, 'product_page.html', {
+    return render(request, 'service/product.html', {
         'drink': drink,
         # 'related_drinks': related_drinks,
     })
