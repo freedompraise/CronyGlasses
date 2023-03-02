@@ -74,3 +74,15 @@ def cart(request):
     }
 
     return render(request, 'service/cart.html', context)
+
+
+def product_page(request, drink_id):
+    drink = get_object_or_404(Drink, pk=drink_id)
+
+    # Query related drinks based on similarity metric
+    related_drinks = Drink.objects.filter(flavor=drink.flavor).exclude(pk=drink_id)[:4]
+
+    return render(request, 'product_page.html', {
+        'drink': drink,
+        'related_drinks': related_drinks,
+    })
