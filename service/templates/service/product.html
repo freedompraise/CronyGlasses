@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container my-4">
+    <div class="row">
+      <div class="col-md-6 mb-4 mb-md-0">
+        <img src="{{ drink.image.url }}" alt="{{ drink.name }}" class="img-fluid rounded">
+      </div>
+      <div class="col-md-6">
+        <h2 class="mb-3">{{ drink.name }}</h2>
+        <p class="text-muted mb-2">{{ drink.price|currency }}</p>
+        <p class="text-muted mb-4">{{ drink.description }}</p>
+        <form method="POST" action="{% url 'cart:add_to_cart' drink.id %}">
+          {% csrf_token %}
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <button type="submit" class="btn btn-primary">Add to cart</button>
+            <a href="https://www.paypal.com/" class="btn btn-outline-primary">Pay with PayPal</a>
+          </div>
+        </form>
+        <hr>
+        <h4 class="mb-3">Related Drinks</h4>
+        <div class="row">
+          {% for related_drink in drink.related_drinks.all %}
+            <div class="col-md-3 mb-3">
+              <a href="{% url 'product_detail' related_drink.id %}">
+                <img src="{{ related_drink.image.url }}" alt="{{ related_drink.name }}" class="img-fluid rounded">
+              </a>
+              <h5 class="mt-3 mb-0">{{ related_drink.name }}</h5>
+              <p class="text-muted">{{ related_drink.price|currency }}</p>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,18 @@
+/* styles for product page */
+.product-detail-page .row {
+    margin-top: 50px;
+    margin-bottom: 50px;
+  }
+  .product-detail-page .btn-primary {
+    background-color: #ffb347;
+    border-color: #ffb347;
+  }
+  .product-detail-page .btn-outline-primary {
+    color: #ffb347;
+    border-color: #ffb347;
+  }
+  .product-detail-page .btn-primary:hover, .product-detail-page .btn-outline-primary:hover {
+    background-color: #ff9c33;
+    border-color: #ff9c33;
+  }
+  

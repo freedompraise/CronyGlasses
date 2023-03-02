@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import authenticate, login
@@ -76,13 +76,13 @@ def cart(request):
     return render(request, 'service/cart.html', context)
 
 
-def product_page(request, drink_id):
-    drink = get_object_or_404(Drink, pk=drink_id)
+def product_page(request, pk):
+    drink = get_object_or_404(Drink, pk=pk)
 
     # Query related drinks based on similarity metric
-    related_drinks = Drink.objects.filter(flavor=drink.flavor).exclude(pk=drink_id)[:4]
+    # related_drinks = Drink.objects.filter(flavor=drink.flavor).exclude(pk=drink_id)[:4]
 
     return render(request, 'product_page.html', {
         'drink': drink,
-        'related_drinks': related_drinks,
+        # 'related_drinks': related_drinks,
     })
