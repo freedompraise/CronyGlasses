@@ -49,3 +49,26 @@ def register(request):
         
     return render(request, 'service/register.html',{})
 
+def cart(request):
+    cart = request.session.get('cart', {})
+    cart_items = []
+    total = 0
+    for drink_id, quantity in cart.items():
+        drink = Drink.objects.get(id=drink_id)
+        price = drink.price * quantity
+        total += price
+        cart_items.append({
+            'id': drink_id,
+            'name': drink.name,
+            'price': drink.price,
+            'quantity': quantity,
+            'total_price': price,
+        })
+
+    context = {
+        'cart_items': cart_items,
+        'subtotal': total,
+    }
+
+    return render(request, 'cart.html', context)
+
