@@ -73,4 +73,4 @@ def cart(request):
         'subtotal': total,
     }
 
-    return render(request, 'cart.html', context)
+    return render(request, 'service/cart.html', context)

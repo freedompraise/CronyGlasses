@@ -1,4 +1,12 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block extrahead %}
+<head>
+  <title>Cart - CronyGlasses</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'styles/cart.css' %}">
+</head>
+{% endblock extrahead %}
 
 {% block content %}
   <h1>Your Cart</h1>
@@ -62,6 +70,8 @@
       </div>
     </div>
   {% else %}
+  <div class="checkout-section">
     <p>Your cart is empty.</p>
+  </div>
   {% endif %}
 {% endblock %}
