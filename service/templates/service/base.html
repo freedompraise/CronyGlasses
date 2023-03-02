@@ -1,0 +1,90 @@
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CronyGlasses</title>
+    <link rel="shortcut icon" type="image/x-icon" href="{% static '/drawable/icon-circle.png' %}"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/2f6992b10e.js" crossorigin="anonymous"></script>
+</head>
+
+
+
+<section class="menu-section">
+    <div class="top-bar">
+        <ul class="social_icons">
+            <li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
+            <li><a href="#"><i class="fa-brands fa-facebook"></i></a></li>
+            <li><a href="#"><i class="fa-brands fa-square-instagram"></i></a></li>
+        </ul>
+
+        <div class="full-logo">
+        <ul class="menu">
+            <a href="{% url 'home' %}">
+            <img src="{% static '/drawable/icon-circle.png' %}" alt="">
+           <h4>CronyGlasses</h4></a>
+        </ul>
+    </div>
+
+        <div class="top-bar--right-menu">
+                <div class="login_btn">
+                    <a href="{% url 'login' %}" class="icon-user"><i class="fa-solid fa-user"></i>
+                        <span class="login">Login</span>
+                </div>
+            <div class="cart-container">
+                <a href="#"><i class="fa-solid fa-cart-shopping"></i></a>
+                <span class="cart_count">0</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<main>
+    {% block content %}
+    
+    {% endblock %}
+</main>
+
+<section>
+    <div class="footer">
+        <div class="footer-sec1">
+            <div class="footer-logo">
+                <img src="{% static '/drawable/icon.png' %}">
+            </div>
+            <div class="legal">
+                <span>LEGAL</span>
+                <ul class="legal-items">
+                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Cookies</a></li>
+                </ul>
+            </div>
+            <div class="get-in-touch">
+                <span>GET IN TOUCH</span>
+                <ul class="legal-items">
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Refund Policy</a></li>
+                </ul>
+                <div>
+                    <ul class="social_icons_footer">
+                        <li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fa-brands fa-facebook"></i></a></li>
+                        <li><a href="#"><i class="fa-brands fa-square-linkedin"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-sec2">
+            <div class="copyright">
+                <span>© 2022 CronyGlasses Ltd</span>
+            </div>
+            <div class="payment-icons">
+                <a href="https://www.paypal.com/">
+                <img src="{% static '/drawable/paypal.png' %}">
+            </a>
+            </div>
+        </div>
+    </div>
+</section>
