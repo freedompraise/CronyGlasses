@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Your Cart</h1>
+  {% if cart %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in cart %}
+          <tr>
+            <td><img src="{{ item.drink.image.url }}" alt="{{ item.drink.name }}" height="100" width="100"></td>
+            <td>{{ item.drink.name }}</td>
+            <td>{{ item.drink.price }}</td>
+            <td>
+              <form method="POST" action="{% url 'cart_update' %}">
+                {% csrf_token %}
+                <input type="hidden" name="drink_id" value="{{ item.drink.id }}">
+                <div class="form-group row">
+                  <div class="col-sm-4">
+                    <input type="number" name="quantity" value="{{ item.quantity }}" class="form-control" min="1">
+                  </div>
+                  <div class="col-sm-4">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                  </div>
+                </div>
+              </form>
+            </td>
+            <td>
+              <form method="POST" action="{% url 'cart_remove' %}">
+                {% csrf_token %}
+                <input type="hidden" name="drink_id" value="{{ item.drink.id }}">
+                <button type="submit" class="btn btn-danger">Remove</button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="row">
+      <div class="col-md-6">
+        <a href="{% url 'menu' %}" class="btn btn-secondary">Continue Shopping</a>
+      </div>
+      <div class="col-md-6 text-right">
+        <h2>Subtotal: ${{ cart.get_total_price }}</h2>
+        <form method="POST" action="{% url 'checkout' %}">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-success">Checkout</button>
+        </form>
+        <br>
+        <form method="POST" action="{% url 'paypal_checkout' %}">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-primary">Pay with PayPal</button>
+        </form>
+      </div>
+    </div>
+  {% else %}
+    <p>Your cart is empty.</p>
+  {% endif %}
+{% endblock %}
