@@ -1,12 +1,16 @@
+{% extends 'base.html' %}
 {% load static %}
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Login - CronyGlasses</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'styles/register.css' %}">
 
-  </head>
-  {% extends 'base.html' %}
+{% block extrahead %}
+<head>
+  <title>Login - CronyGlasses</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'styles/register.css' %}">
+
+</head>
+{% endblock extrahead %}
+<html> 
+ 
 {% block content %}
   <div class="container">
     <div class="row justify-content-center">

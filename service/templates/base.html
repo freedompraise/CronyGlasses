@@ -1,13 +1,14 @@
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CronyGlasses</title>
+    <link rel="stylesheet" href="{% static 'styles/index.css' %}">
     <link rel="shortcut icon" type="image/x-icon" href="{% static '/drawable/icon-circle.png' %}"/>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/2f6992b10e.js" crossorigin="anonymous"></script>
+    
+    {% block extrahead %}{% endblock %}
 </head>
-
 
 
 <section class="menu-section">
@@ -39,10 +40,29 @@
     </div>
 </section>
 
-<main>
+
+<section class="main-menu">
+    <div id="navlist">
+        <div class="menu-items">
+            <a href="#">Home</a>
+            <a href="#">Our Products</a>
+            <a href="#">Cart</a>
+            <a href="#">About Us</a>
+            <a href="#">Contact Us</a>
+        </div>
+        
+    </div>
+        
+    </div>  
+</section>
+
+
+
+<main style="padding-top: 200px;">
     {% block content %}
     
     {% endblock %}
+    {% block extrabody %}{% endblock %}
 </main>
 
 <section>
