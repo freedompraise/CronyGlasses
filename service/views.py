@@ -49,6 +49,7 @@ def register(request):
         
     return render(request, 'service/register.html',{})
 
+
 def cart(request):
     cart = request.session.get('cart', {})
     cart_items = []
@@ -60,6 +61,7 @@ def cart(request):
         cart_items.append({
             'id': drink_id,
             'name': drink.name,
+            'image':drink.image,
             'price': drink.price,
             'quantity': quantity,
             'total_price': price,
