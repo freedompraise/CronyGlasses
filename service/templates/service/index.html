@@ -15,6 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/2f6992b10e.js" crossorigin="anonymous"></script>
 
+
 </head>
 <body>
 
@@ -139,6 +140,7 @@
 <!-- product 1 -->
 
                 <div class="product">
+                    <a href="{% url 'drinks' 1 %}">
                     <div class="product-img">
                         <img src="{% static '/drawable/products/badam.png' %}">
                     </div>
@@ -148,6 +150,7 @@
                     <div class="price">
                         <span>$0</span>
                     </div>
+                </a>
                     <div class="add-to-cart-btn">
                         <button class="button"> Add to Cart
                         </button>
