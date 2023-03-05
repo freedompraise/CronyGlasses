@@ -68,6 +68,24 @@ def cart(request):
     return render(request, 'service/cart.html', context)
 
 
+@login_required
+def cart_update(request, drink_id):
+    quantity = request.POST.get('quantity')
+    cart_item = Cart.objects.filter(user=request.user, drink_id=drink_id).first()
+
+    if cart_item is not None:
+        if quantity == '0':
+            cart_item.delete()
+        else:
+            cart_item.quantity = int(quantity)
+            cart_item.save()
+    else:
+        drink = Drink.objects.get(id=drink_id)
+        cart_item = Cart(user=request.user, drink=drink, quantity=int(quantity))
+        cart_item.save()
+
+    return redirect('cart')
+
 
 def product_page(request, pk):
     drink = get_object_or_404(Drink, pk=pk)

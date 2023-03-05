@@ -10,7 +10,7 @@
 
 {% block content %}
   <h1>Your Cart</h1>
-  {% if cart %}
+  {% if cart_items %}
     <table class="table">
       <thead>
         <tr>
@@ -22,7 +22,7 @@
         </tr>
       </thead>
       <tbody>
-        {% for item in cart %}
+        {% for item in cart_items %}
           <tr>
             <td><img src="{{ item.drink.image.url }}" alt="{{ item.drink.name }}" height="100" width="100"></td>
             <td>{{ item.drink.name }}</td>
