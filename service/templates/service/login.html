@@ -4,7 +4,11 @@
 
 {% block extrahead %}
 <head>
+  {% if request.user.is_authenticated %}
+  <title>{{request.user.first_name}} Dashboard</title>
+  {% else %}
   <title>Login - CronyGlasses</title>
+  {% endif %}
   <link rel="stylesheet" type="text/css" href="{% static 'styles/register.css' %}">
 
 </head>
