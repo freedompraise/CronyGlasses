@@ -34,11 +34,6 @@ def register(request):
         last_name = request.POST['last_name']
         email = request.POST['email']
         password = request.POST['password']
-        # confirm_password = request.POST['confirm_password']
-
-        # if password != confirm_password:
-        #     context = {'error': 'Passwords do not match'}
-        #     return render(request, 'registration/register.html', context)
 
         if User.objects.filter(email=email).exists():
             context = {'error': 'Email already exists'}
@@ -62,28 +57,16 @@ def add_to_cart(request, drink_id):
 
 @login_required
 def cart(request):
-    cart = request.session.get('cart', {})
-    cart_items = []
+    cart_items = Cart.objects.filter(user=request.user)
     total = 0
-    for drink_id, quantity in cart.items():
-        drink = Drink.objects.get(id=drink_id)
-        price = drink.price * quantity
-        total += price
-        cart_items.append({
-            'id': drink_id,
-            'name': drink.name,
-            'image':drink.image,
-            'price': drink.price,
-            'quantity': quantity,
-            'total_price': price,
-        })
-
+    for item in cart_items:
+        total += item.quantity * item.drink.price
     context = {
-        'cart': cart_items,
+        'cart_items': cart_items,
         'subtotal': total,
     }
-
     return render(request, 'service/cart.html', context)
+
 
 
 def product_page(request, pk):
