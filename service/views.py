@@ -45,6 +45,19 @@ def register(request):
         
     return render(request, 'service/register.html',{})
 
+
+def product_page(request, pk):
+    drink = get_object_or_404(Drink, pk=pk)
+
+    # Query related drinks based on similarity metric
+    # related_drinks = Drink.objects.filter(flavor=drink.flavor).exclude(pk=drink_id)[:4]
+
+    return render(request, 'service/product.html', {
+        'drink': drink,
+        # 'related_drinks': related_drinks,
+    })
+
+
 @login_required
 def add_to_cart(request, drink_id):
     drink = get_object_or_404(Drink, pk=drink_id)
@@ -87,13 +100,10 @@ def cart_update(request, drink_id):
     return redirect('cart')
 
 
-def product_page(request, pk):
-    drink = get_object_or_404(Drink, pk=pk)
-
-    # Query related drinks based on similarity metric
-    # related_drinks = Drink.objects.filter(flavor=drink.flavor).exclude(pk=drink_id)[:4]
-
-    return render(request, 'service/product.html', {
-        'drink': drink,
-        # 'related_drinks': related_drinks,
-    })
+@login_required
+def cart_remove(request, drink_id):
+    cart = request.session.get('cart', {})
+    if str(drink_id) in cart:
+        cart.pop(str(drink_id))
+        request.session['cart'] = cart
+    return redirect('cart')

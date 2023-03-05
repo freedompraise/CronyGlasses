@@ -28,7 +28,7 @@
             <td>{{ item.drink.name }}</td>
             <td>{{ item.drink.price }}</td>
             <td>
-              <form method="POST" action="{% url 'cart_update' %}">
+              <form method="POST" action="{% url 'cart_update' drink_id=1 %}">
                 {% csrf_token %}
                 <input type="hidden" name="drink_id" value="{{ item.drink.id }}">
                 <div class="form-group row">
