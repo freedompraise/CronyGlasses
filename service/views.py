@@ -51,6 +51,16 @@ def register(request):
     return render(request, 'service/register.html',{})
 
 @login_required
+def add_to_cart(request, drink_id):
+    drink = get_object_or_404(Drink, pk=drink_id)
+    cart, _ = Cart.objects.get_or_create(user=request.user, drink=drink)
+    cart.quantity += 1
+    cart.save()
+    messages.success(request, f"{drink.name} added to cart!")
+    return redirect('cart')
+
+
+@login_required
 def cart(request):
     cart = request.session.get('cart', {})
     cart_items = []
@@ -69,7 +79,7 @@ def cart(request):
         })
 
     context = {
-        'cart_items': cart_items,
+        'cart': cart_items,
         'subtotal': total,
     }
 
