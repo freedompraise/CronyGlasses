@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'service',
+    'paypal.standard.ipn',
 ]
 
 MIDDLEWARE = [
@@ -74,6 +75,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'cronyGlasses.wsgi.application'
 
+
+# PAYPAL
+PAYPAL_RECEIVER_EMAIL = config('PAYPAL_RECEIVER_EMAIL')
+PAYPAL_TEST = True
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
