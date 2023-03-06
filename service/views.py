@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import *
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+
+from .models import *
+from .forms import OrderForm
 # Create your views here.
 
 def index(request):
@@ -106,4 +108,39 @@ def cart_remove(request, drink_id):
     if str(drink_id) in cart:
         cart.pop(str(drink_id))
         request.session['cart'] = cart
+
     return redirect('cart')
+
+
+
+@login_required
+def checkout(request):
+    cart_items = OrderItem.objects.filter(user=request.user, ordered=False)
+    subtotal = 0
+    for item in cart_items:
+        subtotal += item.total_price
+    tax = round(subtotal * 0.15, 2)
+    total = round(subtotal + tax, 2)
+
+    if request.method == 'POST':
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            order = form.save(commit=False)
+            order.user = request.user
+            order.total = total
+            order.save()
+            for item in cart_items:
+                item.ordered = True
+                item.save()
+            return redirect('order_success')
+    else:
+        form = OrderForm()
+
+    context = {
+        'cart_items': cart_items,
+        'subtotal': subtotal,
+        'tax': tax,
+        'total': total,
+        'form': form,
+    }
+    return render(request, 'service/checkout.html', context)
