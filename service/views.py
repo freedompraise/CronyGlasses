@@ -152,7 +152,7 @@ def checkout(request):
 def paypal_checkout(request):
     user = request.user
     products = Cart.objects.get(user=user.id)
-    total_int = get_total(request, products)
+    total_int = get_object_or_404(Order, pk=pk)
     host = request.get_host()
 
     paypal_dict = {
