@@ -50,6 +50,10 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    @property
+    def total_price(self):
+        return sum(item.drink.price * item.quantity for item in self.orderitem_set.all())
+
     def __str__(self):
         return f"{self.user.username} - {self.created_at.strftime('%d-%m-%Y %H:%M:%S')}"
 
