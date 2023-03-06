@@ -26,8 +26,8 @@ class RelatedDrink(models.Model):
 
 
 class Cart(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    drink = models.ForeignKey(Drink, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    drink = models.ManyToManyField(Drink, null=False)
     quantity = models.IntegerField(default=1)
 
     def __str__(self):
