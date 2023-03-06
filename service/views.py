@@ -81,7 +81,11 @@ def product_page(request, pk):
 def add_to_cart(request, drink_id):
     drink = get_object_or_404(Drink, id=drink_id)
     cart, created = Cart.objects.get_or_create(user=request.user)
-    order_item, created = OrderItem.objects.get_or_create(order=None, drink=drink, quantity=1)
+    if not cart.order:
+        order = Order.objects.create(user=request.user)
+        cart.order = order
+        cart.save()
+    order_item, created = OrderItem.objects.get_or_create(order=cart.order, drink=drink, quantity=1)
     if order_item in cart.order_items.all():
         order_item.quantity += 1
         order_item.save()
@@ -89,6 +93,7 @@ def add_to_cart(request, drink_id):
         cart.order_items.add(order_item)
     cart.save()
     return redirect('cart')
+
 
 
 @login_required
