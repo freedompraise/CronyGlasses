@@ -42,7 +42,7 @@
               </form>
             </td>
             <td>
-              <form method="POST" action="{% url 'cart_remove' %}">
+              <form method="POST" action="{% url 'cart_remove' drink_id=1 %}">
                 {% csrf_token %}
                 <input type="hidden" name="drink_id" value="{{ item.drink.id }}">
                 <button type="submit" class="btn btn-danger">Remove</button>
@@ -54,7 +54,7 @@
     </table>
     <div class="row">
       <div class="col-md-6">
-        <a href="{% url 'menu' %}" class="btn btn-secondary">Continue Shopping</a>
+        <a href="{% url 'home' %}" class="btn btn-secondary">Continue Shopping</a>
       </div>
       <div class="col-md-6 text-right">
         <h2>Subtotal: ${{ cart.get_total_price }}</h2>
