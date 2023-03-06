@@ -79,11 +79,15 @@ def product_page(request, pk):
 
 @login_required
 def add_to_cart(request, drink_id):
-    drink = get_object_or_404(Drink, pk=drink_id)
-    cart, _ = Cart.objects.get_or_create(user=request.user, drink=drink)
-    cart.quantity += 1
+    drink = get_object_or_404(Drink, id=drink_id)
+    cart, created = Cart.objects.get_or_create(user=request.user)
+    order_item, created = OrderItem.objects.get_or_create(order=None, drink=drink, quantity=1)
+    if order_item in cart.order_items.all():
+        order_item.quantity += 1
+        order_item.save()
+    else:
+        cart.order_items.add(order_item)
     cart.save()
-    messages.success(request, f"{drink.name} added to cart!")
     return redirect('cart')
 
 
@@ -128,8 +132,6 @@ def cart_remove(request, drink_id):
         request.session['cart'] = cart
 
     return redirect('cart')
-
-
 
 
 @login_required
