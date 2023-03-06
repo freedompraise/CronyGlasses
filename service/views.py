@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 
 from .models import *
 from .forms import OrderForm
+
+from paypal.standard.forms import PayPalPaymentsForm
 # Create your views here.
 
 def index(request):
@@ -144,3 +146,35 @@ def checkout(request):
         'form': form,
     }
     return render(request, 'service/checkout.html', context)
+
+
+@login_required
+def paypal_checkout(request):
+    user = request.user
+    products = Cart.objects.get(user=user.id)
+    total_int = get_total(request, products)
+    host = request.get_host()
+
+    paypal_dict = {
+        'business': settings.PAYPAL_RECEIVER_EMAIL,
+        'amount': str(total_int),
+        'item_name': str([product.name+'\n' for product in products]),
+      #  'invoice': str([product.name+'\n' for product in Product.objects.all()])
+        'currency_code': 'USD',
+        'notify_url': 'http://{}{}'.format(host,
+                                           reverse('paypal-ipn')),
+        'return_url': 'http://{}{}'.format(host,
+                                           reverse('payment-done')),
+        'cancel_return': 'http://{}{}'.format(host,
+                                              reverse('payment-cancelled')),
+    }
+
+    form = PayPalPaymentsForm(initial=paypal_dict)
+    return redirect(reverse('payment_complete'))
+
+
+def payment_done(request):
+    return render(request, 'service/payment_done.html')
+
+def payment_cancelled(request):
+    return render(request, 'service/payment_cancelled.html')
