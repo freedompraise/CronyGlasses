@@ -9,6 +9,21 @@ from .forms import OrderForm
 
 from paypal.standard.forms import PayPalPaymentsForm
 # Create your views here.
+def compute_order(request):
+    if request.method == 'POST':
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            order = form.save(commit=False)
+            order.user = request.user
+            order.total = total
+            order.save()
+            for item in cart_items:
+                item.ordered = True
+                item.save()
+            return redirect('order_success')
+    else:
+        form = OrderForm()
+
 
 def index(request):
     drinks = Drink.objects.all()[:8]
@@ -82,6 +97,7 @@ def cart(request):
         'cart_items': cart_items,
         'subtotal': total,
     }
+    compute_order(request)
     return render(request, 'service/cart.html', context)
 
 
@@ -115,6 +131,7 @@ def cart_remove(request, drink_id):
 
 
 
+
 @login_required
 def checkout(request):
     cart_items = OrderItem.objects.filter(user=request.user, ordered=False)
@@ -123,20 +140,7 @@ def checkout(request):
         subtotal += item.total_price
     tax = round(subtotal * 0.15, 2)
     total = round(subtotal + tax, 2)
-
-    if request.method == 'POST':
-        form = OrderForm(request.POST)
-        if form.is_valid():
-            order = form.save(commit=False)
-            order.user = request.user
-            order.total = total
-            order.save()
-            for item in cart_items:
-                item.ordered = True
-                item.save()
-            return redirect('order_success')
-    else:
-        form = OrderForm()
+    compute_order(request)
 
     context = {
         'cart_items': cart_items,
