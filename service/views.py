@@ -132,27 +132,34 @@ def cart_remove(request, order_item_id):
 
     return redirect('cart')
 
+
 @login_required
 def cart_update(request, order_item_id):
-    # Get the Cart object for the current user
     cart, created = Cart.objects.get_or_create(user=request.user)
-    # Get the OrderItem object from the database
-    order_item = get_object_or_404(OrderItem, id=order_item_id, order__cart=cart)
+    order_item = get_object_or_404(OrderItem, id=order_item_id)
+
     if request.method == 'POST':
-        # Get the updated quantity value from the form
-        quantity = int(request.POST.get('quantity'))
-        if quantity > 0:
-            # Update the OrderItem object with the new quantity value
-            order_item.quantity = quantity
+        new_quantity = request.POST.get('quantity')
+
+        if new_quantity.isdigit() and int(new_quantity) > 0:
+            order_item.quantity = int(new_quantity)
             order_item.save()
-            messages.success(request, f"{order_item.drink.name} quantity has been updated to {quantity}.")
+
+            cart.total = sum(item.total_price for item in cart.order_items.all())
+            cart.save()
+
+            messages.success(request, f"{order_item.drink.name} quantity has been updated.")
         else:
-            # If the new quantity value is zero or less, remove the OrderItem object from the cart
-            cart.order_items.remove(order_item)
-            messages.success(request, f"{order_item.drink.name} has been removed from your cart.")
-        # Save the updated Cart object to the database
-        cart.save()
+            messages.warning(request, "Invalid quantity.")
+
+    context = {
+        'order_item': order_item,
+    }
+
     return redirect('cart')
+
+
+
 
 @login_required
 def checkout(request):
