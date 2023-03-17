@@ -8,6 +8,8 @@ from .models import *
 from .forms import OrderForm
 
 from paypal.standard.forms import PayPalPaymentsForm
+
+from decimal import Decimal
 # Create your views here.
 def compute_order(request):
     if request.method == 'POST':
@@ -81,32 +83,38 @@ def product_page(request, pk):
 def add_to_cart(request, drink_id):
     drink = get_object_or_404(Drink, id=drink_id)
     cart, created = Cart.objects.get_or_create(user=request.user)
-    if not cart.order:
-        order = Order.objects.create(user=request.user)
-        cart.order = order
-        cart.save()
-    order_item, created = OrderItem.objects.get_or_create(order=cart.order, drink=drink, quantity=1)
-    if order_item in cart.order_items.all():
-        order_item.quantity += 1
-        order_item.save()
-    else:
-        cart.order_items.add(order_item)
+    order = Order.objects.create(user=request.user, total=0)
+    order_item = OrderItem.objects.create(order=order, drink=drink, quantity=1)
+
+    cart.order_items.add(order_item)
+
+    # Update the cart's total price
+    cart_items = cart.order_items.all()
+    cart_total = Decimal(sum([item.total_price for item in cart_items]))
+    cart.total = cart_total
     cart.save()
+
+    
     return redirect('cart')
+
 
 
 
 @login_required
 def cart(request):
-    cart_items = Cart.objects.filter(user=request.user)
+    cart = get_object_or_404(Cart, user=request.user)
+    cart_items = cart.order_items.all()
     total = 0
     for item in cart_items:
         total += item.quantity * item.drink.price
+    cart_total = Decimal(total)
+    cart.total = cart_total
+    cart.save()
     context = {
         'cart_items': cart_items,
-        'subtotal': total,
+        'cart_total': cart_total,
     }
-    compute_order(request)
+
     return render(request, 'service/cart.html', context)
 
 

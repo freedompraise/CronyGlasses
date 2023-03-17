@@ -57,7 +57,7 @@
         <a href="{% url 'home' %}" class="btn btn-secondary">Continue Shopping</a>
       </div>
       <div class="col-md-6 text-right">
-        <h2>Subtotal: ${{ cart.get_total_price }}</h2>
+        <h2>Subtotal: ${{ cart_total }}</h2>
         <form method="POST" action="{% url 'checkout' %}">
           {% csrf_token %}
           <button type="submit" class="btn btn-success">Checkout</button>
