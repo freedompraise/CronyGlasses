@@ -121,12 +121,11 @@ def cart_remove(request, order_item_id):
     # Get the Cart object for the current user
     cart, created = Cart.objects.get_or_create(user=request.user)
     # Get the OrderItem object from the database
-    drink = get_object_or_404(Drink, pk=order_item_id)
     order_item = get_object_or_404(OrderItem, id=order_item_id)
     if order_item:
         cart.order_items.remove(order_item)
         cart.save()
-        messages.success(request, f"{drink.name} has been removed from your cart.")
+        messages.success(request, f"{order_item.drink.name} has been removed from your cart.")
     else:
         messages.warning(request, "The selected item is not in your cart.")
     cart.save()

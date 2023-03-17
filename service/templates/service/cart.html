@@ -42,7 +42,7 @@
               </form>
             </td>
             <td>
-              <form method="POST" action="{% url 'cart_remove' order_item_id=item.drink_id %}">
+              <form method="POST" action="{% url 'cart_remove' order_item_id=item.id %}">
                 {% csrf_token %}
                 <input type="hidden" name="drink_id" value="{{ item.drink.id }}">
                 <button type="submit" class="btn btn-danger">Remove</button>
