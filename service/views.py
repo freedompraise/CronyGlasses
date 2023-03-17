@@ -165,7 +165,7 @@ def checkout(request):
 
     if request.method == 'POST':
         # Create a new Order object
-        order = Order.objects.create(user=request.user, total_price=total)
+        order = Order.objects.create(user=request.user, total=total)
 
         # Move each item from the user's cart to the new order
         for item in order_items:
@@ -176,9 +176,11 @@ def checkout(request):
 
         # Redirect to the home page with a success message
         messages.success(request, "Your order has been placed!")
-        return redirect('home')
-
-    return render(request, 'service/checkout.html', context)
+        # return redirect('home')
+        context = {
+            'total':total
+        }
+    return render(request, 'service/checkout.html')
 
 
 @login_required

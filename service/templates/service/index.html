@@ -1,8 +1,8 @@
+{% extends 'base.html' %}
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<head lang="en">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,76 +14,9 @@
     <link rel="shortcut icon" type="image/x-icon" href="{% static '/drawable/icon-circle.png' %}"/>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/2f6992b10e.js" crossorigin="anonymous"></script>
-
-
 </head>
-<body>
 
-    <!-- Menu section -->
-
-    <section class="menu-section">
-        <div class="top-bar">
-            <ul class="social_icons">
-                <li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
-                <li><a href="#"><i class="fa-brands fa-facebook"></i></a></li>
-                <li><a href="#"><i class="fa-brands fa-square-instagram"></i></a></li>
-            </ul>
-
-            <div class="full-logo">
-            <ul class="menu">
-                <a href="{% url 'home' %}">
-                <img src="{% static '/drawable/icon-circle.png' %}" alt="">
-               <h4>CronyGlasses</h4></a>
-            </ul>
-        </div>
-
-            <div class="top-bar--right-menu">
-                    <div class="login_btn">
-                        <a href="{% url 'login' %}" class="icon-user"><i class="fa-solid fa-user"></i>
-                            <span class="login">Login</span>
-                    </div>
-                <div class="cart-container">
-                    <a href="#"><i class="fa-solid fa-cart-shopping"></i></a>
-                    <span class="cart_count">0</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- Main menu Section -->
-
-
-<section class="main-menu">
-    <div id="navlist">
-        <div class="menu-items">
-            <a href="#">Home</a>
-            <a href="#">Our Products</a>
-            <a href="#">Cart</a>
-            <a href="#">About Us</a>
-            <a href="#">Contact Us</a>
-        </div>
-        
-        <!-- search bar right align -->
-        <div class="search">
-             
-            <form action="#">
-                <input type="text"
-                    placeholder="Search Here.."
-                    name="search">
-                <button>
-                    <i class="fa fa-search"
-                        style="font-size: 18px;">
-                    </i>
-                </button>
-            </form>
-        </div>
-    </div>
-        
-    </div>  
-</section>
-
-
+{% block content %}
     <!-- Slider Section -->
 <section>
 
@@ -313,107 +246,6 @@
     </div>
 
 </section>
-
-
-<!-- Signup Section
-
-<section>
-
-    <div class="signup-container">
-        <div class="signup-box">
-            <div class="subscribe">
-                <span>SUBSCRIBE
-                </span>
-            </div>
-            <div class="signup-desc">
-                <span>Sign up to get the latest on sales, new releases and more …
-                </span>
-
-                <div class="mail-box">
-                    <input required="" type="email" name="text" placeholder="Email" name="text" autocomplete="off" class="input">
-                    <!-- <label class="user-label" >Email</label> -->
-                <!-- </div>
-
-
-                <div class="box">
-                    <select>
-                      <option>Option 1</option>
-                      <option>Option 2</option>
-                      <option>Option 3</option>
-                      <option>Option 4</option>
-                      <option>Option 5</option>
-                    </select>
-                  </div>
-                
-
-                  <button class="signup-btn" style="vertical-align:middle"><span>SIGN UP</span></button>
-
-
-
-            </div>
-        </div>
-    </div>
-
-</section> --> 
-
-
-
-<!-- Section Footer -->
-
-
-<section>
-    <div class="footer">
-        <div class="footer-sec1">
-            <div class="footer-logo">
-                <img src="{% static '/drawable/icon.png' %}">
-            </div>
-            <div class="legal">
-                <span>LEGAL</span>
-                <ul class="legal-items">
-                    <li><a href="#">Terms & Conditions</a></li>
-                    <li><a href="#">Terms of Service</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Cookies</a></li>
-                </ul>
-            </div>
-            <div class="get-in-touch">
-                <span>GET IN TOUCH</span>
-                <ul class="legal-items">
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Contact Us</a></li>
-                    <li><a href="#">Refund Policy</a></li>
-                </ul>
-                <div>
-                    <ul class="social_icons_footer">
-                        <li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fa-brands fa-facebook"></i></a></li>
-                        <li><a href="#"><i class="fa-brands fa-square-linkedin"></i></a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="footer-sec2">
-            <div class="copyright">
-                <span>© 2022 CronyGlasses Ltd</span>
-            </div>
-            <div class="payment-icons">
-                <a href="https://www.paypal.com/">
-                <img src="{% static '/drawable/paypal.png' %}">
-            </a>
-            </div>
-        </div>
-    </div>
-</section>
-
-
-
-
-
-
-
-
-
-
-
 </body>
 </html>
+{% endblock %}
