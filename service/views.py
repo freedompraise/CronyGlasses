@@ -159,21 +159,25 @@ def cart_update(request, order_item_id):
 
 @login_required
 def checkout(request):
-    cart_items = OrderItem.objects.filter(user=request.user, ordered=False)
-    subtotal = 0
-    for item in cart_items:
-        subtotal += item.total_price
-    tax = round(subtotal * 0.15, 2)
-    total = round(subtotal + tax, 2)
-    compute_order(request)
+    cart, created = Cart.objects.get_or_create(user=request.user)
+    order_items = cart.order_items.all()
+    total = sum([item.total_price for item in order_items])
 
-    context = {
-        'cart_items': cart_items,
-        'subtotal': subtotal,
-        'tax': tax,
-        'total': total,
-        'form': form,
-    }
+    if request.method == 'POST':
+        # Create a new Order object
+        order = Order.objects.create(user=request.user, total_price=total)
+
+        # Move each item from the user's cart to the new order
+        for item in order_items:
+            OrderItem.objects.create(order=order, drink=item.drink, quantity=item.quantity)
+
+        # Clear the user's cart
+        cart.order_items.clear()
+
+        # Redirect to the home page with a success message
+        messages.success(request, "Your order has been placed!")
+        return redirect('home')
+
     return render(request, 'service/checkout.html', context)
 
 
