@@ -42,7 +42,7 @@
               </form>
             </td>
             <td>
-              <form method="POST" action="{% url 'cart_remove' drink_id=1 %}">
+              <form method="POST" action="{% url 'cart_remove' order_item_id=item.drink_id %}">
                 {% csrf_token %}
                 <input type="hidden" name="drink_id" value="{{ item.drink.id }}">
                 <button type="submit" class="btn btn-danger">Remove</button>
@@ -72,8 +72,8 @@
   {% else %}
   <section class="checkout-section">
     <p>Your cart is empty.</p>
-    <div>
-      <button type="button">Continue Shopping</button>
+    <div class="col-md-6">
+      <a href="{% url 'home' %}" class="btn btn-secondary">Continue Shopping</a>
     </div>
   </section>
   {% endif %}

@@ -30,7 +30,7 @@ LOGIN_REDIRECT_URL = 'cart'
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-
+APPEND_SLASH=False
 
 # Application definition
 
