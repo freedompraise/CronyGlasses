@@ -133,21 +133,25 @@ def cart_remove(request, order_item_id):
     return redirect('cart')
 
 @login_required
-def cart_update(request, drink_id):
-    quantity = request.POST.get('quantity')
-    cart_item = Cart.objects.filter(user=request.user, drink_id=drink_id).first()
-
-    if cart_item is not None:
-        if quantity == '0':
-            cart_item.delete()
+def cart_update(request, order_item_id):
+    # Get the Cart object for the current user
+    cart, created = Cart.objects.get_or_create(user=request.user)
+    # Get the OrderItem object from the database
+    order_item = get_object_or_404(OrderItem, id=order_item_id, order__cart=cart)
+    if request.method == 'POST':
+        # Get the updated quantity value from the form
+        quantity = int(request.POST.get('quantity'))
+        if quantity > 0:
+            # Update the OrderItem object with the new quantity value
+            order_item.quantity = quantity
+            order_item.save()
+            messages.success(request, f"{order_item.drink.name} quantity has been updated to {quantity}.")
         else:
-            cart_item.quantity = int(quantity)
-            cart_item.save()
-    else:
-        drink = Drink.objects.get(id=drink_id)
-        cart_item = Cart(user=request.user, drink=drink, quantity=int(quantity))
-        cart_item.save()
-
+            # If the new quantity value is zero or less, remove the OrderItem object from the cart
+            cart.order_items.remove(order_item)
+            messages.success(request, f"{order_item.drink.name} has been removed from your cart.")
+        # Save the updated Cart object to the database
+        cart.save()
     return redirect('cart')
 
 @login_required
