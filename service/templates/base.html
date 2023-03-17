@@ -36,7 +36,7 @@
                 </div>
             <div class="cart-container">
                 <a href="{% url 'cart' %}"><i class="fa-solid fa-cart-shopping"></i></a>
-                <span class="cart_count">0</span>
+                <span class="cart_count">{{total}}</span>
             </div>
         </div>
     </div>
@@ -48,7 +48,7 @@
         <div class="menu-items">
             <a href="#">Home</a>
             <a href="#">Our Products</a>
-            <a href="#">Cart</a>
+            <a href="{% url 'cart' %}">Cart</a>
             <a href="#">About Us</a>
             <a href="#">Contact Us</a>
         </div>

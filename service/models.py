@@ -27,6 +27,10 @@ class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     drink = models.ForeignKey(Drink, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
+    
+    class Meta:
+        # Add a unique together constraint for the order and drink fields
+        unique_together = ['order', 'drink']
 
     def __str__(self):
         return f"{self.quantity} of {self.drink.name}"

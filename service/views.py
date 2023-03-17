@@ -29,8 +29,8 @@ def compute_order(request):
 
 def index(request):
     drinks = Drink.objects.all()[:8]
-
-    return render(request,'service/index.html')
+    total = sum(item.quantity for item in request.user.cart.order_items.all())
+    return render(request,'service/index.html',{'total':total})
 
 
 def login_view(request):
@@ -96,8 +96,6 @@ def add_to_cart(request, drink_id):
     
     return redirect('cart')
 
-
-
 @login_required
 def cart(request):
     cart = get_object_or_404(Cart, user=request.user)
@@ -157,8 +155,6 @@ def cart_update(request, order_item_id):
     }
 
     return redirect('cart')
-
-
 
 
 @login_required
