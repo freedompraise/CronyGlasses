@@ -38,6 +38,7 @@ def index(request):
 
 def login_view(request):
     form = AuthenticationForm(request.POST)
+    total = sum(item.quantity for item in request.user.cart.order_items.all())
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
@@ -49,10 +50,11 @@ def login_view(request):
             messages.error(request, 'Invalid email or password.')
     else:
         form = AuthenticationForm()
-    return render(request, 'service/login.html', {'form': form})
+    return render(request, 'service/login.html', {'form': form, 'total':total})
 
 
 def register(request):
+    total = sum(item.quantity for item in request.user.cart.order_items.all())
     if request.method == 'POST':
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
@@ -67,12 +69,12 @@ def register(request):
         login(request, user)
         return redirect('home')
         
-    return render(request, 'service/register.html',{})
+    return render(request, 'service/register.html',{'total':total})
 
 
 def product_page(request, pk):
     drink = get_object_or_404(Drink, pk=pk)
-
+    total = sum(item.quantity for item in request.user.cart.order_items.all())
     return render(request, 'service/product.html', {
         'drink': drink,
     })
@@ -97,6 +99,7 @@ def add_to_cart(request, drink_id):
 
 @login_required
 def cart(request):
+    total = sum(item.quantity for item in request.user.cart.order_items.all())
     cart = get_object_or_404(Cart, user=request.user)
     cart_items = cart.order_items.all()
     total = 0
@@ -108,6 +111,7 @@ def cart(request):
     context = {
         'cart_items': cart_items,
         'cart_total': cart_total,
+        'total':total
     }
 
     return render(request, 'service/cart.html', context)
@@ -160,7 +164,7 @@ def cart_update(request, order_item_id):
 def checkout(request):
     cart = get_object_or_404(Cart, user=request.user)
     order = Order.objects.create(user=request.user, total=cart.order_items.aggregate(total=Sum('drink__price'))['total'])
-
+    total = sum(item.quantity for item in request.user.cart.order_items.all())
     for item in cart.order_items.all():
         item.order = order
         item.save()
@@ -168,7 +172,8 @@ def checkout(request):
     cart.order_items.clear()
     cart.save()
     context = {
-            'order':order
+            'order':order,
+            'total':total
         }
     return render(request, 'service/checkout.html', context)
 
