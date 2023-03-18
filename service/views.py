@@ -3,6 +3,8 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.db import IntegrityError
+from django.db.models import Sum
 
 from .models import *
 from .forms import OrderForm
@@ -159,28 +161,19 @@ def cart_update(request, order_item_id):
 
 @login_required
 def checkout(request):
-    cart, created = Cart.objects.get_or_create(user=request.user)
-    order_items = cart.order_items.all()
-    total = sum([item.total_price for item in order_items])
+    cart = get_object_or_404(Cart, user=request.user)
+    order = Order.objects.create(user=request.user, total=cart.order_items.aggregate(total=Sum('drink__price'))['total'])
 
-    if request.method == 'POST':
-        # Create a new Order object
-        order = Order.objects.create(user=request.user, total=total)
+    for item in cart.order_items.all():
+        item.order = order
+        item.save()
 
-        # Move each item from the user's cart to the new order
-        for item in order_items:
-            OrderItem.objects.create(order=order, drink=item.drink, quantity=item.quantity)
-
-        # Clear the user's cart
-        cart.order_items.clear()
-
-        # Redirect to the home page with a success message
-        messages.success(request, "Your order has been placed!")
-        # return redirect('home')
-        context = {
-            'total':total
+    cart.order_items.clear()
+    cart.save()
+    context = {
+            'order':order
         }
-    return render(request, 'service/checkout.html')
+    return render(request, 'service/checkout.html', context)
 
 
 @login_required

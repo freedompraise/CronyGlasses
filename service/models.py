@@ -14,7 +14,7 @@ class Drink(models.Model):
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    total = models.DecimalField(max_digits=6, decimal_places=2)
+    total = models.DecimalField(max_digits=6, decimal_places=2, default = 0, null = True)
     STATUS_CHOICES = (
         ('draft', 'Draft'),
         ('submitted', 'Submitted'),
@@ -22,6 +22,12 @@ class Order(models.Model):
         ('canceled', 'Canceled'),
     )
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='draft')
+
+    def calculate_total(self):
+        order_items = self.orderitem_set.all()
+        total = sum(item.total_price for item in order_items)
+        self.total = total
+        self.save()
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
