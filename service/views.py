@@ -177,10 +177,10 @@ def paypal_checkout(request):
 
     paypal_dict = {
         'business': settings.PAYPAL_RECEIVER_EMAIL,
-        'amount': str(total_int),
-        'item_name': str([product.name+'\n' for product in products]),
-      #  'invoice': str([product.name+'\n' for product in Product.objects.all()])
-        'currency_code': 'USD',
+        'amount': str(),
+        'item_name': str([]),
+        'invoice': str([]),
+        'currency_code': 'R',
         'notify_url': 'http://{}{}'.format(host,
                                            reverse('paypal-ipn')),
         'return_url': 'http://{}{}'.format(host,
