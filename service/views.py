@@ -72,12 +72,8 @@ def register(request):
 def product_page(request, pk):
     drink = get_object_or_404(Drink, pk=pk)
 
-    # Query related drinks based on similarity metric
-    # related_drinks = Drink.objects.filter(flavor=drink.flavor).exclude(pk=drink_id)[:4]
-
     return render(request, 'service/product.html', {
         'drink': drink,
-        # 'related_drinks': related_drinks,
     })
 
 
@@ -178,10 +174,6 @@ def checkout(request):
 
 @login_required
 def paypal_checkout(request):
-    user = request.user
-    products = Cart.objects.get(user=user.id)
-    total_int = get_object_or_404(Order, pk=user.id)
-    host = request.get_host()
 
     paypal_dict = {
         'business': settings.PAYPAL_RECEIVER_EMAIL,
