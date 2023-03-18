@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.db.models import Sum
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import *
 from .forms import OrderForm
@@ -171,25 +172,56 @@ def checkout(request):
         }
     return render(request, 'service/checkout.html', context)
 
-
-@login_required
+@csrf_exempt
 def paypal_checkout(request):
+    host = request.get_host()
 
+    # Get the cart and calculate total amount
+    cart = Cart.objects.get(user=request.user)
+    if not cart.order_items.all():
+        return redirect('cart')
+    total = Decimal(sum(item.total_price for item in cart.order_items.all()))
+
+    # Get the product (if not cart checkout)
+    product = None
+    if 'product_id' in request.POST:
+        product_id = request.POST['product_id']
+        product = get_object_or_404(Product, id=product_id)
+        total = product.price
+
+    # Create PayPal payment form
     paypal_dict = {
         'business': settings.PAYPAL_RECEIVER_EMAIL,
-        'amount': str(),
-        'item_name': str([]),
-        'invoice': str([]),
-        'currency_code': 'R',
-        'notify_url': 'http://{}{}'.format(host,
-                                           reverse('paypal-ipn')),
-        'return_url': 'http://{}{}'.format(host,
-                                           reverse('payment-done')),
-        'cancel_return': 'http://{}{}'.format(host,
-                                              reverse('payment-cancelled')),
+        'amount': str(total),
+        'currency_code': 'USD',
+        'notify_url': 'http://{}{}'.format(host, reverse('paypal-ipn')),
+        'return_url': 'http://{}{}'.format(host, reverse('payment-done')),
+        'cancel_return': 'http://{}{}'.format(host, reverse('payment-cancelled')),
     }
+    if product:
+        paypal_dict['item_name'] = product.name
+        paypal_dict['invoice'] = product.id
+    else:
+        paypal_dict['item_name'] = "Cart Checkout"
+        paypal_dict['invoice'] = cart.id
 
     form = PayPalPaymentsForm(initial=paypal_dict)
+
+    # If the payment is complete, create order and order items
+    if request.GET.get('payment_status') == 'Completed':
+        if product:
+            # Create order for single product
+            order = Order.objects.create(user=request.user, total=total, status='submitted')
+            OrderItem.objects.create(order=order, product=product, quantity=1)
+        else:
+            # Create order for cart items
+            order = Order.objects.create(user=request.user, total=total, status='submitted')
+            for item in cart.order_items.all():
+                OrderItem.objects.create(order=order, product=item.product, quantity=item.quantity)
+            cart.order_items.clear()
+
+        return redirect('payment_complete')
+        
     return redirect(reverse('payment_complete'))
 
 
