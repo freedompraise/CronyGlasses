@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.db.models import Sum
 from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
+from django.urls import reverse
 
 from .models import *
 from .forms import OrderForm
@@ -77,6 +79,7 @@ def product_page(request, pk):
     total = sum(item.quantity for item in request.user.cart.order_items.all())
     return render(request, 'service/product.html', {
         'drink': drink,
+        'total':total
     })
 
 
@@ -191,7 +194,7 @@ def paypal_checkout(request):
     product = None
     if 'product_id' in request.POST:
         product_id = request.POST['product_id']
-        product = get_object_or_404(Product, id=product_id)
+        product = get_object_or_404(Drink, id=product_id)
         total = product.price
 
     # Create PayPal payment form
@@ -225,9 +228,9 @@ def paypal_checkout(request):
                 OrderItem.objects.create(order=order, product=item.product, quantity=item.quantity)
             cart.order_items.clear()
 
-        return redirect('payment_complete')
+        return redirect('payment-done')
         
-    return redirect(reverse('payment_complete'))
+    return redirect(reverse('payment-done'))
 
 
 def payment_done(request):
