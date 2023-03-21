@@ -2,13 +2,27 @@
 {% load static %}
 
 {% block extrahead %}
-  <title>Payment Successful - CronyGlasses</title>
+  <title>Payments - CronyGlasses</title>
   <link rel="stylesheet" type="text/css" href="{% static 'styles/checkout.css' %}">
 {% endblock extrahead %}
 
 {% block content %}
-<div class="container my-4 text-center">
-  <h2>Your Payment was Successful!</h2>
-  <p>Thank you for shopping with us.</p>
-</div>
-{% endblock content %}
+{% if page == 'process'}
+{% block title %}Make Payment {% endblock %}
+<p>Payment cancelled.</p>
+{% block content %}
+
+
+
+{% if page == 'done' %}
+
+    <p>Payment done.</p>
+
+{% else %}
+   <div class ="container pb-3 mb-1" style=" margin-bottom:200px; right: 5000px;">
+    <h4>Pay with Paypal</h4>
+{{ form.render }}
+   </div>
+    {% endif %}
+
+{% endblock %}

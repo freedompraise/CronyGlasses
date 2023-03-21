@@ -228,9 +228,9 @@ def paypal_checkout(request):
                 OrderItem.objects.create(order=order, product=item.product, quantity=item.quantity)
             cart.order_items.clear()
 
-        return redirect('payment-done')
+        return redirect('home')
         
-    return redirect(reverse('payment-done'))
+    return redirect(('payment-done'), {'form':form})
 
 
 def payment_done(request):
