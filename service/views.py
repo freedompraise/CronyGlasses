@@ -185,10 +185,10 @@ def paypal_checkout(request):
     host = request.get_host()
 
     # Get the cart and calculate total amount
-    cart = Cart.objects.get(user=request.user)
-    if not cart.order_items.all():
-        return redirect('cart')
-    total = Decimal(sum(item.total_price for item in cart.order_items.all()))
+    # cart = Cart.objects.get(user=request.user)
+    # if not cart.order_items.all():
+    #     return redirect('cart')
+    # total = Decimal(sum(item.total_price for item in cart.order_items.all()))
 
     # Get the product (if not cart checkout)
     product = None
@@ -230,7 +230,7 @@ def paypal_checkout(request):
 
         return redirect('home')
         
-    return redirect(('payment-done'), {'form':form})
+    return render(request, 'service/payment.html', {'form':form, 'page':'done'})
 
 
 def payment_done(request):
