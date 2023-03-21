@@ -18,7 +18,8 @@ from decimal import Decimal
 # Create your views here.
 
 def index(request):
-    drinks = Drink.objects.all()[:8]
+    popular_products = Drink.objects.all()[:4]
+    hot_gifts = Drink.objects.all()[4:8]
     total = sum(item.quantity for item in request.user.cart.order_items.all())
     return render(request,'service/index.html',{'total':total})
 
