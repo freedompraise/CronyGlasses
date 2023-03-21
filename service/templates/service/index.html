@@ -71,7 +71,7 @@
             <div class="products">
 
 <!-- product 1 -->
-
+                    {% for product in popular %}
                 <div class="product">
                     <a href="{% url 'drinks' 1 %}">
                     <div class="product-img">
@@ -89,62 +89,7 @@
                         </button>
                     </div>
                 </div>
-
-                <!-- product 2 -->
-
-                <div class="product">
-                    <div class="product-img">
-                        <img src="{% static '/drawable/products/fizz.png' %}">
-                    </div>
-                    <div class="product-name">
-                        <span>Fizz Appy</span>
-                    </div>
-                    <div class="price">
-                        <span>$0</span>
-                    </div>
-                    <div class="add-to-cart-btn">
-                        <button class="button"> Add to Cart
-                        </button>
-                    </div>
-                </div>
-
-                <!-- product 3 -->
-
-                <div class="product">
-                    <div class="product-img">
-                        <img src="{% static '/drawable/products/lassi.png' %}">
-                    </div>
-                    <div class="product-name">
-                        <span>Best Lassi</span>
-                    </div>
-                    <div class="price">
-                        <span>$0</span>
-                    </div>
-                    <div class="add-to-cart-btn">
-                        <button class="button"> Add to Cart
-                        </button>
-                    </div>
-                </div>
-
-                <!-- product 4 -->
-
-                <div class="product">
-                    <div class="product-img">
-                        <img src="{% static '/drawable/products/nimbu-pani.png' %}">
-                    </div>
-                    <div class="product-name">
-                        <span>Nimbu Pani</span>
-                    </div>
-                    <div class="price">
-                        <span>$0</span>
-                    </div>
-                    <div class="add-to-cart-btn">
-                        <button class="button"> Add to Cart
-                        </button>
-                    </div>
-                </div>
-
-                
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -169,7 +114,7 @@
             <div class="products">
 
 <!-- product 1 -->
-
+                    {% for product in hot_gifts %}
                 <div class="product">
                     <div class="product-img">
                         <img src="{% static '/drawable/products/rum.png' %}">
@@ -185,62 +130,7 @@
                         </button>
                     </div>
                 </div>
-
-                <!-- product 2 -->
-
-                <div class="product">
-                    <div class="product-img">
-                        <img src="{% static '/drawable/products/vodaka.png' %}">
-                    </div>
-                    <div class="product-name">
-                        <span>Vodaka</span>
-                    </div>
-                    <div class="price">
-                        <span>$0</span>
-                    </div>
-                    <div class="add-to-cart-btn">
-                        <button class="button"> Add to Cart
-                        </button>
-                    </div>
-                </div>
-
-                <!-- product 3 -->
-
-                <div class="product">
-                    <div class="product-img">
-                        <img src="{% static '/drawable/products/wine.png' %}">
-                    </div>
-                    <div class="product-name">
-                        <span>Wine</span>
-                    </div>
-                    <div class="price">
-                        <span>$0</span>
-                    </div>
-                    <div class="add-to-cart-btn">
-                        <button class="button"> Add to Cart
-                        </button>
-                    </div>
-                </div>
-
-                <!-- product 4 -->
-
-                <div class="product">
-                    <div class="product-img">
-                        <img src="{% static '/drawable/products/beer.png' %}">
-                    </div>
-                    <div class="product-name">
-                        <span>Beer</span>
-                    </div>
-                    <div class="price">
-                        <span>$0</span>
-                    </div>
-                    <div class="add-to-cart-btn">
-                        <button class="button"> Add to Cart
-                        </button>
-                    </div>
-                </div>
-
-                
+                    {% endfor %}
             </div>
         </div>
     </div>

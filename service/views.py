@@ -21,7 +21,7 @@ def index(request):
     popular_products = Drink.objects.all()[:4]
     hot_gifts = Drink.objects.all()[4:8]
     total = sum(item.quantity for item in request.user.cart.order_items.all())
-    return render(request,'service/index.html',{'total':total})
+    return render(request,'service/index.html',{'total':total, 'popular':popular_products, 'hot':hot_gifts})
 
 
 def login_view(request):
