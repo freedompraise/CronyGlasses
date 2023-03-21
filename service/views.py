@@ -16,21 +16,6 @@ from paypal.standard.forms import PayPalPaymentsForm
 
 from decimal import Decimal
 # Create your views here.
-def compute_order(request):
-    if request.method == 'POST':
-        form = OrderForm(request.POST)
-        if form.is_valid():
-            order = form.save(commit=False)
-            order.user = request.user
-            order.total = total
-            order.save()
-            for item in cart_items:
-                item.ordered = True
-                item.save()
-            return redirect('order_success')
-    else:
-        form = OrderForm()
-
 
 def index(request):
     drinks = Drink.objects.all()[:8]
@@ -228,7 +213,7 @@ def paypal_checkout(request):
 
         return redirect('home')
         
-    return render(request, 'service/payment.html', {'form':form, 'page':'done'})
+    return render(request, 'service/payment.html', {'form':form, 'page':'done','total':total})
 
 
 def payment_done(request):
