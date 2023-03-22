@@ -78,7 +78,7 @@
                         <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid rounded">
                     </div>
                     <div class="product-name">
-                        <span>Badam Shake</span>
+                        <span>{{product.name}}</span>
                     </div>
                     <div class="price">
                         <span>${{product.price}}</span>
@@ -115,21 +115,23 @@
 
 <!-- product 1 -->
                     {% for product in hot %}
-                <div class="product">
-                    <div class="product-img">
-                        <img src="{% static '/drawable/products/rum.png' %}">
+                    <div class="product">
+                        <a href="{% url 'drinks' product.id %}">
+                        <div class="product-img">
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid rounded">
+                        </div>
+                        <div class="product-name">
+                            <span>{{product.name}}</span>
+                        </div>
+                        <div class="price">
+                            <span>${{product.price}}</span>
+                        </div>
+                    </a>
+                        <div class="add-to-cart-btn">
+                            <button class="button"> Add to Cart
+                            </button>
+                        </div>
                     </div>
-                    <div class="product-name">
-                        <span>Rum</span>
-                    </div>
-                    <div class="price">
-                        <span>$0</span>
-                    </div>
-                    <div class="add-to-cart-btn">
-                        <button class="button"> Add to Cart
-                        </button>
-                    </div>
-                </div>
                     {% endfor %}
             </div>
         </div>
