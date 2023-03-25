@@ -11,7 +11,7 @@
   <div class="row">
     <div class="col-md-6 mb-4 mb-md-0">
       <h2 class="mb-3">Shipping Address</h2>
-      <form method="POST" action="{% url 'checkout' %}">
+      <form method="POST" action="{% url 'payment-done' %}">
         {% csrf_token %}
         <div class="form-group">
           <label for="full_name">Full Name</label>
@@ -45,7 +45,7 @@
           <label for="phone">Phone Number</label>
           <input type="text" name="phone" class="form-control" placeholder="+234-123-456-7890" required>
         </div>
-        <button type="submit" class="btn btn-primary">Place Order</button>
+        <button type="submit" class="btn btn-custom">Place Order</button>
       </form>
     </div>
     <div class="col-md-6">
