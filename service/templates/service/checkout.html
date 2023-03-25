@@ -49,19 +49,4 @@
       </form>
     </div>
     <div class="col-md-6">
-      <h2 class="mb-3">Order Summary</h2>
-      {% include 'service/cart_item.html' %}
-      <hr>
-      <div class="row">
-        <div class="col-8">
-          {% if order.total %}
-          <p>Subtotal</p>
-        </div>
-        <div class="col-4">
-          <p>R{{order.total}}</p>
-        </div>
-        {% endif %}
-      </div>
-      <div class="row">
-      </div>
 {% endblock %}
