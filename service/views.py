@@ -90,15 +90,11 @@ def cart(request):
     total = sum(item.quantity for item in request.user.cart.order_items.all())
     cart = get_object_or_404(Cart, user=request.user)
     cart_items = cart.order_items.all()
-    total = 0
-    for item in cart_items:
-        total += item.quantity * item.drink.price
-    cart_total = Decimal(total)
-    cart.total = cart_total
+    cart.total = sum(item.quantity * item.drink.price for item in cart_items)
     cart.save()
     context = {
         'cart_items': cart_items,
-        'cart_total': cart_total,
+        'cart_total': cart.total,
         'total':total
     }
 
