@@ -72,16 +72,20 @@ form {
   flex-direction: column;
   align-items: center;
 }
+/* Button colors */
 
-button.btn.btn-primary {
-  font-size: 20px;
-  padding: 10px 20px;
-  background-color: #0070BA; /* Paypal's blue color */
-  color: #fff; /* white text color */
-  border-color: #0070BA; /* border color */
-}
-
-button.btn.btn-primary:hover {
-  background-color: #009cde; /* Paypal's complementary green color on hover */
-  border-color: #009cde; /* border color on hover */
-}
+.btn-success {
+	background-color: #28a745;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+  }
+  
+  .btn-primary {
+	background-color: #007bff;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+  }  

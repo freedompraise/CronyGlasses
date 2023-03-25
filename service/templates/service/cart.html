@@ -9,8 +9,9 @@
 {% endblock extrahead %}
 
 {% block content %}
-  <h1>Your Cart</h1>
-  {% if cart_items %}
+<h1>Your Cart</h1>
+{% if cart_items %}
+  <div class="cart-container">
     <table class="table">
       <thead>
         <tr>
@@ -24,29 +25,29 @@
       {% include 'service/cart_item.html' %}
       </tbody>
     </table>
-    <div class="row">
-      <div class="col-md-6">
-        <a href="{% url 'home' %}" class="btn btn-secondary">Continue Shopping</a>
-      </div>
+    <div class="checkout-section">
       <div class="col-md-6 text-right">
         <h2>Subtotal: ${{ cart_total }}</h2>
-        <form method="POST" action="{% url 'checkout' %}">
-          {% csrf_token %}
-          <button type="submit" class="btn btn-success">Checkout</button>
-        </form>
-        <br>
-        <form method="POST" action="{% url 'paypal_checkout' %}">
-          {% csrf_token %}
-          <button type="submit" class="btn btn-primary">Pay with PayPal</button>
-        </form>
-      </div>
+        <div class="text-center"> <!-- Add text-center class here -->
+          <form method="POST" action="{% url 'checkout' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success">Checkout</button>
+          </form>
+          <br>
+          <form method="POST" action="{% url 'paypal_checkout' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Pay with PayPal</button>
+          </form>
+        </div>
+      </div>      
     </div>
-  {% else %}
-  <section class="checkout-section">
-    <p>Your cart is empty.</p>
-    <div class="col-md-6">
-      <a href="{% url 'home' %}" class="btn btn-secondary">Continue Shopping</a>
-    </div>
-  </section>
-  {% endif %}
+  </div>
+{% else %}
+<section class="checkout-section">
+  <p>Your cart is empty.</p>
+  <div class="col-md-6">
+    <a href="{% url 'home' %}" class="btn btn-secondary">Continue Shopping</a>
+  </div>
+</section>
+{% endif %}
 {% endblock %}
