@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -10,7 +10,6 @@ from django.conf import settings
 from django.urls import reverse
 
 from .models import *
-from .forms import OrderForm
 
 from paypal.standard.forms import PayPalPaymentsForm
 
@@ -73,15 +72,15 @@ def product_page(request, pk):
 def add_to_cart(request, drink_id):
     drink = get_object_or_404(Drink, id=drink_id)
     cart, created = Cart.objects.get_or_create(user=request.user)
-    order = Order.objects.create(user=request.user, total=0)
-    order_item = OrderItem.objects.create(order=order, drink=drink, quantity=1)
-
-    cart.order_items.add(order_item)
-
-    # Update the cart's total price
-    cart_items = cart.order_items.all()
-    cart.total = Decimal(sum([item.total_price for item in cart_items]))
-    cart.save()
+    order_items = cart.order_items.filter(drink=drink)
+    if order_items.exists():
+        order_item = order_items.first()
+        order_item.quantity += 1
+        order_item.save()
+    else:
+        order = Order.objects.create(user=request.user, total=0)
+        order_item = OrderItem.objects.create(order=order, drink=drink, quantity=1)
+        cart.order_items.add(order_item)
     
     return redirect('cart')
 
