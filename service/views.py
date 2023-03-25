@@ -80,8 +80,7 @@ def add_to_cart(request, drink_id):
 
     # Update the cart's total price
     cart_items = cart.order_items.all()
-    cart_total = Decimal(sum([item.total_price for item in cart_items]))
-    cart.total = cart_total
+    cart.total = Decimal(sum([item.total_price for item in cart_items]))
     cart.save()
     
     return redirect('cart')
