@@ -21,35 +21,7 @@
           <th></th>
         </tr>
       </thead>
-      <tbody>
-        {% for item in cart_items %}
-          <tr>
-            <td><img src="{{ item.drink.image.url }}" alt="{{ item.drink.name }}" height="100" width="100"></td>
-            <td>{{ item.drink.name }}</td>
-            <td>{{ item.drink.price }}</td>
-            <td>
-              <form method="POST" action="{% url 'cart_update' order_item_id=item.id %}">
-                {% csrf_token %}
-                <input type="hidden" name="drink_id" value="{{ item.drink.id }}">
-                <div class="form-group row">
-                  <div class="col-sm-4">
-                    <input type="number" name="quantity" value="{{ item.quantity }}" class="form-control" min="1">
-                  </div>
-                  <div class="col-sm-4">
-                    <button type="submit" class="btn btn-primary">Update</button>
-                  </div>
-                </div>
-              </form>
-            </td>
-            <td>
-              <form method="POST" action="{% url 'cart_remove' order_item_id=item.id %}">
-                {% csrf_token %}
-                <input type="hidden" name="drink_id" value="{{ item.drink.id }}">
-                <button type="submit" class="btn btn-danger">Remove</button>
-              </form>
-            </td>
-          </tr>
-        {% endfor %}
+      {% include 'service/cart_item.html' %}
       </tbody>
     </table>
     <div class="row">

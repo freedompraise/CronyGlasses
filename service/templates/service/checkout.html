@@ -50,19 +50,7 @@
     </div>
     <div class="col-md-6">
       <h2 class="mb-3">Order Summary</h2>
-        {% for item in order_orderitems %}
-          <div class="row">
-            <div class="col-8">
-              <p>{{ item.name }}</p>
-            </div>
-            <div class="col-2">
-              <p>{{ item.quantity }}</p>
-            </div>
-            <div class="col-2">
-              <p>R{{ item.total_price }}</p>
-            </div>
-          </div>
-        {% endfor %}
+      {% include 'service/cart_item.html' %}
       <hr>
       <div class="row">
         <div class="col-8">

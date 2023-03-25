@@ -156,7 +156,8 @@ def checkout(request):
     cart.save()
     context = {
             'order':order,
-            'total':total
+            'total':total,
+            'cart_items':cart.order_items.all()
         }
     return render(request, 'service/checkout.html', context)
 
