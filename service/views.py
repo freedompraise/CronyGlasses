@@ -218,6 +218,19 @@ def paypal_checkout(request):
 
 
 def payment_done(request):
+    order = request.session.get('order')
+    if not order:
+        return redirect('home')
+    
+    order_items = order.order_items.all()
+    total = order.get_total()
+    
+    context = {
+        'order_items': order_items,
+        'total': total,
+    }
+    
+    del request.session['order']
     return render(request, 'service/payment_done.html')
 
 def payment_cancelled(request):
