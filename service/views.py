@@ -146,20 +146,30 @@ def cart_update(request, order_item_id):
 @login_required
 def checkout(request):
     cart = get_object_or_404(Cart, user=request.user)
-    order = Order.objects.create(user=request.user, total=cart.order_items.aggregate(total=Sum('drink__price'))['total'])
-    total = sum(item.quantity for item in request.user.cart.order_items.all())
+    order_total = cart.order_items.aggregate(total=Sum('drink__price'))['total']
+    order = Order.objects.create(user=request.user, total=order_total)
+
     for item in cart.order_items.all():
-        item.order = order
-        item.save()
+        order_item, created = OrderItem.objects.get_or_create(order=order, drink=item.drink)
+
+        if not created:
+            # If the OrderItem already exists, update the quantity instead of creating a new one
+            order_item.quantity += item.quantity
+            order_item.save()
+        else:
+            order_item.quantity = item.quantity
+            order_item.save()
 
     cart.order_items.clear()
     cart.save()
+
     context = {
-            'order':order,
-            'total':total,
-            'cart_items':cart.order_items.all()
-        }
+        'order': order,
+        'total': order_total,
+        'cart_items': cart.order_items.all()
+    }
     return render(request, 'service/checkout.html', context)
+
 
 @csrf_exempt
 def paypal_checkout(request):
