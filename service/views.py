@@ -14,18 +14,22 @@ from .models import *
 from paypal.standard.forms import PayPalPaymentsForm
 
 from decimal import Decimal
-# Create your views here.
+
+# Global Total variable handles a user havning no cart items yet
 
 def index(request):
     popular_products = Drink.objects.all()[:4]
     hot_gifts = Drink.objects.all()[4:8]
-    total = sum(item.quantity for item in request.user.cart.order_items.all())
+    total = 0
+    try:
+        total = sum(item.quantity for item in request.user.cart.order_items.all())
+    except:
+        pass
     return render(request,'service/index.html',{'total':total, 'popular':popular_products, 'hot':hot_gifts})
 
 
 def login_view(request):
     form = AuthenticationForm(request.POST)
-    total = sum(item.quantity for item in request.user.cart.order_items.all())
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
@@ -37,10 +41,12 @@ def login_view(request):
             messages.error(request, 'Invalid email or password.')
     else:
         form = AuthenticationForm()
+    total = sum(item.quantity for item in request.user.cart.order_items.all())
     return render(request, 'service/login.html', {'form': form, 'total':total})
 
 
 def register(request):
+    Cart.objects.create(user=request.user)
     total = sum(item.quantity for item in request.user.cart.order_items.all())
     if request.method == 'POST':
         first_name = request.POST['first_name']
@@ -60,8 +66,10 @@ def register(request):
 
 
 def product_page(request, pk):
+    total = 0
     drink = get_object_or_404(Drink, pk=pk)
-    total = sum(item.quantity for item in request.user.cart.order_items.all())
+    if request.user.is_authenticated:
+        total = sum(item.quantity for item in request.user.cart.order_items.all())
     return render(request, 'service/product.html', {
         'drink': drink,
         'total':total
