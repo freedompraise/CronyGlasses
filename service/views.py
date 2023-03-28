@@ -30,6 +30,7 @@ def index(request):
 
 
 def login_view(request):
+    total = 0
     form = AuthenticationForm(request.POST)
     if request.method == 'POST':
         email = request.POST['email']
@@ -42,7 +43,6 @@ def login_view(request):
             messages.error(request, 'Invalid email or password.')
     else:
         form = AuthenticationForm()
-    total = sum(item.quantity for item in request.user.cart.order_items.all())
     return render(request, 'service/login.html', {'form': form, 'total':total})
 
 
@@ -77,7 +77,7 @@ def product_page(request, pk):
     })
 
 
-@login_required
+@login_required(login_url = 'login')
 def add_to_cart(request, drink_id):
     drink = get_object_or_404(Drink, id=drink_id)
     cart, created = Cart.objects.get_or_create(user=request.user)
@@ -93,7 +93,7 @@ def add_to_cart(request, drink_id):
     
     return redirect('cart')
 
-@login_required
+@login_required(login_url = 'login')
 def cart(request):
     total = sum(item.quantity for item in request.user.cart.order_items.all())
     cart = get_object_or_404(Cart, user=request.user)
@@ -105,7 +105,6 @@ def cart(request):
         'cart_total': cart.total,
         'total':total
     }
-
     return render(request, 'service/cart.html', context)
 
 

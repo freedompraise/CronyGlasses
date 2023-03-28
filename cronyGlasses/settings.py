@@ -25,7 +25,7 @@ from decouple import config
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY')
 
-LOGIN_REDIRECT_URL = 'cart'
+# LOGIN_REDIRECT_URL = 'auth'
 
 DEBUG = True
 
