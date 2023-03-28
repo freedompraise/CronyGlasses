@@ -16,6 +16,7 @@ from paypal.standard.forms import PayPalPaymentsForm
 from decimal import Decimal
 
 # Global Total variable handles a user havning no cart items yet
+total = 0
 
 def index(request):
     popular_products = Drink.objects.all()[:4]
