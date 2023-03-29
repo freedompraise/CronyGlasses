@@ -38,7 +38,7 @@ def login_view(request):
         user = authenticate(request, email=email, password=password)
         if user is not None:
             login(request, user)
-            return redirect('home') # Replace 'home' with the URL name of your homepage
+            return redirect('home')
         else:
             messages.error(request, 'Invalid email or password.')
     else:
@@ -47,8 +47,7 @@ def login_view(request):
 
 
 def register(request):
-    Cart.objects.create(user=request.user)
-    total = sum(item.quantity for item in request.user.cart.order_items.all())
+    total = 0
     if request.method == 'POST':
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
@@ -58,11 +57,14 @@ def register(request):
         if User.objects.filter(email=email).exists():
             context = {'error': 'Email already exists'}
             return render(request, 'service/register.html', context)
-
+        global user
         user = User.objects.create(email=email, first_name = first_name, last_name = last_name, password=password)
         login(request, user)
         return redirect('home')
-        
+
+        Cart.objects.create(user=user)
+        total = sum(item.quantity for item in request.user.cart.order_items.all())
+
     return render(request, 'service/register.html',{'total':total})
 
 
