@@ -16,15 +16,17 @@
       <div class="col-md-6 mb-4 mb-md-0">
         <img src="{{ drink.image.url }}" alt="{{ drink.name }}" class="img-fluid rounded">
       </div>
+
       <div class="col-md-6">
         <h2 class="mb-3">{{ drink.name }}</h2>
         <p class="text-muted mb-2">R-{{ drink.price}}</p>
-        <p class="text-muted mb-4">{{ drink.description }}</p>
+        <p class="description">{{ drink.description }}</p>
         <form method="POST" action="{% url 'add_to_cart' drink.id %}"> 
           {% csrf_token %}
           <div class="d-flex justify-content-between align-items-center mb-4">
             <button type="submit" class="btn btn-success">Add to cart</button>
           </form>
+
           <form method="POST" action="{% url 'paypal_checkout' %}">
             {% csrf_token %}
             <input type="hidden" name="product_id" value="{{ drink.id }}">

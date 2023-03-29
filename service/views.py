@@ -176,7 +176,7 @@ def checkout(request):
     return render(request, 'service/checkout.html', context)
 
 
-@csrf_exempt
+@login_required(login_url = 'login')
 def paypal_checkout(request):
     host = request.get_host()
 
