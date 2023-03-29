@@ -14,6 +14,16 @@
   {% block content %}
   <body>
     <form class="signup-form" method="POST">
+      
+        
+      {% if messages %}
+      <div class="alert alert-danger" role="alert" style="display: inline-block;">
+          {% for message in messages %}
+              {{ message }}
+          {% endfor %}
+      </div>
+  {% endif %}
+      
       {% csrf_token %}
       <h2>Create an account</h2>
       <div class="form-group">

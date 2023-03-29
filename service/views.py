@@ -8,6 +8,7 @@ from django.db.models import Sum
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from django.urls import reverse
+from django.utils.crypto import get_random_string
 
 from .models import *
 
@@ -52,18 +53,17 @@ def register(request):
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
         email = request.POST['email']
-        password = request.POST['password']
+        password = request.POST['password']    
+        username = get_random_string(length=10)     
 
-        if User.objects.filter(email=email).exists():
-            context = {'error': 'Email already exists'}
-            return render(request, 'service/register.html', context)
-        global user
-        user = User.objects.create(email=email, first_name = first_name, last_name = last_name, password=password)
-        login(request, user)
-        return redirect('home')
-
-        Cart.objects.create(user=user)
-        total = sum(item.quantity for item in request.user.cart.order_items.all())
+        user, created = User.objects.get_or_create(email=email, username = username, defaults={'first_name': first_name, 'last_name': last_name, 'password': password})
+        if created:
+            login(request, user)
+            Cart.objects.create(user=user)
+            return redirect('home')
+        
+        messages.error(request, 'User with email already exists')
+        return redirect('register')
 
     return render(request, 'service/register.html',{'total':total})
 
