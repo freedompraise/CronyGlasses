@@ -4,7 +4,9 @@
   "description": "A web application for ordering and purchasing drinks online.",
   "scripts": {
     "start": "python manage.py runserver",
-    "prebuild": "npm install && python manage.py migrate"
+    "prebuild": "npm install && python manage.py migrate",
+    "dev": "python manage.py runserver --noreload",
+    "postinstall": "python manage.py collectstatic --noinput"
   },
   "repository": {
     "type": "git",
