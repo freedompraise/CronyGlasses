@@ -27,7 +27,7 @@ SECRET_KEY = config('SECRET_KEY')
 
 # LOGIN_REDIRECT_URL = 'auth'
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 APPEND_SLASH=False
@@ -131,10 +131,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/images/'
-MEDIA_ROOT=BASE_DIR/"static/images"
+MEDIA_ROOT='BASE_DIR/"static/images"'
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
