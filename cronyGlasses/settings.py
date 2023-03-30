@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+from django.core.management.utils import get_random_secret_key
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -23,7 +23,7 @@ from decouple import config
 # imports hidden keys from .env file
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+# SECRET_KEY = config('SECRET_KEY')
 
 # LOGIN_REDIRECT_URL = 'auth'
 
@@ -141,3 +141,21 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# set SECURE_HSTS_SECONDS to a non-zero value to enable HSTS
+SECURE_HSTS_SECONDS = 315300 # or any value that you prefer
+
+# set SECURE_SSL_REDIRECT to True to enforce SSL connection
+SECURE_SSL_REDIRECT = True
+
+# set SECURE_HSTS_INCLUDE_SUBDOMAINS to True if all subdomains should be served via SSL
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+
+# set SECURE_HSTS_PRELOAD to True to submit your site to the browser preload list
+SECURE_HSTS_PRELOAD = True
+
+# set SESSION_COOKIE_SECURE and CSRF_COOKIE_SECURE to True to use secure-only cookies
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECRET_KEY = get_random_secret_key()
