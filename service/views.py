@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.db.models import Sum
@@ -11,7 +11,7 @@ from django.urls import reverse
 from django.utils.crypto import get_random_string
 
 from .models import *
-
+from .forms import CustomAuthenticationForm
 from paypal.standard.forms import PayPalPaymentsForm
 
 from decimal import Decimal
@@ -32,19 +32,22 @@ def index(request):
 
 def login_view(request):
     total = 0
-    form = AuthenticationForm(request.POST)
     if request.method == 'POST':
-        email = request.POST['email']
-        password = request.POST['password']
-        user = authenticate(request, email=email, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('home')
+        form = AuthenticationForm(request=request, data=request.POST)
+        if form.is_valid():
+            email = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(request, email=email, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('home')
+            else:
+                messages.error(request, 'Invalid email or password.')
         else:
             messages.error(request, 'Invalid email or password.')
     else:
         form = AuthenticationForm()
-    return render(request, 'service/login.html', {'form': form, 'total':total})
+    return render(request, 'service/login.html', {'form': form, 'total': total})
 
 
 def register(request):
