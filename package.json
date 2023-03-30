@@ -1,0 +1,24 @@
+{
+  "name": "package.json",
+  "version": "1.0.0",
+  "description": "A web application for ordering and purchasing drinks online.",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/freedompraise/cronyglasses.git"
+  },
+  "keywords": [
+    "ecommerce",
+    "drinks",
+    "python"
+  ],
+  "author": "Praise Freedom Dike",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/freedompraise/cronyglasses/issues"
+  },
+  "homepage": "https://github.com/freedompraise/cronyglasses#readme"
+}
