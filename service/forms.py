@@ -1,12 +1,9 @@
 from django import forms
+from django.contrib.auth.forms import AuthenticationForm
 
+class CustomAuthenticationForm(AuthenticationForm):
+    email = forms.EmailField(max_length=254, widget=forms.EmailInput(attrs={'autofocus': True}))
 
-class OrderForm(forms.Form):
-    full_name = forms.CharField(max_length=50)
-    email = forms.EmailField()
-    address = forms.CharField(max_length=250)
-    city = forms.CharField(max_length=100)
-    state = forms.CharField(max_length=100)
-    zip_code = forms.CharField(max_length=20)
-    country = forms.CharField(max_length=50)
-    phone = forms.CharField(max_length=20)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'] = self.fields.pop('username', None)
