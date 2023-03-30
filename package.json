@@ -1,10 +1,10 @@
 {
-  "name": "package.json",
+  "name": "cronyglasses",
   "version": "1.0.0",
   "description": "A web application for ordering and purchasing drinks online.",
   "main": "index.js",
   "scripts": {
-    "test": "npm install"
+    "prebuild": "npm install && python manage.py migrate"
   },
   "repository": {
     "type": "git",
