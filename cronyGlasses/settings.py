@@ -25,7 +25,10 @@ from decouple import config
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = config('SECRET_KEY')
 
-# LOGIN_REDIRECT_URL = 'auth'
+# PAYPAL
+PAYPAL_RECEIVER_EMAIL = config('PAYPAL_RECEIVER_EMAIL')
+PAYPAL_TEST = True
+
 
 DEBUG = False
 
@@ -43,7 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'service.apps.ServiceConfig',
     'paypal.standard.ipn',
-    
+
 ]
 
 MIDDLEWARE = [
@@ -82,9 +85,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'cronyGlasses.wsgi.application'
 
 
-# PAYPAL
-PAYPAL_RECEIVER_EMAIL = config('PAYPAL_RECEIVER_EMAIL')
-PAYPAL_TEST = True
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
