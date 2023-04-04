@@ -19,60 +19,80 @@ from decimal import Decimal
 # Global Total variable handles a user havning no cart items yet
 total = 0
 
+# View for the index page
 def index(request):
+    # Get the first 4 drinks in the database as popular products
     popular_products = Drink.objects.all()[:4]
+    # Get the next 4 drinks in the database as hot gifts
     hot_gifts = Drink.objects.all()[4:8]
     total = 0
     try:
+        # If the user is logged in, get the total number of items in their cart
         total = sum(item.quantity for item in request.user.cart.order_items.all())
     except:
         pass
+    # Render the index.html template with the popular products, hot gifts, and cart total
     return render(request,'service/index.html',{'total':total, 'popular':popular_products, 'hot':hot_gifts})
 
 
+# View for the login page
 def login_view(request):
     total = 0
     if request.method == 'POST':
+        # If the form was submitted, create an AuthenticationForm instance with the submitted data
         form = AuthenticationForm(request=request, data=request.POST)
         if form.is_valid():
+            # If the form is valid, get the user's email and password from the form's cleaned data
             email = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
+            # Authenticate the user with the provided email and password
             user = authenticate(request, email=email, password=password)
             if user is not None:
+                # If the user is authenticated, log them in and redirect them to the home page
                 login(request, user)
                 return redirect('home')
             else:
+                # If the user is not authenticated, show an error message
                 messages.error(request, 'Invalid email or password.')
         else:
+            # If the form is not valid, show an error message
             messages.error(request, 'Invalid email or password.')
     else:
+        # If the form was not submitted, create a new AuthenticationForm instance
         form = AuthenticationForm()
+    # Render the login.html template with the form and cart total
     return render(request, 'service/login.html', {'form': form, 'total': total})
 
 
+# View for the registration page
 def register(request):
     total = 0
     if request.method == 'POST':
+        # If the form was submitted, get the user's input data
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
         email = request.POST['email']
         password = request.POST['password']    
+        # Generate a random username for the user
         username = get_random_string(length=10)     
-
-        user, created = User.objects.get_or_create(email=email, username = username, defaults={'first_name': first_name, 'last_name': last_name, 'password': password})
+        # Try to get a user with the provided email address
+        user, created = User.objects.get_or_create(email=email, username=username, defaults={'first_name': first_name, 'last_name': last_name, 'password': password})
         if created:
+            # If the user was created, log them in and create a new cart for them
             login(request, user)
             Cart.objects.create(user=user)
             return redirect('home')
-        
+        # If the user already exists, show an error message
         messages.error(request, 'User with email already exists')
         return redirect('register')
+    # If the form was not submitted, render the register.html template with the cart total
+    return render(request, 'service/register.html',{'total': total})
 
-    return render(request, 'service/register.html',{'total':total})
 
-
+# View for a drink's product page
 def product_page(request, pk):
     total = 0
+    # Get the drink with the specified primary key (pk) from the database
     drink = get_object_or_404(Drink, pk=pk)
     if request.user.is_authenticated:
         total = sum(item.quantity for item in request.user.cart.order_items.all())
