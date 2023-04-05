@@ -1,1 +1,0 @@
-web: gunicorn cronyGlasses.application.wsgi --log-file -
