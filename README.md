@@ -1,70 +1,64 @@
-# Booking-App
+# Crony Glasses
 <h3> A web app that presents the most demanded drinks in India and allows you to place orders </h3>
 
-
 <div style = "background-colour:black" > 
-<h3>Copyright 2022 <a href = "https://github.com/freedompraise" >Praise Freedom Dike</a> and <a href = "https://github.com/mr-mayurchaure" >Mayur Chaure</a></h3>
-
-<p>Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at 
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.</p>
-
    </div>
-
    <div align="center">
 <img width="30%" alt="CronyGlasses" src="static/drawable/icon-circle.png">
 
 # CronyGLasses
 </div>
 
-### Cloning the repository
+## Table of Contents
 
---> Clone the repository using the command below :
-```bash
-git clone https://github.com/freedompraise/Booking-App.git
+- [Installation](#installation)
+- [Team](#team)
+- [Support](#team)
+- [License](#license)
+- [Copyright](#copyright)
 
-```
 
---> Move into the directory where we have the project files : 
-```bash
-cd Booking App
+## Installation
 
-```
-
---> Create a virtual environment :
-```bash
-# Let's install virtualenv first
-pip install virtualenv
-
-# Then we create our virtual environment
-virtualenv envname
-
-```
-
---> Activate the virtual environment :
-```bash
-envname\scripts\activate
-
-```
-
---> Install the requirements :
-```bash
+**1.Clone Repository $ Install Packages**
+```sh
+git clone https:github.com/freedompraise/cleanser-stores.git
 pip install -r requirements.txt
-
+```
+**2.Setup Virtualenv**
+```sh
+virtualenv env
+source env/bin/activate
+```
+**3.Migrate $ Start Server**
+```sh
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver
 ```
 
-#
+## Team
 
-### Running the App
+|                                               Praise Dike                                           |
+| :----------------------------------------------------------------------------------------------------: |
+|   [![freedompraise](https://avatars.githubusercontent.com/u/70984186?s=400&u=2fc0952d8de74a1b5d1232435597997e9d16482a&v=4)](https://github.com/freedompraise)  | 
+<a href="https://github.com/freedompraise" rel="noopener noreferrer" target="_blank"> `github.com/freedompraise`</a> |
 
---> To run the App, we use :
-```bash
-python manage.py runserver
+---
+
+## Support
+
+Reach out to me at one of the following places!
+
+- [Twitter](https://twitter.com/freedom_praise)
+- [Mail](mail.to:dikepraise119@gmail.com)
+
+## License
+Apache License 2.0
+
+[![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
+
+- **[MIT license](http://opensource.org/licenses/mit-license.php)**
+
+
+<h4>Copyright 2023 | Praise Freedom Dike</h4>
