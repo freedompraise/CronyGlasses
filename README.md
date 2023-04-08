@@ -22,7 +22,7 @@
 
 **1.Clone Repository $ Install Packages**
 ```sh
-git clone https:github.com/freedompraise/cleanser-stores.git
+git clone https:github.com/freedompraise/cronyGlasses.git
 pip install -r requirements.txt
 ```
 **2.Setup Virtualenv**
