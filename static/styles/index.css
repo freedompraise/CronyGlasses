@@ -678,3 +678,18 @@ ul li{
 .dropdown-menu li {
   display: block;
 }
+
+@media screen and (max-width: 767px) {
+  .footer .footer-sec1 .get-in-touch {
+    margin-top: 20px;
+  }
+  .footer .footer-sec1 .legal {
+    display: none;
+  }
+  .footer .footer-sec2 .icon-legal {
+    display: block;
+    text-align: center;
+    font-size: 30px;
+    color: #ccc;
+  }
+}

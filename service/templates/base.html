@@ -8,7 +8,21 @@
     <link rel="shortcut icon" type="image/x-icon" href="{% static '/drawable/icon-circle.png' %}"/>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/50e0af0f47.js" crossorigin="anonymous"></script>
-    
+    <script>
+        window.onload = function (){
+            const menuItems = document.querySelectorAll('.menu-items a');
+
+menuItems.forEach(item => {
+  if (item.nextElementSibling) {
+    item.addEventListener('click', e => {
+      e.preventDefault();
+      item.nextElementSibling.classList.toggle('show');
+    });
+  }
+});
+
+        }
+    </script>
     {% block extrahead %}{% endblock %}
 </head>
 
@@ -72,44 +86,36 @@
 
 <section>
     <div class="footer">
-        <div class="footer-sec1">
-            <div class="footer-logo">
-                <img src="{% static '/drawable/icon.png' %}">
-            </div>
-            <div class="legal">
-                <span>LEGAL</span>
-                <ul class="legal-items">
-                    <li><a href="#">Terms & Conditions</a></li>
-                    <li><a href="#">Terms of Service</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Cookies</a></li>
-                </ul>
-            </div>
-            <div class="get-in-touch">
-                <span>GET IN TOUCH</span>
-                <ul class="legal-items">
-                    <li><a href="https://sites.google.com/view/praisedike/about">About Us</a></li>
-                    <li><a href="mailto:dikepraise119@gmail.com">Contact Us</a></li>
-                    <li><a href="https://www.bohemiansundays.com.au/pages/shipping-and-returns">Refund Policy</a></li>
-                </ul>
-                <div>
-                    <ul class="social_icons_footer">
-                        <li><a href="https://twitter.com/freedom_praise"><i class="fa-brands fa-twitter"></i></a></li>
-                        <li><a href="https://freedompraise.hashnode.dev/"><i class="fa-brands fa-hashnode"></i></a></li>
-                        <li><a href="https://linkedin.com/in/praise-dike"><i class="fa-brands fa-linkedin"></i></a></li>
-                    </ul>
-                </div>
-            </div>
+      <div class="footer-sec1">
+        <div class="footer-logo">
+          <img src="{% static '/drawable/icon.png' %}">
         </div>
-        <div class="footer-sec2">
-            <div class="copyright">
-                <span>© 2023 CronyGlasses Ltd</span>
-            </div>
-            <div class="payment-icons">
-                <a href="https://developer.paypal.com/">
-                <img src="{% static '/drawable/paypal.png' %}">
-            </a>
-            </div>
+        <div class="get-in-touch">
+          <span>GET IN TOUCH</span>
+          <ul class="legal-items">
+            <li><a href="https://sites.google.com/view/praisedike/about">About Us</a></li>
+            <li><a href="mailto:dikepraise119@gmail.com">Contact Us</a></li>
+            <li><a href="https://www.bohemiansundays.com.au/pages/shipping-and-returns">Refund Policy</a></li>
+          </ul>
+          <div>
+            <ul class="social_icons_footer">
+              <li><a href="https://twitter.com/freedom_praise"><i class="fa-brands fa-twitter"></i></a></li>
+              <li><a href="https://freedompraise.hashnode.dev/"><i class="fa-brands fa-hashnode"></i></a></li>
+              <li><a href="https://linkedin.com/in/praise-dike"><i class="fa-brands fa-linkedin"></i></a></li>
+            </ul>
+          </div>
         </div>
+      </div>
+      <div class="footer-sec2">
+        <div class="icon-legal">
+          <i class="fa-solid fa-balance-scale"></i>
+        </div>
+        <div class="payment-icons">
+          <a href="https://developer.paypal.com/">
+            <img src="{% static '/drawable/paypal.png' %}">
+          </a>
+        </div>
+      </div>
     </div>
-</section>
+  </section>
+  
