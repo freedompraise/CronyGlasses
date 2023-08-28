@@ -1,3 +1,4 @@
 db.sqlite3
 service/migrations
 Procfile
+venv
