@@ -2,3 +2,6 @@ db.sqlite3
 service/migrations
 Procfile
 venv
+.env
+cert.pem
+key.pem
