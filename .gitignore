@@ -1,4 +1,7 @@
-.env
 db.sqlite3
 service/migrations
-cronyGlasses/settings.py
+Procfile
+venv
+.env
+cert.pem
+key.pem
