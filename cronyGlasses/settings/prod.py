@@ -1,7 +1,7 @@
 from .base_settings import *
 
 
-ALLOWED_HOSTS = os.environ('ALLOWED_HOSTS').split(' ')
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(' ')
 DEBUG = os.getenv('DEBUG', '0').lower() in ['true', 't', '1']
 
 DATABASES = {
