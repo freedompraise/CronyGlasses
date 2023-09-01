@@ -102,7 +102,7 @@ def register(request):
 def product_page(request, pk):
     total = 0
     drink = get_object_or_404(Drink, pk=pk)
-    reviews = random.randint(1,1000)
+    reviews = random.randint(1,500)
 
     if request.user.is_authenticated:
         total = sum(item.quantity for item in request.user.cart.order_items.all())
