@@ -16,6 +16,8 @@ from paypal.standard.forms import PayPalPaymentsForm
 
 from decimal import Decimal
 
+import random
+
 # Global Total variable handles a user havning no cart items yet
 total = 0
 
@@ -34,6 +36,12 @@ def index(request):
     # Render the index.html template with the popular products, hot gifts, and cart total
     return render(request,'service/index.html',{'total':total, 'popular':popular_products, 'hot':hot_gifts})
 
+def related_products(products=Drink.objects.all(), product_id):
+    product_list = list(products)
+    product_list = [product for product in product_list if product.id != product_id]
+    if len(product_list) < 4:
+        return product_list
+    return random.sample(product_list, 4)
 
 # View for the login page
 def login_view(request):
@@ -96,6 +104,7 @@ def product_page(request, pk):
     drink = get_object_or_404(Drink, pk=pk)
     if request.user.is_authenticated:
         total = sum(item.quantity for item in request.user.cart.order_items.all())
+    related = related_products(product_id=pk)
     return render(request, 'service/product.html', {
         'drink': drink,
         'total':total
