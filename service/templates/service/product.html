@@ -100,7 +100,12 @@
             </div>
           </div>
           <div class="buttons d-flex flex-row mt-5 gap-3">
-            <button class="btn btn-outline-dark">Buy Now</button>
+            <form method="post" action="{% url 'paypal_checkout' %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-outline-dark">
+                Buy Now
+              </button>
+            </form>
             <form method="post" action="{% url 'add_to_cart' drink.id %}">
               {% csrf_token %}<button type="submit" class="btn btn-dark">
                 Add to Cart
