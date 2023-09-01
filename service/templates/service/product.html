@@ -41,12 +41,14 @@
             <ul id="thumbnail">
               {% for product in related_products %}
               <li>
+                <a href="{% url 'drinks' product.id %}">
                 <img
                   onclick="changeImage(this)"
                   src="{{ product.image.url }}"
                   width="70"
                 />
               </li>
+            </a>
               {% endfor %}
             </ul>
           </div>
@@ -66,7 +68,7 @@
               <i class="bx bxs-star"></i> <i class="bx bxs-star"></i>
               <i class="bx bx-star"></i>
             </div>
-            <span>441 reviews</span>
+            <span>441 {{reviews}} </span>
           </div>
 
           <div class="mt-5">
