@@ -137,7 +137,8 @@ def cart(request):
     context = {
         'cart_items': cart_items,
         'cart_total': cart.total,
-        'total':total
+        'total':total,
+        'discount': round(0.1 * cart.total),
     }
     return render(request, 'service/cart.html', context)
 
