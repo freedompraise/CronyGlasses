@@ -138,7 +138,7 @@ def cart(request):
         'cart_items': cart_items,
         'cart_total': cart.total,
         'total':total,
-        'discount': round(0.1 * cart.total),
+        'discount': round(Decimal('0.1') * cart.total),
     }
     return render(request, 'service/cart.html', context)
 
