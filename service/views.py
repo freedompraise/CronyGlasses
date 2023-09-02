@@ -145,9 +145,7 @@ def cart(request):
 
 @login_required
 def cart_remove(request, order_item_id):
-    # Get the Cart object for the current user
     cart = Cart.objects.get(user=request.user)
-    # Get the OrderItem object from the database
     order_item = get_object_or_404(OrderItem, id=order_item_id)
     cart.order_items.remove(order_item)
     cart.save()

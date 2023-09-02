@@ -87,7 +87,7 @@
                 Buy Now
               </button>
             </form>
-            <form method="post" action="{% url 'add_to_cart' drink.id %}">
+            <form method="post" action="{% url 'add-to-cart' drink.id %}">
               {% csrf_token %}<button type="submit" class="btn btn-dark">
                 Add to Cart
               </button>

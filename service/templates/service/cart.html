@@ -84,13 +84,14 @@
                 {{item.total_price}}
               </td>
               <td class="text-center align-middle px-0">
-                <a
-                  href="#"
+                <form
+                  method="post"
                   class="shop-tooltip close float-none text-danger"
-                  title=""
+                  action="{% url 'cart-remove' %}"
                   data-original-title="Remove"
-                  >×</a
                 >
+                  ×
+                </form>
               </td>
             </tr>
             {% endfor %}
