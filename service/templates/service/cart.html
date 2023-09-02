@@ -87,10 +87,11 @@
                 <form
                   method="post"
                   class="shop-tooltip close float-none text-danger"
-                  action="{% url 'cart-remove' %}"
+                  action="{% url 'cart-remove' item.id %}"
                   data-original-title="Remove"
                 >
-                  ×
+                  {% csrf_token %}
+                  <button type="submit">×</button>
                 </form>
               </td>
             </tr>
