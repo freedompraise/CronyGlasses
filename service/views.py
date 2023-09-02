@@ -154,7 +154,7 @@ def cart_remove(request, order_item_id):
 
 
 @login_required
-def cart_update(request, order_item_id):
+def order_item_update(request, order_item_id):
     cart, created = Cart.objects.get_or_create(user=request.user)
     order_item = get_object_or_404(OrderItem, id=order_item_id)
 
