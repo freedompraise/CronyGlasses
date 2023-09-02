@@ -1,53 +1,143 @@
-{% extends 'base.html' %}
-{% load static %}
-
-{% block extrahead %}
+{% extends 'base.html' %} {% load static %} {% block extrahead %}
 <head>
   <title>Cart - CronyGlasses</title>
-  <link rel="stylesheet" type="text/css" href="{% static 'styles/cart.css' %}">
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="{% static 'styles/cart.css' %}"
+  />
+  <link
+    href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"
+    rel="stylesheet"
+    id="bootstrap-css"
+  />
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  <link
+    href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"
+    rel="stylesheet"
+  />
 </head>
-{% endblock extrahead %}
+{% endblock extrahead %} {% block content %}
+<div class="container px-3 my-5 clearfix">
+  <!-- Shopping cart table -->
+  <div class="card">
+    <div class="card-header">
+      <h2>Shopping Cart</h2>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered m-0">
+          <thead>
+            <tr>
+              <!-- Set columns width -->
+              <th class="text-center py-3 px-4" style="min-width: 400px">
+                Product Name &amp; Details
+              </th>
+              <th class="text-right py-3 px-4" style="width: 100px">Price</th>
+              <th class="text-center py-3 px-4" style="width: 120px">
+                Quantity
+              </th>
+              <th class="text-right py-3 px-4" style="width: 100px">Total</th>
+              <th
+                class="text-center align-middle py-3 px-0"
+                style="width: 40px"
+              >
+                <a
+                  href="#"
+                  class="shop-tooltip float-none text-light"
+                  title=""
+                  data-original-title="Clear cart"
+                  ><i class="ino ion-md-trash"></i
+                ></a>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in cart_items %}
+            <tr>
+              <td class="p-4">
+                <div class="media align-items-center">
+                  <img
+                    src="{{ item.drink.image.url }}"
+                    class="d-block ui-w-40 ui-bordered mr-4"
+                    alt=""
+                  />
+                  <div class="media-body">
+                    <a href="#" class="d-block text-dark"
+                      >{{item.drink.name}}</a
+                    >
+                  </div>
+                </div>
+              </td>
+              <td class="text-right font-weight-semibold align-middle p-4">
+                $ {{ item.drink.price }}
+              </td>
+              <td class="align-middle p-4">
+                <input
+                  type="text"
+                  class="form-control text-center"
+                  value="{{item.quantity}}"
+                  min="1"
+                />
+              </td>
+              <td class="text-right font-weight-semibold align-middle p-4">
+                {{item.total_price}}
+              </td>
+              <td class="text-center align-middle px-0">
+                <form
+                  method="post"
+                  class="shop-tooltip close float-none text-danger"
+                  action="{% url 'cart-remove' item.id %}"
+                  data-original-title="Remove"
+                >
+                  {% csrf_token %}
+                  <button type="submit">×</button>
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <!-- / Shopping cart table -->
 
-{% block content %}
-<h1>Your Cart</h1>
-{% if cart_items %}
-  <div class="cart-container">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Image</th>
-          <th>Name</th>
-          <th>Price</th>
-          <th>Quantity</th>
-          <th></th>
-        </tr>
-      </thead>
-      {% include 'service/cart_item.html' %}
-      </tbody>
-    </table>
-    <div class="checkout-section">
-      <div class="col-md-6 text-right">
-        <h2>Subtotal: ${{ cart_total }}</h2>
-        <div class="text-center"> <!-- Add text-center class here -->
-          <form method="POST" action="{% url 'checkout' %}">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-success">Checkout</button>
-          </form>
-          <br>
-          <form method="POST" action="{% url 'paypal_checkout' %}">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-primary">Pay with PayPal</button>
-          </form>
+      <div
+        class="d-flex flex-wrap justify-content-between align-items-center pb-4"
+      >
+        <div class="mt-4">
+          <label class="text-muted font-weight-normal">Promocode</label>
+          <input type="text" placeholder="ABC" class="form-control" />
         </div>
-      </div>      
+        <div class="d-flex">
+          <div class="text-right mt-4 mr-5">
+            <label class="text-muted font-weight-normal m-0">Discount</label>
+            <div class="text-large"><strong>${{discount}}</strong></div>
+          </div>
+          <div class="text-right mt-4">
+            <label class="text-muted font-weight-normal m-0">Total price</label>
+            <div class="text-large"><strong>${{cart_total}}</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="float-right">
+        <a
+          href="{% url 'home' %}#products"
+          type="button"
+          class="btn btn-lg btn-default md-btn-flat mt-2 mr-3"
+        >
+          Back to shopping
+        </a>
+        <a
+          type="button"
+          href="{% url 'checkout' %}"
+          class="btn btn-lg btn-primary mt-2"
+        >
+          Checkout
+        </a>
+      </div>
     </div>
   </div>
-{% else %}
-<section class="checkout-section">
-  <p>Your cart is empty.</p>
-  <div class="col-md-6">
-    <a href="{% url 'home' %}" class="btn btn-primary">Continue Shopping</a>
-  </div>
-</section>
-{% endif %}
+</div>
 {% endblock %}

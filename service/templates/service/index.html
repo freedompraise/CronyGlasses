@@ -68,7 +68,7 @@
             <div class="section_desc">
                 <span>Make your selection from an array of the most demanded drinks in India, offered at your door.</span>
             </div>
-            <div class="products">
+            <div class="products" id="products">
 
 <!-- product 1 -->
                     {% for product in popular %}
@@ -85,7 +85,7 @@
                     </div>
                 </a>
                     <div class="add-to-cart-btn">
-                        <form method = 'POST' action="{% url 'add_to_cart' product.id %}">
+                        <form method = 'POST' action="{% url 'add-to-cart' product.id %}">
                             {% csrf_token %}
                         <button type="submit" class="button"> Add to Cart
                         </button>
@@ -131,7 +131,7 @@
                         </div>
                     </a>
                         <div class="add-to-cart-btn">
-                            <form method = 'POST' action="{% url 'add_to_cart' product.id %}">
+                            <form method = 'POST' action="{% url 'add-to-cart' product.id %}">
                                 {% csrf_token %}
                             <button type="submit" class="button"> Add to Cart
                             </button>

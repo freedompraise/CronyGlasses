@@ -137,16 +137,15 @@ def cart(request):
     context = {
         'cart_items': cart_items,
         'cart_total': cart.total,
-        'total':total
+        'total':total,
+        'discount': round(Decimal('0.1') * cart.total),
     }
     return render(request, 'service/cart.html', context)
 
 
 @login_required
 def cart_remove(request, order_item_id):
-    # Get the Cart object for the current user
     cart = Cart.objects.get(user=request.user)
-    # Get the OrderItem object from the database
     order_item = get_object_or_404(OrderItem, id=order_item_id)
     cart.order_items.remove(order_item)
     cart.save()
@@ -155,7 +154,7 @@ def cart_remove(request, order_item_id):
 
 
 @login_required
-def cart_update(request, order_item_id):
+def order_item_update(request, order_item_id):
     cart, created = Cart.objects.get_or_create(user=request.user)
     order_item = get_object_or_404(OrderItem, id=order_item_id)
 
