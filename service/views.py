@@ -189,7 +189,6 @@ def checkout(request):
         order_item, created = OrderItem.objects.get_or_create(order=order, drink=item.drink)
 
         if not created:
-            # If the OrderItem already exists, update the quantity instead of creating a new one
             order_item.quantity += item.quantity
             order_item.save()
         else:
