@@ -183,12 +183,15 @@ def order_item_update(request, order_item_id):
 def checkout(request):
     cart = get_object_or_404(Cart, user=request.user)
     order = Order.objects.create(user=request.user, total=cart.total)
-    cart.order_items.clear()
-    cart.save()
+        
+    if request.method == 'POST':
+        cart.order_items.clear()
+        cart.save()
 
     context = {
         'total': sum(item.quantity for item in request.user.cart.order_items.all()),
         'cart': cart,
+        'checkout_total': cart.total + 10 # change name to total 
     }
 
     return render(request, 'service/checkout.html', context)
