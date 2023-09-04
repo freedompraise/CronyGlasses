@@ -199,9 +199,9 @@ def checkout(request):
     cart.save()
 
     context = {
-        'order': order,
-        'total': order_total,
-        'cart_items': cart.order_items.all()
+        'order_total': order_total,
+        'total': sum(item.quantity for item in request.user.cart.order_items.all()),
+        'cart_items': cart.order_items.all(),
     }
     return render(request, 'service/checkout.html', context)
 
