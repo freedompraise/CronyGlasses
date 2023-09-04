@@ -182,27 +182,15 @@ def order_item_update(request, order_item_id):
 @login_required
 def checkout(request):
     cart = get_object_or_404(Cart, user=request.user)
-    order_total = cart.order_items.aggregate(total=Sum('drink__price'))['total']
-    order = Order.objects.create(user=request.user, total=order_total)
-
-    for item in cart.order_items.all():
-        order_item, created = OrderItem.objects.get_or_create(order=order, drink=item.drink)
-
-        if not created:
-            order_item.quantity += item.quantity
-            order_item.save()
-        else:
-            order_item.quantity = item.quantity
-            order_item.save()
-
+    order = Order.objects.create(user=request.user, total=cart.total)
     cart.order_items.clear()
     cart.save()
 
     context = {
-        'order_total': order_total,
         'total': sum(item.quantity for item in request.user.cart.order_items.all()),
-        'cart_items': cart.order_items.all(),
+        'cart': cart,
     }
+
     return render(request, 'service/checkout.html', context)
 
 
