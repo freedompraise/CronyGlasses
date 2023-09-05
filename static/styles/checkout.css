@@ -1,73 +1,26 @@
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  
-  form label {
-    font-weight: bold;
-  }
-  
-  form input[type="text"],
-  form input[type="email"],
-  form input[type="tel"] {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    border: none;
-    border-bottom: 2px solid #ccc;
-  }
-  
-  form input[type="submit"] {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    margin-top: 20px;
-    cursor: pointer;
-  }
-  
-  form input[type="submit"]:hover {
-    background-color: #0056b3;
-  }
-  
-  .order-summary {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-top: 20px;
-  }
-  
-  .order-summary .row {
-    margin-bottom: 10px;
-  }
-  
-  .order-summary .col-8 {
-    font-weight: bold;
-  }
-  
-  .order-summary hr {
-    margin-top: 10px;
-    margin-bottom: 10px;
-  }
-  
-  @media (min-width: 768px) {
-    .order-summary {
-      margin-top: 0;
-    }
-  }
-  .btn-custom {
-    background-color: #008080;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: all 0.3s ease;
+body {
+  background: #eee;
 }
 
-.btn-custom:hover {
-    background-color: #fff;
-    color: #008080;
+.card {
+  box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
 }
-  
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 0 solid rgba(0, 0, 0, 0.125);
+  border-radius: 1rem;
+}
+
+.card-body {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 1.5rem 1.5rem;
+}

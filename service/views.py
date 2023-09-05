@@ -116,6 +116,7 @@ def add_to_cart(request, drink_id):
     drink = get_object_or_404(Drink, id=drink_id)
     cart, created = Cart.objects.get_or_create(user=request.user)
     order_items = cart.order_items.filter(drink=drink)
+
     if order_items.exists():
         order_item = order_items.first()
         order_item.quantity += 1
@@ -132,11 +133,10 @@ def cart(request):
     total = sum(item.quantity for item in request.user.cart.order_items.all())
     cart = get_object_or_404(Cart, user=request.user)
     cart_items = cart.order_items.all()
-    cart.total = sum(item.quantity * item.drink.price for item in cart_items)
     cart.save()
     context = {
         'cart_items': cart_items,
-        'cart_total': cart.total,
+        'cart': cart,
         'total':total,
         'discount': round(Decimal('0.1') * cart.total),
     }
@@ -182,28 +182,18 @@ def order_item_update(request, order_item_id):
 @login_required
 def checkout(request):
     cart = get_object_or_404(Cart, user=request.user)
-    order_total = cart.order_items.aggregate(total=Sum('drink__price'))['total']
-    order = Order.objects.create(user=request.user, total=order_total)
-
-    for item in cart.order_items.all():
-        order_item, created = OrderItem.objects.get_or_create(order=order, drink=item.drink)
-
-        if not created:
-            # If the OrderItem already exists, update the quantity instead of creating a new one
-            order_item.quantity += item.quantity
-            order_item.save()
-        else:
-            order_item.quantity = item.quantity
-            order_item.save()
-
-    cart.order_items.clear()
-    cart.save()
+    order = Order.objects.create(user=request.user, total=cart.total)
+        
+    if request.method == 'POST':
+        cart.order_items.clear()
+        cart.save()
 
     context = {
-        'order': order,
-        'total': order_total,
-        'cart_items': cart.order_items.all()
+        'total': sum(item.quantity for item in request.user.cart.order_items.all()),
+        'cart': cart,
+        'checkout_total': cart.total + 10 # change name to total 
     }
+
     return render(request, 'service/checkout.html', context)
 
 
