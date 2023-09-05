@@ -58,36 +58,59 @@
             class="accordion-collapse collapse show"
             data-bs-parent="#accordionPayment"
           >
-            <div class="accordion-body">
-              <div class="mb-3">
-                <label class="form-label">Card Number</label>
-                <input type="text" class="form-control" placeholder="" />
+            <form id="checkout-form">
+              {% csrf_token %}
+              <div class="accordion-body">
+                <div class="mb-3">
+                  <label class="form-label">Card Number</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="1234 5678 9012 3456"
+                    id="card-number"
+                    readonly
+                  />
+                </div>
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="mb-3">
+                      <label class="form-label">Name on card</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="John Doe"
+                        id="name-on-card"
+                        readonly
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-3">
+                    <div class="mb-3">
+                      <label class="form-label">Expiry date</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="07/22"
+                        id="expiry-date"
+                        readonly
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-3">
+                    <div class="mb-3">
+                      <label class="form-label">CVV Code</label>
+                      <input
+                        type="password"
+                        class="form-control"
+                        placeholder="123"
+                        id="cvv-code"
+                        readonly
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="row">
-                <div class="col-lg-6">
-                  <div class="mb-3">
-                    <label class="form-label">Name on card</label>
-                    <input type="text" class="form-control" placeholder="" />
-                  </div>
-                </div>
-                <div class="col-lg-3">
-                  <div class="mb-3">
-                    <label class="form-label">Expiry date</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="MM/YY"
-                    />
-                  </div>
-                </div>
-                <div class="col-lg-3">
-                  <div class="mb-3">
-                    <label class="form-label">CVV Code</label>
-                    <input type="password" class="form-control" />
-                  </div>
-                </div>
-              </div>
-            </div>
+            </form>
           </div>
         </div>
         <!-- PayPal -->
