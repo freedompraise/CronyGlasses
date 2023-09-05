@@ -81,7 +81,7 @@
             </div>
           </div>
           <div class="buttons d-flex flex-row mt-5 gap-3">
-            <form method="post" action="{% url 'paypal_checkout' %}">
+            <form method="post" action="{% url 'paypal-checkout' %}">
               {% csrf_token %}
               <button type="submit" class="btn btn-outline-dark">
                 Buy Now
