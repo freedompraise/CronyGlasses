@@ -203,7 +203,7 @@ def paypal_checkout(request):
 
     # Get the cart and calculate total amount
     cart = Cart.objects.get(user=request.user)
-    total = Decimal(sum(item.total_price for item in cart.order_items.all()))
+    total = cart.total + 10
 
     # Get the product (if not cart checkout)
     product = None
@@ -230,7 +230,6 @@ def paypal_checkout(request):
 
     form = PayPalPaymentsForm(initial=paypal_dict)
 
-    # If the payment is complete, create order and order items
     if request.GET.get('payment_status') == 'Completed':
         if product:
             # Create order for single product

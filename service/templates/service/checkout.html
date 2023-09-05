@@ -35,6 +35,7 @@
                 type="radio"
                 name="payment"
                 id="payment1"
+                value="{% url 'payment-done' %}"
               />
               <label class="form-check-label pt-1" for="payment1">
                 Credit Card
@@ -129,6 +130,7 @@
                 type="radio"
                 name="payment"
                 id="payment2"
+                value="{% url 'paypal-checkout' %}"
               />
               <label class="form-check-label pt-1" for="payment2">
                 PayPal
