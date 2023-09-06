@@ -1,62 +1,62 @@
-# Crony Glasses
+# CronyGlasses
 
-<h3> A web app that presents the most demanded drinks in India and allows you to place orders </h3>
-
-<div style = "background-colour:black" > 
-   </div>
-   <div align="center">
-<img width="30%" alt="CronyGlasses" src="static/drawable/icon-circle.png">
-
-# CronyGLasses
-
-</div>
+CronyGlasses is a web app that presents the most demanded drinks in India and allows you to place orders.
 
 ## Table of Contents
 
-- [Installation](#installation)
-- [Team](#team)
-- [Support](#team)
-- [License](#license)
-- [Copyright](#copyright)
+- Installation
+- Usage
+- Contributing
+- License
 
 ## Installation
 
-````
-
---> Create a virtual environment :
-```bash
-# Let's install virtualenv first
-pip install virtualenv
-
-# Then we create our virtual environment
-virtualenv envname
-
-````
-
---> Activate the virtual environment :
+To install and run CronyGlasses, you need to have Python 3 and pip installed on your system. You also need to clone the repository from GitHub and install the required packages.
 
 ```bash
-envname\scripts\activate
+# Clone the repository
+git clone https://github.com/freedompraise/CronyGlasses.git
 
-```
+# Change directory to the project folder
+cd CronyGlasses
 
---> Install the requirements :
-
-```bash
+# Install the required packages
 pip install -r requirements.txt
-```
 
-**2.Setup Virtualenv**
-
-```sh
+# Set up a virtual environment (optional)
 virtualenv env
 source env/bin/activate
-```
 
-**3.Migrate $ Start Server**
-
-```sh
+# Migrate the database
 python manage.py makemigrations
 python manage.py migrate
+
+# Run the server
 python manage.py runserver
+
+## Usage
+To use CronyGlasses, open your browser and go to http://localhost:8000/. You will see a list of drinks that are popular in India. You can select any drink and see its details, such as price, ingredients, and ratings. You can also place an order by clicking on the order button and filling out the form.
+
+![Screenshot of CronyGlasses]
+
+Contributing
+CronyGlasses is an open source project and welcomes contributions from anyone who is interested. If you want to contribute, please follow these steps:
+
+- Fork the repository on GitHub
+- Create a new branch for your feature or bug fix
+- Make your changes and commit them with a clear message
+- Push your branch to your forked repository
+- Create a pull request from your branch to the master branch of CronyGlasses
+- Wait for feedback or approval from the maintainers
+
+You can also report issues, suggest features, or ask questions on the issues page. Please follow the issue template and provide as much information as possible.
+
+The current contributors of CronyGlasses are:
+
+Praise Dike (https://github.com/freedompraise)[freedompraise]
+### Support: Twitter ([@freedom_praise]), Mail ([dikepraise119@gmail.com])
+
+
+## License
+CronyGlasses is licensed under the Apache License 2.0. See [LICENSE] for more details.
 ```
