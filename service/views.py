@@ -3,115 +3,113 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from django.db import IntegrityError
-from django.db.models import Sum
-from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from django.urls import reverse
 from django.utils.crypto import get_random_string
 
-from .models import *
-from .forms import CustomAuthenticationForm
+from .models import Drink, Cart, Order, OrderItem, User
 from paypal.standard.forms import PayPalPaymentsForm
 
 from decimal import Decimal
 
-import random
-
 # Global Total variable handles a user havning no cart items yet
-total = 0
-
-# View for the index page
-def index(request):
-    # Get the first 4 drinks in the database as popular products
-    popular_products = Drink.objects.all()[:4]
-    # Get the next 4 drinks in the database as hot gifts
-    hot_gifts = Drink.objects.all()[4:8]
-    total = 0
-    try:
-        # If the user is logged in, get the total number of items in their cart
-        total = sum(item.quantity for item in request.user.cart.order_items.all())
-    except:
-        pass
-    # Render the index.html template with the popular products, hot gifts, and cart total
-    return render(request,'service/index.html',{'total':total, 'popular':popular_products, 'hot':hot_gifts})
-
-def related_products(product_id):
-    drinks = Drink.objects.all()
-    product_list = list(drinks)
-    product_list = [product for product in product_list if product.id != product_id]
-    if len(product_list) < 4:
-        return product_list
-    return random.sample(product_list, 4)
-
-# View for the login page
-def login_view(request):
-    total = 0
-    if request.method == 'POST':
-        # If the form was submitted, create an AuthenticationForm instance with the submitted data
-        form = AuthenticationForm(request=request, data=request.POST)
-        if form.is_valid():
-            # If the form is valid, get the user's email and password from the form's cleaned data
-            email = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            # Authenticate the user with the provided email and password
-            user = authenticate(request, email=email, password=password)
-            if user is not None:
-                # If the user is authenticated, log them in and redirect them to the home page
-                login(request, user)
-                return redirect('home')
-            else:
-                # If the user is not authenticated, show an error message
-                messages.error(request, 'Invalid email or password.')
-        else:
-            # If the form is not valid, show an error message
-            messages.error(request, 'Invalid email or password.')
-    else:
-        # If the form was not submitted, create a new AuthenticationForm instance
-        form = AuthenticationForm()
-    # Render the login.html template with the form and cart total
-    return render(request, 'service/login.html', {'form': form, 'total': total})
+from .utils import total, related_products, reviews
 
 
-# View for the registration page
-def register(request):
-    total = 0
-    if request.method == 'POST':
-        # If the form was submitted, get the user's input data
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
-        email = request.POST['email']
-        password = request.POST['password']    
+
+def register_view(request):
+    if request.method == "POST":
+        first_name = request.POST["first_name"]
+        last_name = request.POST["last_name"]
+        email = request.POST["email"]
+        password = request.POST["password"]
         # Generate a random username for the user
-        username = get_random_string(length=10)     
-        # Try to get a user with the provided email address
-        user, created = User.objects.get_or_create(email=email, username=username, defaults={'first_name': first_name, 'last_name': last_name, 'password': password})
+        username = get_random_string(length=10)
+        user, created = User.objects.get_or_create(
+            email=email,
+            username=username,
+            defaults={
+                "first_name": first_name,
+                "last_name": last_name,
+                "password": password,
+            },
+        )
         if created:
-            # If the user was created, log them in and create a new cart for them
             login(request, user)
             Cart.objects.create(user=user)
-            return redirect('home')
-        # If the user already exists, show an error message
-        messages.error(request, 'User with email already exists')
-        return redirect('register')
+            return redirect("home")
+        messages.error(request, "User with email already exists")
+        return redirect("register")
     # If the form was not submitted, render the register.html template with the cart total
-    return render(request, 'service/register.html',{'total': total})
+    return render(request, "service/register.html", {"total": total(request)})
 
 
-# View for a drink's product page
-def product_page(request, pk):
-    if request.user.is_authenticated:
-        total = sum(item.quantity for item in request.user.cart.order_items.all())
+def login_view(request):
+    if request.method == "POST":
+        form = AuthenticationForm(request=request, data=request.POST)
+        if form.is_valid():
+            email = form.cleaned_data.get("username")
+            password = form.cleaned_data.get("password")
+            user = authenticate(request, email=email, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect("home")
+            else:
+                messages.error(request, "Invalid email or password.")
+        else:
+            messages.error(request, "Invalid email or password.")
+    else:
+        form = AuthenticationForm()
+    return render(
+        request, "service/login.html", {"form": form, "total": total(request)}
+    )
 
-    return render(request, 'service/product.html', {
-        'drink': get_object_or_404(Drink, pk=pk),
-        'total': 0,
-        'related_products':related_products(product_id=pk),
-        'reviews': random.randint(1,500),
-    })
+
+def home_view(request):
+    popular_products = Drink.objects.all()[:4]
+    hot_gifts = Drink.objects.all()[4:8]
+
+    return render(
+        request,
+        "service/index.html",
+        {"total": total(request), "popular": popular_products, "hot": hot_gifts},
+    )
 
 
-@login_required(login_url = 'login')
+def product_page_view(request, pk):
+    return render(
+        request,
+        "service/product.html",
+        {
+            "drink": get_object_or_404(Drink, pk=pk),
+            "total": total(request),
+            "related_products": related_products(
+                product_id=pk, drinks=Drink.objects.all()
+            ),
+            "reviews": reviews,
+        },
+    )
+
+
+@login_required(login_url="login")
+def cart_view(request):
+    cart = get_object_or_404(Cart, user=request.user)
+    cart_items = cart.order_items.all()
+    cart.save()
+
+    return render(
+        request,
+        "service/cart.html",
+        {
+            "cart_items": cart_items,
+            "cart": cart,
+            "total": total(request),
+            "discount": round(Decimal("0.1") * cart.total),
+        },
+    )
+
+
+@login_required(login_url="login")
 def add_to_cart(request, drink_id):
     drink = get_object_or_404(Drink, id=drink_id)
     cart, created = Cart.objects.get_or_create(user=request.user)
@@ -125,115 +123,105 @@ def add_to_cart(request, drink_id):
         order = Order.objects.create(user=request.user, total=0)
         order_item = OrderItem.objects.create(order=order, drink=drink, quantity=1)
         cart.order_items.add(order_item)
-    
-    return redirect('cart')
 
-@login_required(login_url = 'login')
-def cart(request):
-    total = sum(item.quantity for item in request.user.cart.order_items.all())
-    cart = get_object_or_404(Cart, user=request.user)
-    cart_items = cart.order_items.all()
-    cart.save()
-    context = {
-        'cart_items': cart_items,
-        'cart': cart,
-        'total':total,
-        'discount': round(Decimal('0.1') * cart.total),
-    }
-    return render(request, 'service/cart.html', context)
+    return redirect("cart")
 
 
 @login_required
-def cart_remove(request, order_item_id):
+def remove_from_cart(request, order_item_id):
     cart = Cart.objects.get(user=request.user)
     order_item = get_object_or_404(OrderItem, id=order_item_id)
     cart.order_items.remove(order_item)
     cart.save()
 
-    return redirect('cart')
+    return redirect("cart")
 
 
 @login_required
-def order_item_update(request, order_item_id):
+def update_cart_item(request, order_item_id):
     cart, created = Cart.objects.get_or_create(user=request.user)
     order_item = get_object_or_404(OrderItem, id=order_item_id)
 
-    if request.method == 'POST':
-        new_quantity = request.POST.get('quantity')
+    if request.method == "POST":
+        new_quantity = request.POST.get("quantity")
 
         if new_quantity.isdigit() and int(new_quantity) > 0:
             order_item.quantity = int(new_quantity)
             order_item.save()
-
-            cart.total = sum(item.total_price for item in cart.order_items.all())
-            cart.save()
-
-            messages.success(request, f"{order_item.drink.name} quantity has been updated.")
+            messages.success(
+                request, f"{order_item.drink.name} quantity has been updated."
+            )
         else:
             messages.warning(request, "Invalid quantity.")
 
-    context = {
-        'order_item': order_item,
-    }
-
-    return redirect('cart')
+    return redirect("cart")
 
 
 @login_required
-def checkout(request):
+def checkout_view(request):
     cart = get_object_or_404(Cart, user=request.user)
-    order = Order.objects.create(user=request.user, total=cart.total)
-        
-    if request.method == 'POST':
+    Order.objects.create(user=request.user, total=cart.total)
+
+    if request.method == "POST":
         cart.order_items.clear()
         cart.save()
 
-    context = {
-        'total': sum(item.quantity for item in request.user.cart.order_items.all()),
-        'cart': cart,
-        'checkout_total': cart.total + 10 # change name to total 
-    }
+    return render(
+        request,
+        "service/checkout.html",
+        {
+            "total": total(request),
+            "cart": cart,
+            "checkout_total": cart.total + 10,  # change name to total
+        },
+    )
 
-    return render(request, 'service/checkout.html', context)
 
-
-@login_required(login_url = 'login')
-def paypal_checkout(request):
+@login_required(login_url="login")
+def paypal_checkout_view(request):
     host = request.get_host()
     cart = Cart.objects.get(user=request.user)
     paypal_total = cart.total + 10
-
     # Get the product (if not cart checkout)
     product = None
-    if 'product_id' in request.POST:
-        product_id = request.POST['product_id']
+    
+    if "product_id" in request.POST:
+        product_id = request.POST["product_id"]
         product = get_object_or_404(Drink, id=product_id)
         paypal_total = product.price
 
     # Create PayPal payment form
     paypal_dict = {
-        'business': settings.PAYPAL_RECEIVER_EMAIL,
-        'amount': str(paypal_total),
-        'currency_code': 'USD',
-        'notify_url': 'http://{}{}'.format(host, reverse('paypal-ipn')),
-        'return_url': 'http://{}{}'.format(host, reverse('payment-done')),
-        'cancel_return': 'http://{}{}'.format(host, reverse('payment-cancelled')),
-        'item_name': product.name if product else 'Cart Checkout',
-        'invoice': product.id if product else cart.id,
+        "business": settings.PAYPAL_RECEIVER_EMAIL,
+        "amount": str(paypal_total),
+        "currency_code": "USD",
+        "notify_url": "http://{}{}".format(host, reverse("paypal-ipn")),
+        "return_url": "http://{}{}".format(host, reverse("payment-done")),
+        "cancel_return": "http://{}{}".format(host, reverse("payment-cancelled")),
+        "item_name": product.name if product else "Cart Checkout",
+        "invoice": product.id if product else cart.id,
     }
 
     form = PayPalPaymentsForm(initial=paypal_dict)
-        
-    return render(request, 'service/payment.html', { 'form':form, 'page':'done','paypal_total':paypal_total, 'total': total })
+
+    return render(
+        request,
+        "service/payment.html",
+        {
+            "form": form,
+            "page": "done",
+            "paypal_total": paypal_total,
+            "total": total(request),
+        },
+    )
 
 
-def payment_done(request):
+def payment_done_view(request):
     Order.objects.filter(user=request.user).delete()
     cart = Cart.objects.get(user=request.user)
     OrderItem.objects.filter(cart=cart).delete()
-    
-    return redirect('home')
-    
-   
-def payment_cancelled(request):
-    return render(request, 'service/payment_cancelled.html')
+    return redirect("home")
+
+
+def payment_cancelled_view(request):
+    return render(request, "service/payment_cancelled.html")
