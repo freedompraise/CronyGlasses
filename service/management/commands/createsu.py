@@ -7,13 +7,13 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
 class Command(BaseCommand):
-    help = 'Creates a superuser.'
+    help = "Creates a superuser."
 
     def handle(self, *args, **options):
-        if not User.objects.filter(username='admin').exists():
+        if not User.objects.filter(username="admin").exists():
             User.objects.create_superuser(
-                username=os.getenv('username'),
-                password=os.getenv('password')
+                username=os.getenv("username"), password=os.getenv("password")
             )
-        print('Superuser has been created.')
+        print("Superuser has been created.")
