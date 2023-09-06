@@ -18,11 +18,26 @@ from decimal import Decimal
 # Global Total variable handles a user havning no cart items yet
 from .utils import total, related_products, reviews
 
-# View for the index page
-def index(request):
-    popular_products = Drink.objects.all()[:4]
-    hot_gifts = Drink.objects.all()[4:8]
-    return render(request,'service/index.html',{'total':total(request), 'popular':popular_products, 'hot':hot_gifts})
+
+# View for the registration page
+
+def register(request):
+    if request.method == 'POST':
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        email = request.POST['email']
+        password = request.POST['password']    
+        # Generate a random username for the user
+        username = get_random_string(length=10)     
+        user, created = User.objects.get_or_create(email=email, username=username, defaults={'first_name': first_name, 'last_name': last_name, 'password': password})
+        if created:
+            login(request, user)
+            Cart.objects.create(user=user)
+            return redirect('home')
+        messages.error(request, 'User with email already exists')
+        return redirect('register')
+    # If the form was not submitted, render the register.html template with the cart total
+    return render(request, 'service/register.html',{'total': total(request) })
 
 
 # View for the login page
@@ -46,24 +61,11 @@ def login_view(request):
     return render(request, 'service/login.html', {'form': form, 'total': total(request)})
 
 
-# View for the registration page
-def register(request):
-    if request.method == 'POST':
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
-        email = request.POST['email']
-        password = request.POST['password']    
-        # Generate a random username for the user
-        username = get_random_string(length=10)     
-        user, created = User.objects.get_or_create(email=email, username=username, defaults={'first_name': first_name, 'last_name': last_name, 'password': password})
-        if created:
-            login(request, user)
-            Cart.objects.create(user=user)
-            return redirect('home')
-        messages.error(request, 'User with email already exists')
-        return redirect('register')
-    # If the form was not submitted, render the register.html template with the cart total
-    return render(request, 'service/register.html',{'total': total(request) })
+# View for the index page
+def index(request):
+    popular_products = Drink.objects.all()[:4]
+    hot_gifts = Drink.objects.all()[4:8]
+    return render(request,'service/index.html',{'total':total(request), 'popular':popular_products, 'hot':hot_gifts})
 
 
 # View for a drink's product page
@@ -73,6 +75,20 @@ def product_page(request, pk):
         'total': total(request),
         'related_products':related_products(product_id=pk, drinks=Drink.objects.all()),
         'reviews': reviews,
+    })
+
+
+@login_required(login_url = 'login')
+def cart(request):
+    cart = get_object_or_404(Cart, user=request.user)
+    cart_items = cart.order_items.all()
+    cart.save()
+
+    return render(request, 'service/cart.html', {
+        'cart_items': cart_items,
+        'cart': cart,
+        'total':total(request),
+        'discount': round(Decimal('0.1') * cart.total),
     })
 
 @login_required(login_url = 'login')
@@ -91,19 +107,6 @@ def add_to_cart(request, drink_id):
         cart.order_items.add(order_item)
     
     return redirect('cart')
-
-@login_required(login_url = 'login')
-def cart(request):
-    cart = get_object_or_404(Cart, user=request.user)
-    cart_items = cart.order_items.all()
-    cart.save()
-
-    return render(request, 'service/cart.html', {
-        'cart_items': cart_items,
-        'cart': cart,
-        'total':total(request),
-        'discount': round(Decimal('0.1') * cart.total),
-    })
 
 
 @login_required
