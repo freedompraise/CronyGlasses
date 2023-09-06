@@ -16,8 +16,6 @@ from decimal import Decimal
 from .utils import total, related_products, reviews
 
 
-# View for the registration page
-
 
 def register_view(request):
     if request.method == "POST":
@@ -46,7 +44,6 @@ def register_view(request):
     return render(request, "service/register.html", {"total": total(request)})
 
 
-# View for the login page
 def login_view(request):
     if request.method == "POST":
         form = AuthenticationForm(request=request, data=request.POST)
@@ -63,13 +60,11 @@ def login_view(request):
             messages.error(request, "Invalid email or password.")
     else:
         form = AuthenticationForm()
-    # Render the login.html template with the form and cart total
     return render(
         request, "service/login.html", {"form": form, "total": total(request)}
     )
 
 
-# View for the index page
 def home_view(request):
     popular_products = Drink.objects.all()[:4]
     hot_gifts = Drink.objects.all()[4:8]
@@ -80,7 +75,6 @@ def home_view(request):
     )
 
 
-# View for a drink's product page
 def product_page_view(request, pk):
     return render(
         request,
