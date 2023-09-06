@@ -97,13 +97,13 @@ def cart(request):
     cart = get_object_or_404(Cart, user=request.user)
     cart_items = cart.order_items.all()
     cart.save()
-    context = {
+
+    return render(request, 'service/cart.html', {
         'cart_items': cart_items,
         'cart': cart,
         'total':total(request),
         'discount': round(Decimal('0.1') * cart.total),
-    }
-    return render(request, 'service/cart.html', context)
+    })
 
 
 @login_required
@@ -131,10 +131,6 @@ def order_item_update(request, order_item_id):
         else:
             messages.warning(request, "Invalid quantity.")
 
-    context = {
-        'order_item': order_item,
-    }
-
     return redirect('cart')
 
 
@@ -147,13 +143,11 @@ def checkout(request):
         cart.order_items.clear()
         cart.save()
 
-    context = {
+    return render(request, 'service/checkout.html', {
         'total': total(request),
         'cart': cart,
         'checkout_total': cart.total + 10 # change name to total 
-    }
-
-    return render(request, 'service/checkout.html', context)
+    })
 
 
 @login_required(login_url = 'login')
