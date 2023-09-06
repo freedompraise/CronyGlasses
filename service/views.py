@@ -68,6 +68,7 @@ def login_view(request):
 def home_view(request):
     popular_products = Drink.objects.all()[:4]
     hot_gifts = Drink.objects.all()[4:8]
+
     return render(
         request,
         "service/index.html",
@@ -181,9 +182,9 @@ def paypal_checkout_view(request):
     host = request.get_host()
     cart = Cart.objects.get(user=request.user)
     paypal_total = cart.total + 10
-
     # Get the product (if not cart checkout)
     product = None
+    
     if "product_id" in request.POST:
         product_id = request.POST["product_id"]
         product = get_object_or_404(Drink, id=product_id)
