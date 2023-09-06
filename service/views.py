@@ -10,7 +10,7 @@ from django.conf import settings
 from django.urls import reverse
 from django.utils.crypto import get_random_string
 
-from .models import *
+from .models import Drink, Cart, Order, OrderItem, User
 from .forms import CustomAuthenticationForm
 from paypal.standard.forms import PayPalPaymentsForm
 
