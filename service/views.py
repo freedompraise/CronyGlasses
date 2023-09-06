@@ -21,7 +21,7 @@ from .utils import total, related_products, reviews
 
 # View for the registration page
 
-def register(request):
+def register_view(request):
     if request.method == 'POST':
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
@@ -62,14 +62,14 @@ def login_view(request):
 
 
 # View for the index page
-def index(request):
+def home_view(request):
     popular_products = Drink.objects.all()[:4]
     hot_gifts = Drink.objects.all()[4:8]
     return render(request,'service/index.html',{'total':total(request), 'popular':popular_products, 'hot':hot_gifts})
 
 
 # View for a drink's product page
-def product_page(request, pk):
+def product_page_view(request, pk):
     return render(request, 'service/product.html', {
         'drink': get_object_or_404(Drink, pk=pk),
         'total': total(request),
@@ -79,7 +79,7 @@ def product_page(request, pk):
 
 
 @login_required(login_url = 'login')
-def cart(request):
+def cart_view(request):
     cart = get_object_or_404(Cart, user=request.user)
     cart_items = cart.order_items.all()
     cart.save()
@@ -110,7 +110,7 @@ def add_to_cart(request, drink_id):
 
 
 @login_required
-def cart_remove(request, order_item_id):
+def remove_from_cart(request, order_item_id):
     cart = Cart.objects.get(user=request.user)
     order_item = get_object_or_404(OrderItem, id=order_item_id)
     cart.order_items.remove(order_item)
@@ -120,7 +120,7 @@ def cart_remove(request, order_item_id):
 
 
 @login_required
-def order_item_update(request, order_item_id):
+def update_cart_item(request, order_item_id):
     cart, created = Cart.objects.get_or_create(user=request.user)
     order_item = get_object_or_404(OrderItem, id=order_item_id)
 
@@ -138,7 +138,7 @@ def order_item_update(request, order_item_id):
 
 
 @login_required
-def checkout(request):
+def checkout_view(request):
     cart = get_object_or_404(Cart, user=request.user)
     order = Order.objects.create(user=request.user, total=cart.total)
         
@@ -154,7 +154,7 @@ def checkout(request):
 
 
 @login_required(login_url = 'login')
-def paypal_checkout(request):
+def paypal_checkout_view(request):
     host = request.get_host()
     cart = Cart.objects.get(user=request.user)
     paypal_total = cart.total + 10
@@ -183,12 +183,12 @@ def paypal_checkout(request):
     return render(request, 'service/payment.html', { 'form':form, 'page':'done','paypal_total':paypal_total, 'total': total(request) })
 
 
-def payment_done(request):
+def payment_done_view(request):
     Order.objects.filter(user=request.user).delete()
     cart = Cart.objects.get(user=request.user)
     OrderItem.objects.filter(cart=cart).delete()
     return redirect('home')
     
    
-def payment_cancelled(request):
+def payment_cancelled_view(request):
     return render(request, 'service/payment_cancelled.html')
