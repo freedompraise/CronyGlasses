@@ -1,12 +1,15 @@
 function togglePaymentOption() {
   const paymentRadios = document.getElementsByName("payment");
+  const orderButton = document.querySelector("#placeOrderButton");
 
-  paymentRadios.forEach((radio) => {
-    radio.addEventListener("change", () => {
-      if (radio.checked) {
-        window.location.href = radio.value;
-      }
-    });
+  orderButton.addEventListener("click", () => {
+    const selectedRadio = Array.from(paymentRadios).find(
+      (radio) => radio.checked
+    );
+
+    if (selectedRadio) {
+      window.location.href = selectedRadio.value;
+    }
   });
 }
 
