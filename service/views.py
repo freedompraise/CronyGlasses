@@ -200,49 +200,29 @@ def checkout(request):
 @login_required(login_url = 'login')
 def paypal_checkout(request):
     host = request.get_host()
-
-    # Get the cart and calculate total amount
     cart = Cart.objects.get(user=request.user)
-    total = cart.total + 10
+    paypal_total = cart.total + 10
 
     # Get the product (if not cart checkout)
     product = None
     if 'product_id' in request.POST:
         product_id = request.POST['product_id']
         product = get_object_or_404(Drink, id=product_id)
-        total = product.price
+        paypal_total = product.price
 
     # Create PayPal payment form
     paypal_dict = {
         'business': settings.PAYPAL_RECEIVER_EMAIL,
-        'amount': str(total),
+        'amount': str(paypal_total),
         'currency_code': 'USD',
         'notify_url': 'http://{}{}'.format(host, reverse('paypal-ipn')),
         'return_url': 'http://{}{}'.format(host, reverse('payment-done')),
         'cancel_return': 'http://{}{}'.format(host, reverse('payment-cancelled')),
+        'item_name': product.name if product else 'Cart Checkout',
+        'invoice': product.id if product else cart.id,
     }
-    if product:
-        paypal_dict['item_name'] = product.name
-        paypal_dict['invoice'] = product.id
-    else:
-        paypal_dict['item_name'] = "Cart Checkout"
-        paypal_dict['invoice'] = cart.id
 
     form = PayPalPaymentsForm(initial=paypal_dict)
-
-    if request.GET.get('payment_status') == 'Completed':
-        if product:
-            # Create order for single product
-            order = Order.objects.create(user=request.user, total=total, status='submitted')
-            OrderItem.objects.create(order=order, product=product, quantity=1)
-        else:
-            # Create order for cart items
-            order = Order.objects.create(user=request.user, total=total, status='submitted')
-            for item in cart.order_items.all():
-                OrderItem.objects.create(order=order, product=item.product, quantity=item.quantity)
-            cart.order_items.clear()
-
-        return redirect('home')
         
     return render(request, 'service/payment.html', {'form':form, 'page':'done','total':total})
 
