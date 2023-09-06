@@ -3,15 +3,11 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from django.db import IntegrityError
-from django.db.models import Sum
-from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from django.urls import reverse
 from django.utils.crypto import get_random_string
 
 from .models import Drink, Cart, Order, OrderItem, User
-from .forms import CustomAuthenticationForm
 from paypal.standard.forms import PayPalPaymentsForm
 
 from decimal import Decimal
@@ -169,7 +165,7 @@ def update_cart_item(request, order_item_id):
 @login_required
 def checkout_view(request):
     cart = get_object_or_404(Cart, user=request.user)
-    order = Order.objects.create(user=request.user, total=cart.total)
+    Order.objects.create(user=request.user, total=cart.total)
 
     if request.method == "POST":
         cart.order_items.clear()
