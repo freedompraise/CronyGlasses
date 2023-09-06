@@ -1,46 +1,43 @@
-{% extends 'base.html' %}
-{% load static %}
-
-{% block extrahead %}
-  <title>Payments - CronyGlasses</title>
-  <link rel="stylesheet" type="text/css" href="{% static 'styles/payment.css' %}">
-{% endblock %}
-
-{% block content %}
-  {% if product %}
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <h2>{{ product.name }}</h2>
-          <p>Price: {{ product.price }}</p>
-        </div>
-      </div>
-    </div>
-  {% else %}
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <h2>Cart Checkout</h2>
-          <ul>
-            {% for item in cart.order_items.all %}
-              <li>{{ item.product.name }} x {{ item.quantity }}</li>
-            {% endfor %}
-          </ul>
-          <p>Total: {{ total }}</p>
-        </div>
-      </div>
-    </div>
-  {% endif %}
-
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <form method="post" action="https://www.paypal.com/cgi-bin/webscr">
-          {% csrf_token %}
-          {{ form.render }}
-          <button type="submit" class="btn btn-primary btn-lg"></button>
-        </form>
-      </div>
+{% extends 'base.html' %} {% load static %} {% block extrahead %}
+<title>Payments - CronyGlasses</title>
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'styles/payment.css' %}"
+/>
+{% endblock %} {% block content %} {% if product %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h2>{{ product.name }}</h2>
+      <p>Price: {{ product.price }}</p>
     </div>
   </div>
+</div>
+{% else %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Cart Checkout</h2>
+      <ul>
+        {% for item in cart.order_items.all %}
+        <li>{{ item.product.name }} x {{ item.quantity }}</li>
+        {% endfor %}
+      </ul>
+      <p>Total: {{ paypal_total }}</p>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <form method="post" action="https://www.paypal.com/cgi-bin/webscr">
+        {% csrf_token %} {{ form.render }}
+        <button type="submit" class="btn btn-primary btn-lg"></button>
+      </form>
+    </div>
+  </div>
+</div>
 {% endblock %}

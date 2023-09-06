@@ -224,7 +224,7 @@ def paypal_checkout(request):
 
     form = PayPalPaymentsForm(initial=paypal_dict)
         
-    return render(request, 'service/payment.html', {'form':form, 'page':'done','total':total})
+    return render(request, 'service/payment.html', { 'form':form, 'page':'done','paypal_total':paypal_total, 'total': total })
 
 
 def payment_done(request):
