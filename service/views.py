@@ -15,12 +15,8 @@ from .forms import CustomAuthenticationForm
 from paypal.standard.forms import PayPalPaymentsForm
 
 from decimal import Decimal
-
-import random
-
 # Global Total variable handles a user havning no cart items yet
-def total(request):
-    return (sum(item.quantity for item in request.user.cart.order_items.all()) if request.user.is_authenticated else 0 )
+from .utils import total, related_products, reviews
 
 # View for the index page
 def index(request):
@@ -28,13 +24,6 @@ def index(request):
     hot_gifts = Drink.objects.all()[4:8]
     return render(request,'service/index.html',{'total':total(request), 'popular':popular_products, 'hot':hot_gifts})
 
-def related_products(product_id):
-    drinks = Drink.objects.all()
-    product_list = list(drinks)
-    product_list = [product for product in product_list if product.id != product_id]
-    if len(product_list) < 4:
-        return product_list
-    return random.sample(product_list, 4)
 
 # View for the login page
 def login_view(request):
@@ -82,10 +71,9 @@ def product_page(request, pk):
     return render(request, 'service/product.html', {
         'drink': get_object_or_404(Drink, pk=pk),
         'total': total(request),
-        'related_products':related_products(product_id=pk),
-        'reviews': random.randint(1,500),
+        'related_products':related_products(product_id=pk, drinks=Drink.objects.all()),
+        'reviews': reviews,
     })
-
 
 @login_required(login_url = 'login')
 def add_to_cart(request, drink_id):
