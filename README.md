@@ -39,9 +39,8 @@ python manage.py runserver
 
 To use CronyGlasses, open your browser and go to http://localhost:8000/. You will see a list of drinks that are popular in India. You can select any drink and see its details, such as price, ingredients, and ratings. You can also place an order by clicking on the order button and filling out the form.
 
-![Screenshot of CronyGlasses]
+## Contributing
 
-Contributing
 CronyGlasses is an open source project and welcomes contributions from anyone who is interested. If you want to contribute, please follow these steps:
 
 - Fork the repository on GitHub
@@ -55,10 +54,14 @@ You can also report issues, suggest features, or ask questions on the issues pag
 
 The current contributors of CronyGlasses are:
 
-Praise Dike (https://github.com/freedompraise)[freedompraise]
+- Praise Dike @freedompraise
+- Mayur Chaure @mr-mayurchaure
 
-### Support: Twitter ([@freedom_praise]), Mail ([dikepraise119@gmail.com])
+### Support:
+
+- [Twitter](https:twitter.com/freedom_praise)
+- [Mail](mail.to:dikepraise119@gmail.com)
 
 ## License
 
-CronyGlasses is licensed under the Apache License 2.0. See [LICENSE] for more details.
+CronyGlasses is licensed under the Apache License 2.0. See [LICENSE](https://mit-license.org/) for more details.
