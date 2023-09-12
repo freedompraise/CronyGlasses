@@ -5,4 +5,5 @@ venv
 .env
 cert.pem
 key.pem
+cronyGlasses/settings/dev.py
 dev.py
