@@ -16,7 +16,6 @@ from decimal import Decimal
 from .utils import total, related_products, reviews
 
 
-
 def register_view(request):
     if request.method == "POST":
         first_name = request.POST["first_name"]
@@ -184,7 +183,7 @@ def paypal_checkout_view(request):
     paypal_total = cart.total + 10
     # Get the product (if not cart checkout)
     product = None
-    
+
     if "product_id" in request.POST:
         product_id = request.POST["product_id"]
         product = get_object_or_404(Drink, id=product_id)
