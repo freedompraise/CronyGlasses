@@ -35,6 +35,20 @@ python manage.py migrate
 python manage.py runserver
 ```
 
+## Running the tests
+
+To run the tests, follow these steps:
+
+1. **Set up a Testing Database**: Create a separate database for testing. You can configure this in your project's settings
+
+2. **Run the tests**: Run the tests using the following command:
+
+```bash
+python manage.py test
+```
+
+This command will run all the tests in the tests folder.
+
 ## Usage
 
 To use CronyGlasses, open your browser and go to http://localhost:8000/. You will see a list of drinks that are popular in India. You can select any drink and see its details, such as price, ingredients, and ratings. You can also place an order by clicking on the order button and filling out the form.

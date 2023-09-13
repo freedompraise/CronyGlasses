@@ -1,6 +1,5 @@
 import random
 
-
 def total(request):
     return (
         sum(item.quantity for item in request.user.cart.order_items.all())
@@ -19,3 +18,4 @@ def related_products(product_id, drinks):
 
 def reviews():
     return random.randint(1, 500)
+
