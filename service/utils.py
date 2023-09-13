@@ -1,5 +1,5 @@
 import random
-
+from service.models import User, Drink, Order, OrderItem, Cart
 
 def total(request):
     return (
@@ -19,3 +19,19 @@ def related_products(product_id, drinks):
 
 def reviews():
     return random.randint(1, 500)
+
+
+def create_test_user(username="testuser", password="testpassword"):
+    return User.objects.create_user(username=username, password=password)
+
+def create_test_drink(name, price, description, image):
+    return Drink.objects.create(name=name, price=price, description=description, image=image)
+
+def create_test_cart(user):
+    return Cart.objects.create(user=user)
+
+def create_test_order(user, total, status="draft"):
+    return Order.objects.create(user=user, total=total, status=status)
+
+def create_test_order_item(order, drink, quantity):
+    return OrderItem.objects.create(order=order, drink=drink, quantity=quantity)
