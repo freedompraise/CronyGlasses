@@ -8,3 +8,4 @@ key.pem
 cronyGlasses/settings/dev.py
 dev.py
 /images/
+/staticfiles/images/images/
