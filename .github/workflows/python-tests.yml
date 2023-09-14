@@ -13,8 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DJANGO_SETTINGS_MODULE: "cronyGlasses.settings.prod"
-      DATABABE_URL: "postgres://db_dvj5_user:sT846cVevKM673GAoQwRDSJmnHXnTrT0@dpg-cijaffdgkuvhnndf3o30-a.oregon-postgres.render.com/db_dvj5"
       SECRET_KEY: "thisisnotasecret"
+      PAYPAL_RECEIVER_EMAIL: secrets.PAYPAL_RECEIVER_EMAIL
+      USE_SQLITE: True
+      ALlOWED_HOSTS: "127.0.0.1 localhost"
     strategy:
       max-parallel: 4
       matrix:
