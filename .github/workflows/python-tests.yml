@@ -5,13 +5,15 @@ on:
     branches:
       - master
     pull_request:
-      branches: ["master"]
+      branches:
+        - master
 
 env:
   DEBUG: False
   SECRET_KEY: "Not Applicable"
   ALLOWED_HOSTS: "127.0.0.1 localhost"
   SITE_ID: 1
+  DJANGO_SETTINGS_MODULE: "cronyGlasses.settings.prod"
 
 jobs:
   build:
