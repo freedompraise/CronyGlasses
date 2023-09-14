@@ -80,10 +80,22 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "cronyGlasses.wsgi.application"
 
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS").split(" ")
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+if str(os.environ.get("USE_SQLITE")).lower() == "true":
+    DATABASES = {
+         "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
+    }
+else:
+    DATABASES = {
+    "default": dj_database_url.parse(os.environ.get("DATABASE_URL"), conn_max_age=600),
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
