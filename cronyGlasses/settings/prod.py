@@ -1,8 +1,6 @@
 from .base_settings import *
 import dj_database_url
 
-
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS").split(" ")
 DEBUG = os.getenv("DEBUG", "0").lower() in ["true", "t", "1"]
 
 

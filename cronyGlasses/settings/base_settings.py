@@ -80,6 +80,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "cronyGlasses.wsgi.application"
 
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS").split(" ")
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
