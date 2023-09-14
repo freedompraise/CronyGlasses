@@ -42,7 +42,7 @@ jobs:
         DEBUG: False
         DJANGO_SETTINGS_MODULE: "cronyGlasses.settings.prod"
         run: |
-          export DJANGO_SETTINGS_MODULE="cronyGlasses.settings.prod""
+          export DJANGO_SETTINGS_MODULE="cronyGlasses.settings.prod"
 
       # - name: collect-static-files
       #   run: |
