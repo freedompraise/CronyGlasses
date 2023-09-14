@@ -11,6 +11,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      DJANGO_SETTINGS_MODULE: "cronyGlasses.settings.prod"
     strategy:
       max-parallel: 4
       matrix:
@@ -36,12 +38,6 @@ jobs:
           python -m pip install --upgrade pip==21.2.4
           pip install wheel
           pip install -r requirements.txt
-
-      - name: Set Environment variables
-        env:
-        DJANGO_SETTINGS_MODULE: "cronyGlasses.settings.prod"
-        run: |
-          export DJANGO_SETTINGS_MODULE="cronyGlasses.settings.prod"
 
       # - name: collect-static-files
       #   run: |
