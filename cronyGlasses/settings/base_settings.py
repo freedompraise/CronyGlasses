@@ -26,7 +26,7 @@ load_dotenv()
 PAYPAL_RECEIVER_EMAIL = os.getenv("PAYPAL_RECEIVER_EMAIL")
 PAYPAL_TEST = True
 
-
+DEBUG = os.getenv("DEBUG", "0").lower() in ["true", "t", "1"]
 APPEND_SLASH = False
 
 # Application definition
