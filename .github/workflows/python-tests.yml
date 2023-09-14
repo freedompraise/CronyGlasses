@@ -39,7 +39,6 @@ jobs:
 
       - name: Set Environment variables
         env:
-        DEBUG: False
         DJANGO_SETTINGS_MODULE: "cronyGlasses.settings.prod"
         run: |
           export DJANGO_SETTINGS_MODULE="cronyGlasses.settings.prod"
