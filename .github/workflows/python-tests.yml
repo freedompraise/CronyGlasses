@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DJANGO_SETTINGS_MODULE: "cronyGlasses.settings.prod"
+      DATABABE_URL: "postgres://db_dvj5_user:sT846cVevKM673GAoQwRDSJmnHXnTrT0@dpg-cijaffdgkuvhnndf3o30-a.oregon-postgres.render.com/db_dvj5"
+      SECRET_KEY: "thisisnotasecret"
     strategy:
       max-parallel: 4
       matrix:
