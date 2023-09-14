@@ -5,6 +5,6 @@ venv
 .env
 cert.pem
 key.pem
-# dev.py
+dev.py
 /images/
 /staticfiles/images/images/
