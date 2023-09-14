@@ -4,26 +4,41 @@ on:
   push:
     branches:
       - master
+    pull_request:
+      branches: ["master"]
+
+env:
+  DEBUG: False
+  SECRET_KEY: "Not Applicable"
+  ALLOWED_HOSTS: "127.0.0.1 localhost"
+  SITE_ID: 1
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.7, 3.8, 3.9]
 
     steps:
+      - uses: actions/checkout@v3
+
+      - name: update-system-dependencies
+        run: |
+          sudo apt-get update -y
+
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v3
         with:
           python-version: 3.10.8
           cache: "pip"
-
-      - name: Checkout Repository
-        uses: actions/checkout@v2
 
       - name: install-python-virtualenv
         run: |
           python3 -m venv venv
           source venv/bin/activate
-          pip install --upgrade pip
+          python -m pip install --upgrade pip==21.2.4
           pip install wheel
           pip install -r requirements.txt
 
@@ -39,4 +54,4 @@ jobs:
 
       - name: Run Tests
         run: |
-          python manage.py test
+          python3 manage.py test
