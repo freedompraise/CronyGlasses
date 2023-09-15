@@ -14,6 +14,7 @@ jobs:
       PAYPAL_RECEIVER_EMAIL: secrets.PAYPAL_RECEIVER_EMAIL
       USE_SQLITE: True
       ALLOWED_HOSTS: "127.0.0.1 localhost"
+      deploy_url: secrets.RENDER_DEPLOY_HOOK_URL
     strategy:
       max-parallel: 4
       matrix:
@@ -41,7 +42,5 @@ jobs:
 
       - name: Deploy
         if: github.ref == 'refs/heads/master'
-        env:
-          deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
         run: |
           curl $deploy_url
