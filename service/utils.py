@@ -1,9 +1,10 @@
 import random
 
+
 def total(request):
     return (
         sum(item.quantity for item in request.user.cart.order_items.all())
-        if request.user.is_authenticated
+        if request.user.is_authenticated and not request.user.is_superuser
         else 0
     )
 
@@ -18,4 +19,3 @@ def related_products(product_id, drinks):
 
 def reviews():
     return random.randint(1, 500)
-

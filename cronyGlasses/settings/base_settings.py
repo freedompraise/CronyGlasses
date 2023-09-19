@@ -87,15 +87,17 @@ ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS").split(" ")
 
 if str(os.environ.get("USE_SQLITE")).lower() == "true":
     DATABASES = {
-         "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
     }
 else:
     DATABASES = {
-    "default": dj_database_url.parse(os.environ.get("DATABASE_URL"), conn_max_age=600),
-}
+        "default": dj_database_url.parse(
+            os.environ.get("DATABASE_URL"), conn_max_age=600
+        ),
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -132,15 +134,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 MEDIA_URL = "/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "staticfiles", "images")
-STATICFILES_DIRS = [os.path.join(BASE_DIR,  "static")]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
 
 # set SECURE_HSTS_SECONDS to a non-zero value to enable HSTS
 SECRET_KEY = os.environ["SECRET_KEY"]
