@@ -8,3 +8,4 @@ SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+MEDIA_ROOT = os.path.join(BASE_DIR, "staticfiles", "images")
