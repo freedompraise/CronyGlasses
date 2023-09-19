@@ -141,6 +141,5 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-
 # set SECURE_HSTS_SECONDS to a non-zero value to enable HSTS
 SECRET_KEY = os.environ["SECRET_KEY"]
