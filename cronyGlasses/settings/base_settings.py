@@ -12,7 +12,6 @@ PAYPAL_RECEIVER_EMAIL = os.getenv("PAYPAL_RECEIVER_EMAIL")
 PAYPAL_TEST = True
 
 DEBUG = os.getenv("DEBUG", "0").lower() in ["true", "t", "1"]
-APPEND_SLASH = False
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 load_dotenv()
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
@@ -22,7 +21,7 @@ ROOT_URLCONF = "cronyGlasses.urls"
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = ["http://localhost:3000", "https://cronyglasses.onrender.com"]
 WSGI_APPLICATION = "cronyGlasses.wsgi.application"
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS").split(" ")
+ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(" ")
 
 INSTALLED_APPS = [
     "django.contrib.admin",
