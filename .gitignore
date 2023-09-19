@@ -11,5 +11,7 @@ key.pem
 service/__pycache__/
 service/migrations/__pycache__/
 service/management/__pycache__/
+service/management/commands/__pycache__/
+service/tests/__pycache__/
 cronyGlasses/__pycache__/
 cronyGlasses/settings/__pycache__/
