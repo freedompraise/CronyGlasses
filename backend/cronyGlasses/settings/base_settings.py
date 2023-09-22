@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     "paypal.standard.ipn",
     "sslserver",
     "corsheaders",
+    "rest_framework",
 ]
 
 MIDDLEWARE = [
@@ -105,4 +106,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = "/static/"
 MEDIA_URL = "/"
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+
+FRONTEND_DIR = os.path.join(BASE_DIR, "frontend", "build")
+
+STATICFILES_DIRS = [FRONTEND_DIR]
+
+try:
+    with open(os.path.join(FRONTEND_DIR, "index.html")) as f:
+        # Read the index.html file and assign it to the Django template
+        TEMPLATES[0]["DIRS"] = [os.path.join(BASE_DIR, "frontend", "build")]
+except FileNotFoundError:
+    print("React build not found. Run `npm run build`.")
