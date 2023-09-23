@@ -39,7 +39,7 @@ class CartSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ("id", "username", "email", "first_name", "password")
+        fields = ("id", "email", "first_name", "password")
 
         def create(self, validated_data):
             user = User(
