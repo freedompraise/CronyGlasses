@@ -35,6 +35,7 @@ jobs:
 
       - name: Install dependencies, run migrations, and run tests
         run: |
+          cd backend
           pip install wheel
           pip install -r requirements.txt
           python manage.py migrate --noinput
