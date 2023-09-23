@@ -1,26 +1,28 @@
-"""
-Django settings for cronyGlasses project.
-
-"""
 from pathlib import Path
 import os
 from dotenv import load_dotenv
 import dj_database_url
+
+load_dotenv()
 
 # PAYPAL
 PAYPAL_RECEIVER_EMAIL = os.getenv("PAYPAL_RECEIVER_EMAIL")
 PAYPAL_TEST = True
 
 DEBUG = os.getenv("DEBUG", "0").lower() in ["true", "t", "1"]
+
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
-load_dotenv()
+
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
 SECRET_KEY = os.environ["SECRET_KEY"]
+
 ROOT_URLCONF = "cronyGlasses.urls"
-# cors headers
-CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOWED_ORIGINS = ["http://localhost:3000", "https://cronyglasses.onrender.com"]
-WSGI_APPLICATION = "cronyGlasses.wsgi.application"
+
+# CORS_ALLOW_ALL_ORIGINS = True
+
+# CORS_ALLOWED_ORIGINS = ["http://localhost:3000", "https://cronyglasses.onrender.com"]
+
 ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(" ")
 
 INSTALLED_APPS = [
@@ -35,6 +37,7 @@ INSTALLED_APPS = [
     "sslserver",
     "corsheaders",
     "rest_framework",
+    "rest_framework_simplejwt",
 ]
 
 MIDDLEWARE = [
@@ -48,6 +51,17 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": {
+        "rest_framework_simplejwt.authentication.JWTAuthentication"
+    }
+}
+
+SIMPLE_JWT = {
+    "SIGNING_KEY": "cronyGlasses",
+    "ALGORITHM": "HS256",
+    "AUTH_HEADER_TYPES": ("Bearer",),
+}
 
 TEMPLATES = [
     {
@@ -81,22 +95,6 @@ else:
         ),
     }
 
-# Password validation
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-    },
-]
-
 # Internationalization
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
@@ -107,13 +105,13 @@ USE_TZ = True
 STATIC_URL = "/static/"
 MEDIA_URL = "/"
 
-FRONTEND_DIR = os.path.join(BASE_DIR, "frontend", "build")
+FRONTEND_DIR = os.path.join(BASE_DIR.parent, "frontend", "public")
 
 STATICFILES_DIRS = [FRONTEND_DIR]
 
 try:
     with open(os.path.join(FRONTEND_DIR, "index.html")) as f:
         # Read the index.html file and assign it to the Django template
-        TEMPLATES[0]["DIRS"] = [os.path.join(BASE_DIR, "frontend", "build")]
+        TEMPLATES[0]["DIRS"] = [os.path.join(BASE_DIR.parent, "frontend", "src")]
 except FileNotFoundError:
     print("React build not found. Run `npm run build`.")
