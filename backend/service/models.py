@@ -39,6 +39,7 @@ class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     drink = models.ForeignKey(Drink, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1, null=True)
+    total_price = models.DecimalField(max_digits=6, decimal_places=2, null=True)
 
     class Meta:
         # Add a unique together constraint for the order and drink fields
@@ -47,18 +48,25 @@ class OrderItem(models.Model):
     def __str__(self):
         return f"{self.quantity} of {self.drink.name}"
 
-    @property
-    def total_price(self):
-        return self.quantity * self.drink.price
+    def save(self, *args, **kwargs):
+        if self.total_price == 0:
+            self.total_price = self.quantity * self.drink.price
+        super().save(*args, **kwargs)
+        self.cart.update_total()  # update total after saving the order item
+
+    def delete(self, *args, **kwargs):
+        super().delete(*args, **kwargs)
+        self.cart.update_total()  # update total after deleting the order item
 
 
 class Cart(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     order_items = models.ManyToManyField(OrderItem)
+    total = models.DecimalField(max_digits=6, decimal_places=2, default=0, null=True)
 
     def __str__(self):
         return f"{self.user}'s cart"
 
-    @property
-    def total(self):
-        return sum(item.total_price for item in self.order_items.all())
+    def update_total(self):
+        self.total = sum(item.total_price for item in self.order_items.all())
+        self.save()
