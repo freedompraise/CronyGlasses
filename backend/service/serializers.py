@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Drink, Order, OrderItem, Cart, User
+from django.contrib.auth import authenticate
 
 
 class DrinkSerializer(serializers.ModelSerializer):
@@ -39,24 +40,13 @@ class CartSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ("id", "email", "first_name", "password")
+        fields = ("id", "username", "password")
 
         def create(self, validated_data):
             user = User(
-                email=validated_data["email"],
-                username=validated_data["email"],
+                username=validated_data["usernmae"],
             )
             user.set_password(validated_data["password"])
             user.save()
             Cart.objects.create(user=user)
             return user
-
-        def login(self, validated_data):
-            email = validated_data["email"]
-            password = validated_data["password"]
-
-            user = authenticate(email=email, password=password)
-            if user:
-                return user
-            else:
-                raise serializers.ValidationError("Invalied credentials")
