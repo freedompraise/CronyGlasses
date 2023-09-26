@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from rest_framework import status
 from rest_framework.views import APIView
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.generics import (
     CreateAPIView,
     ListCreateAPIView,
@@ -33,6 +36,8 @@ from .utils import total, related_products, reviews
 
 class UserRegisterView(CreateAPIView):
     serializer_class = UserSerializer
+    permission_classes = [AllowAny]
+    authentication_classes = [BasicAuthentication]
 
     def create(self, request, *args, **kwargs):
         response = super().create(request, *args, **kwargs)
@@ -43,53 +48,107 @@ class UserRegisterView(CreateAPIView):
         return response
 
 
-class UserLoginView(APIView):
-    serialier_class = UserSerializer
-
-    def post(self, request):
-        serializer = UserSerializer(data=request.data)
-        if serializer.is_valid():
-            user = serializer.login(serializer.validated_data)
-            if user:
-                refresh = RefreshToken.for_user(user)
-                return Response(
-                    {"refresh": str(refresh), "access": str(refresh.access_token)}
-                )
-
-        return Response(
-            {"error": "Invalid credentials"}, status=status.HTTP_400_BAD_REQUEST
-        )
-
-
 class DrinkListView(ListCreateAPIView):
     queryset = Drink.objects.all()
     serializer_class = DrinkSerializer
+    permission_classes = [AllowAny]
+    authentication_classes = [BasicAuthentication]
 
 
 class DrinkDetailView(RetrieveUpdateDestroyAPIView):
     queryset = Drink.objects.all()
     serializer_class = DrinkSerializer
+    permission_classes = [AllowAny]
+    authentication_classes = [BasicAuthentication]
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+
+        # Get related drinks (4 random drinks excluding the current drink)
+        related_drinks = Drink.objects.exclude(pk=instance.pk).order_by("?")[:4]
+        related_drinks_serializer = DrinkSerializer(related_drinks, many=True)
+
+        # Generate a random review count
+        review_count = randint(1, 1000)
+
+        response_data = {
+            "drink": serializer.data,
+            "related_drinks": related_drinks_serializer.data,
+            "reviews": review_count,
+        }
+
+        return Response(response_data)
+
+
+class CreateCartView(CreateAPIView):
+    queryset = Cart.objects.all()
+    serializer_class = CartSerializer
+    permission_classes = [AllowAny]
+    authentication_classes = [BasicAuthentication]
+
+    def create(self, request, *args, **kwargs):
+        response = super().create(request, *args, **kwargs)
+        cart = Cart.objects.get(pk=response.data["id"])
+        cart.user = request.user
+        cart.save()
+        return response
 
 
 class CartDetailView(RetrieveUpdateDestroyAPIView):
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
+    permission_classes = [AllowAny]
+    authentication_classes = [BasicAuthentication]
 
 
 class OrderDetailView(RetrieveUpdateDestroyAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
+    permission_classes = [AllowAny]
+    authentication_classes = [BasicAuthentication]
+
+
+class CreateOrderView(CreateAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+    permission_classes = [AllowAny]
+    authentication_classes = [BasicAuthentication]
+
+    def create(self, request, *args, **kwargs):
+        response = super().create(request, *args, **kwargs)
+        order = Order.objects.get(pk=response.data["id"])
+        cart = Cart.objects.get(user=request.user)
+        order.cart = cart
+        order.save()
+        return response
 
 
 class OrderItemDetailView(RetrieveUpdateDestroyAPIView):
     queryset = OrderItem.objects.all()
     serializer_class = OrderItemSerializer
+    permission_classes = [AllowAny]
+    authentication_classes = [BasicAuthentication]
+
+
+class CreateOrderItemView(CreateAPIView):
+    queryset = OrderItem.objects.all()
+    serializer_class = OrderItemSerializer
+    permission_classes = [AllowAny]
+    authentication_classes = [BasicAuthentication]
+
+    def create(self, request, *args, **kwargs):
+        response = super().create(request, *args, **kwargs)
+        orderitem = OrderItem.objects.get(pk=response.data["id"])
+        order = Order.objects.get(cart__user=request.user, is_ordered=False)
+        orderitem.order = order
+        orderitem.save()
+        return response
 
 
 class PayPalCheckoutView(APIView):
     def post(self, request):
         cart = Cart.objects.get(user=request.user)
-        paypal_total = cart.total + 10
         # Get the product (if not cart checkout)
         product = None
 
