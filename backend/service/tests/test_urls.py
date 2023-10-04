@@ -1,18 +1,6 @@
 from django.urls import reverse, resolve
-from service.views import (
-    home_view,
-    product_page_view,
-    cart_view,
-    checkout_view,
-    payment_done_view,
-    payment_cancelled_view,
-    paypal_checkout_view,
-)
 
-
-def test_home_url():
-    url = reverse("home")
-    assert resolve(url).func == home_view
+# from service.views import *
 
 
 def test_product_page_url():

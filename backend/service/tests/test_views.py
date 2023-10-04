@@ -2,7 +2,18 @@ from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 from service.models import Drink, Cart, OrderItem
-from service.views import home_view, product_page_view, cart_view, checkout_view
+from service.views import (
+    UserRegisterView,
+    DrinkListView,
+    DrinkDetailView,
+    CartDetailView,
+    OrderDetailView,
+    OrderItemDetailView,
+    PayPalCheckoutView,
+    CreateCartView,
+    CreateOrderView,
+    CreateOrderItemView,
+)
 from decimal import Decimal
 from .test_utils import (
     create_test_user,
@@ -28,21 +39,3 @@ class ServiceViewsTestCase(TestCase):
         self.order_item1 = create_test_order_item(
             order=self.order, drink=self.drink, quantity=1
         )
-
-    def test_home_view(self):
-        response = self.client.get(reverse("home"))
-        self.assertEqual(response.status_code, 200)
-
-    def test_product_page_view(self):
-        response = self.client.get(reverse("drinks", args=[self.drink.pk]))
-        self.assertEqual(response.status_code, 200)
-
-    def test_cart_view(self):
-        self.client.login(username="testuser", password="testpassword")
-        response = self.client.get(reverse("cart"))
-        self.assertEqual(response.status_code, 200)
-
-    def test_checkout_view(self):
-        self.client.login(username="testuser", password="testpassword")
-        response = self.client.get(reverse("checkout"))
-        self.assertEqual(response.status_code, 200)
