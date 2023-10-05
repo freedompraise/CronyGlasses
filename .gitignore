@@ -8,10 +8,10 @@ key.pem
 # dev.py
 /images/
 /staticfiles/images/images/
-service/__pycache__/
-service/migrations/__pycache__/
-service/management/__pycache__/
-service/management/commands/__pycache__/
-service/tests/__pycache__/
-cronyGlasses/__pycache__/
-cronyGlasses/settings/__pycache__/
+backend/service/__pycache__/
+backend/service/migrations/__pycache__/
+backend/service/management/__pycache__/
+backend/service/management/commands/__pycache__/
+backend/service/tests/__pycache__/
+backend/cronyGlasses/__pycache__/
+backend/cronyGlasses/settings/__pycache__/
