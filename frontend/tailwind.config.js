@@ -1,9 +1,6 @@
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-  // purge: [
-  //   "./src/**/*.{js,jsx,ts,tsx}", // Look for classes used in JS/JSX/TS/TSX files
-  //   "./public/index.html", // Look for classes used in the HTML file
-  // ],
-  darkMode: false, // or 'media' or 'class'
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {},
   },
