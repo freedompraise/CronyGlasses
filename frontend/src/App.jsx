@@ -14,6 +14,7 @@ function App() {
           <Route path="/" exact component={Home} />
           <Route path="/product/:id" exact component={Product} />
         </Switch>
+        <Footer />
       </Router>
     </div>
   );
