@@ -10,7 +10,7 @@ import { faUser, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Navbar = () => {
+const NavBar = () => {
   return (
     <nav
       className="flex justify-between items-center text-white h-16"
@@ -25,15 +25,15 @@ const Navbar = () => {
       <div className="flex items-center space-x-4 ml-8">
         {/* Twitter Icon */}
         <a href="https://twitter.com/freedom_praise">
-          <FontAwesomeIcon icon={faXTwitter} classname="fab fa-twitter" />
+          <FontAwesomeIcon icon={faXTwitter} className="fab fa-twitter" />
         </a>
         {/* GitHub Icon */}
         <a href="https://github.com/freedompraise">
-          <FontAwesomeIcon icon={faGithub} classname="fab fa-github" />
+          <FontAwesomeIcon icon={faGithub} className="fab fa-github" />
         </a>
         {/* LinkedIn Icon */}
         <a href="https://linkedin.com/in/praise-dike">
-          <FontAwesomeIcon icon={faLinkedin} classname="fab fa-linkedin" />
+          <FontAwesomeIcon icon={faLinkedin} className="fab fa-linkedin" />
         </a>
       </div>
 
@@ -50,7 +50,7 @@ const Navbar = () => {
       <div className="flex items-center space-x-4 mr-8">
         {/* User Icon */}
         <i className="fas fa-user">
-          <FontAwesomeIcon icon={faUser} classname="fas fa-user" />
+          <FontAwesomeIcon icon={faUser} className="fas fa-user" />
         </i>
         {/* Login */}
         <span>Login</span>
@@ -59,7 +59,7 @@ const Navbar = () => {
           <i className="fas fa-shopping-cart">
             <FontAwesomeIcon
               icon={faShoppingCart}
-              classname="fas fa-shopping-cart"
+              className="fas fa-shopping-cart"
             />
           </i>
           <span className="ml-1">0</span>
@@ -69,4 +69,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default NavBar;
