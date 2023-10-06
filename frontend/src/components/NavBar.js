@@ -1,4 +1,5 @@
 import React from "react";
+import icon from "../assets/icon.png";
 import {
   faXTwitter,
   faGithub,
@@ -37,15 +38,11 @@ const Navbar = () => {
       </div>
 
       {/* Center section */}
-      <div className="flex items-center">
+      <div className="flex flex-col items-center">
         {/* Project Icon */}
-        <a href="/" className="flex items-center mr-6">
-          <img
-            src="assets/icon.png"
-            alt="Project Icon"
-            className="w-8 h-8 mr-2"
-          />
-          <span>CRONYGLASSES</span>
+        <a href="/" className="flex items-center flex-col">
+          <img src={icon} alt="Project Icon" className="w-8 h-8 mr-2" />
+          <div className="text-xl">CRONYGLASSES</div>
         </a>
       </div>
 
