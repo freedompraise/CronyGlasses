@@ -19,11 +19,11 @@ SECRET_KEY = os.environ["SECRET_KEY"]
 
 ROOT_URLCONF = "cronyGlasses.urls"
 
-# CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = True
 
-# CORS_ALLOWED_ORIGINS = ["http://localhost:3000", "https://cronyglasses.onrender.com"]
+ACCESS_CONTROL_ALLOW_ORIGIN = "*"
 
-ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(" ")
+ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
