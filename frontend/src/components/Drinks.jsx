@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { getDrinks } from "../services/api";
-import Loader from "../components/Loader";
+import Loader from "./Loader";
 
-const Drink = () => {
+const Drinks = () => {
   const [drinks, setDrinks] = useState([]);
   const [loader, setLoader] = useState(false);
   const [error, setError] = useState("");
@@ -12,17 +12,16 @@ const Drink = () => {
 
     getDrinks()
       .then((res) => {
-        let drinksData = res.data.drinks;
-        setDrinks(drinksData);
+        setDrinks(res.data); // Update the drinks state with the response data
         setLoader(false);
-
-        console.log(drinksData);
       })
       .catch((err) => {
         setError(err.message);
         setLoader(false);
       });
   }, []);
+
+  console.log("Drinks State:", drinks);
 
   return (
     <>
@@ -40,13 +39,14 @@ const Drink = () => {
             {drinks &&
               drinks.map((prop, i) => (
                 <div key={i}>
-                  <div className="shadow-xl p-8 rounded-md md:h-[65vh]">
-                    {/* <img
+                  <div className="shadow-xl p-8 rounded-md md:h-[35vh]">
+                    <img
                       className="h-[25vh] md:h-[35vh]"
                       src={prop.image}
-                      alt=""
-                    /> */}
-                    <h2 className="mt-6 lg:text-xl">{prop.name}</h2>
+                      alt={prop.name}
+                    />
+                    <h2 className="mt-6 lg:text-xl text-black">{prop.name}</h2>
+                    {console.log(prop)}
                     <h2 className="text-xl font-bold mt-2">{prop.price} $</h2>
                   </div>
                 </div>
@@ -58,4 +58,4 @@ const Drink = () => {
   );
 };
 
-export default Drink;
+export default Drinks;
