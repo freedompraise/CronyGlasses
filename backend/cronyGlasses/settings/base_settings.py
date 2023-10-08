@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     "corsheaders",
     "rest_framework",
     "rest_framework_simplejwt",
+    "cloudinary",
+    "cloudinary_storage",
 ]
 
 MIDDLEWARE = [
@@ -48,7 +50,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": {
@@ -69,7 +70,6 @@ TEMPLATES = [
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
-                "django.template.context_processors.debug",
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
@@ -99,3 +99,13 @@ LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
+
+CLOUDINARY_STORAGE = {
+    "CLOUD_NAME": os.getenv("CLOUD_NAME"),
+    "API_KEY": os.getenv("API_KEY"),
+    "API_SECRET": os.getenv("API_SECRET"),
+}
+
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+
+MEDIA_URL = "/media/"
