@@ -7,6 +7,7 @@ cert.pem
 key.pem
 # dev.py
 /images/
+/media/
 /staticfiles/images/images/
 backend/service/__pycache__/
 backend/service/migrations/__pycache__/

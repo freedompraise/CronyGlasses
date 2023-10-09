@@ -23,12 +23,11 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.urls import reverse
-from django.utils.crypto import get_random_string
 
 from .models import Drink, Cart, Order, OrderItem, User
 from paypal.standard.forms import PayPalPaymentsForm
 
-from decimal import Decimal
+from random import randint
 
 # Global Total variable is used in the views to help calculate the total price of the cart
 from .utils import total, related_products, reviews
