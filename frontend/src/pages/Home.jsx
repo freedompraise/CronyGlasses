@@ -1,12 +1,13 @@
 import React from "react";
 import banner from "../assets/banner.png";
-import Drinks from "../components/Drinks";
+import { Drinks, WhyCrony } from "../components/INDEX";
 
 function Home() {
   return (
     <div className="">
       <img src={banner} alt="banner" className="w-full h-340" />
-      <h3 className="text-black">This is Home Page</h3>
+      <WhyCrony />
+      <p>Drink</p>
       <Drinks />
     </div>
   );

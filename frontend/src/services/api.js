@@ -15,3 +15,5 @@ export const getDrinks = async () => {
     console.log(error);
   }
 };
+
+export const getRandDrink = async () => {};
