@@ -31,7 +31,7 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
-    "service.apps.ServiceConfig",
+    "service",
     "paypal.standard.ipn",
     "sslserver",
     "corsheaders",
@@ -109,3 +109,5 @@ CLOUDINARY_STORAGE = {
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 MEDIA_URL = "/media/"
+
+# ROOT_URLCONF = BASE_DIR / "cronyGlasses/urls.py"
