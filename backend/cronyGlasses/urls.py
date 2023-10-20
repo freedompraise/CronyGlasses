@@ -25,6 +25,3 @@ urlpatterns = [
     path("api/", include("service.urls")),
     path("paypal-ipn/", paypal_views.ipn, name="paypal-ipn"),
 ]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

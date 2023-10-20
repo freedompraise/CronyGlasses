@@ -7,4 +7,3 @@ SECURE_HSTS_PRELOAD = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 WSGI_APPLICATION = "cronyGlasses.wsgi.application"
-ROOT_URLCONF = "cronyGlasses.urls"
