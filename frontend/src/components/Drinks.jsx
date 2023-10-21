@@ -33,31 +33,26 @@ const Drinks = () => {
             {" "}
             BROWSE OUR POPULAR ITEMS{" "}
           </h1>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 text-center gap-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:grid-cols-4 text-center gap-4">
             <div className="absolute left-1/2 -translate-x-1/2">
               {loader && <Loader />}
               <h1>{error}</h1>
             </div>
+
             {popularDrinks &&
               popularDrinks.map((prop, i) => (
-                <div key={i}>
-                  <div className="shadow-xl p-2 roun\ ded-md">
-                    <img
-                      className="h-[25vh] md:h-[35vh]"
-                      src={prop.image}
-                      alt={prop.name}
-                    />
-                    <h2 className="mt-6 lg:text-xl text-black">{prop.name}</h2>
-                    {console.log(prop)}
-                    <h2 className="text-xl font-bold mt-2">{prop.price} $</h2>
-                  </div>
+                <div className="mx-2 h-full" key={i}>
+                  <img className="" src={prop.image} alt={prop.name} />
+                  <h2 className="mt-6 lg:text-xl text-black">{prop.name}</h2>
+                  {console.log(prop)}
+                  <h2 className="text-xl font-bold mt-2">{prop.price} $</h2>
                 </div>
               ))}
           </div>
           <h1 className="py-4 text-center mb-4 text-xl">
             TOP SALES THIS WEEKEND
           </h1>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 textCenter gap-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:grid-cols-4 textCenter gap-1/4">
             <div className="absolute left-1/2 -translate-x-1/2">
               {loader && <Loader />}
               <h1>{error}</h1>
@@ -65,12 +60,8 @@ const Drinks = () => {
             {topDrinks &&
               topDrinks.map((prop, i) => (
                 <div key={i}>
-                  <div className="shadow-xl p-8 rounded-md md:h-[35vh]">
-                    <img
-                      className="h-[25vh] md:h-[35vh]"
-                      src={prop.image}
-                      alt={prop.name}
-                    />
+                  <div className="h-52 relative">
+                    <img className="" src={prop.image} alt={prop.name} />
                     <h2 className="mt-6 lg:text-xl text-black">{prop.name}</h2>
                     {console.log(prop)}
                     <h2 className="text-xl font-bold mt-2">{prop.price} $</h2>
