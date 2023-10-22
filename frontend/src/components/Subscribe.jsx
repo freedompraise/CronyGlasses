@@ -5,7 +5,7 @@ function Subscribe() {
     <div
       className=""
       style={{
-        backgroundColor: "rgb(63, 55, 55)",
+        backgroundColor: "rgb(140, 140, 140)",
       }}
     >
       <div className="flex flex-col items-center justify-center w-2/5 mx-auto">
