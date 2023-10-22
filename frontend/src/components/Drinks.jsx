@@ -34,12 +34,14 @@ const Drinks = () => {
             {" "}
             BROWSE OUR POPULAR ITEMS{" "}
           </h1>
+          <hr className="border-gray-300 mb-8" />
           <p className="text-center mt-4 mb-8">
             Quench your thirst with our popular drinks. Try them today and
             experience refreshment!
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:grid-cols-4 text-center gap-4">
-            <div className="absolute left-1/2 -translate-x-1/2">
+            {/* TO DO: make the drinks div centre aligned */}
+            <div className="absolute translate-x-1/2">
               {loader && <Loader />}
               <h1>{error}</h1>
             </div>
@@ -47,6 +49,7 @@ const Drinks = () => {
             {drinks &&
               drinks.map((prop, i) => (
                 <div className="mx-0 h-1/2 w-1/2" key={i}>
+                  {/* TO DO: make the div full width and height */}
                   <div className="flex items-center justify-center h-full">
                     <img className="" src={prop.image} alt={prop.name} />
                   </div>
