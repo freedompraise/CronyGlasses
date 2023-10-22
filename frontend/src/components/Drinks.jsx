@@ -3,8 +3,9 @@ import { getDrinks } from "../services/api";
 import Loader from "./Loader";
 
 const Drinks = () => {
-  const [popularDrinks, setPopularDrinks] = useState([]);
-  const [topDrinks, setTopDrinks] = useState([]);
+  // const [popularDrinks, setPopularDrinks] = useState([]);
+  // const [topDrinks, setTopDrinks] = useState([]);
+  const [drinks, setDrinks] = useState([]);
   const [loader, setLoader] = useState(false);
   const [error, setError] = useState("");
 
@@ -13,8 +14,8 @@ const Drinks = () => {
 
     getDrinks()
       .then((res) => {
-        setPopularDrinks(res.data.slice(0, 4)); // Update the popularDrinks state with the response data
-        setTopDrinks(res.data.slice(4, 8)); // Update the topDrinks state with the response data
+        setDrinks(res.data.slice(0, 8)); // Update the popularDrinks state with the response data
+        // setTopDrinks(res.data.slice(4, 8)); // Update the topDrinks state with the response data
         setLoader(false);
       })
       .catch((err) => {
@@ -23,7 +24,7 @@ const Drinks = () => {
       });
   }, []);
 
-  console.log("Drinks State:", popularDrinks);
+  console.log("Drinks State:", drinks);
 
   return (
     <>
@@ -33,37 +34,25 @@ const Drinks = () => {
             {" "}
             BROWSE OUR POPULAR ITEMS{" "}
           </h1>
+          <p className="text-center mt-4 mb-8">
+            Quench your thirst with our popular drinks. Try them today and
+            experience refreshment!
+          </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:grid-cols-4 text-center gap-4">
             <div className="absolute left-1/2 -translate-x-1/2">
               {loader && <Loader />}
               <h1>{error}</h1>
             </div>
 
-            {popularDrinks &&
-              popularDrinks.map((prop, i) => (
+            {drinks &&
+              drinks.map((prop, i) => (
                 <div className="mx-0 h-1/2 w-1/2" key={i}>
-                  <img className="" src={prop.image} alt={prop.name} />
+                  <div className="flex items-center justify-center h-full">
+                    <img className="" src={prop.image} alt={prop.name} />
+                  </div>
                   <h2 className="mt-6 lg:text-xl text-black">{prop.name}</h2>
                   {console.log(prop)}
-                  <h2 className="text-xl font-bold mt-2">{prop.price} $</h2>
-                </div>
-              ))}
-          </div>
-          <h1 className="py-4 text-center mb-4 text-xl">
-            TOP SALES THIS WEEKEND
-          </h1>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:grid-cols-4 textCenter gap-1/4">
-            <div className="absolute left-1/2 -translate-x-1/2">
-              {loader && <Loader />}
-              <h1>{error}</h1>
-            </div>
-            {topDrinks &&
-              topDrinks.map((prop, i) => (
-                <div className="h-1/2 w-1/2 mx-0" key={i}>
-                  <img className="" src={prop.image} alt={prop.name} />
-                  <h2 className="mt-6 lg:text-xl text-black">{prop.name}</h2>
-                  {console.log(prop)}
-                  <h2 className="text-xl font-bold mt-2">{prop.price} $</h2>
+                  <h2 className="text-xl font-bold mt-2">${prop.price} </h2>
                 </div>
               ))}
           </div>
