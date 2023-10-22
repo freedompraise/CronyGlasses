@@ -3,7 +3,7 @@ import React from "react";
 const WhyCrony = () => {
   return (
     <div className="max-w-6xl mx-auto my-8 p-4 text-center">
-      <h2 className="text-xl mb-4">WHY SHOP WITH CRONYGLASSES</h2>
+      <h2 className="text-xl mb-4">WHY SHOP WITH CRONYGLASSES?</h2>
       <br />
       <p className="text-base mb-4">
         <strong>Quality Eyewear Selection:</strong> At CronyGlasses, we curate a
