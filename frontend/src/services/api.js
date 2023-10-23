@@ -20,3 +20,12 @@ export const getRandDrink = async () => {
     console.log(error);
   }
 };
+
+export const getDrink = async (id) => {
+  try {
+    const response = await axios.get(`${url}${id}`);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};

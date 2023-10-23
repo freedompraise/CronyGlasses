@@ -4,5 +4,4 @@ export { default as WhyCrony } from "../components/WhyCrony";
 export { default as Loader } from "../components/Loader";
 export { default as Drinks } from "../components/Drinks";
 export { default as RandomDrink } from "../components/RandomDrink";
-
 export { default as Subscribe } from "../components/Subscribe";
