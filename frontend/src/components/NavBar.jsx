@@ -15,9 +15,7 @@ const NavBar = () => {
     <nav
       className="flex justify-between items-center text-white h-16"
       style={{
-        backgroundColor: "rgb(63, 55, 55)",
-        height: "70px",
-        width: "100%",
+        backgroundColor: "rgb(140, 140, 140)",
       }}
     >
       {/* Left section */}

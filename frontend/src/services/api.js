@@ -16,4 +16,11 @@ export const getDrinks = async () => {
   }
 };
 
-export const getRandDrink = async () => {};
+export const getRandDrink = async () => {
+  try {
+    const response = await axios.get(`${url}random`);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};

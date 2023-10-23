@@ -169,3 +169,13 @@ class PayPalCheckoutView(APIView):
         }
 
         form = PayPalPaymentsForm(initial=paypal_dict)
+
+
+class RandomDrinkView(APIView):
+    permission_classes = [AllowAny]
+    authentication_classes = [BasicAuthentication]
+
+    def get(self, request):
+        random_drink = Drink.objects.order_by("?").first()
+        serializer = DrinkSerializer(random_drink)
+        return Response(serializer.data)
