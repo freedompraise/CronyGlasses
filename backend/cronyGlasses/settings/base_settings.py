@@ -110,4 +110,4 @@ DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 MEDIA_URL = "/media/"
 
-ROOT_URLCONF = BASE_DIR / "cronyGlasses/urls.py"
+ROOT_URLCONF = "cronyGlasses.urls"
