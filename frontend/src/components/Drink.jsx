@@ -4,12 +4,14 @@ import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
 function Drink() {
   const [Drink, setDrink] = useState([]);
+  const [RelatedDrinks, setRelatedDrinks] = useState([]);
   const { id } = useParams();
 
   useEffect(() => {
     getDrink(id)
       .then((res) => {
-        setDrink(res.data);
+        setDrink(res.data.drink);
+        setRelatedDrinks(res.data.relatedDrinks);
       })
       .catch((err) => {
         console.log(err);
@@ -29,7 +31,7 @@ function Drink() {
         <ul className="list-disc list-inside">
           <li>70cl bottle</li>
           <li>All Natural Flavourings</li>
-          <li>ABV: {Drink.abv}% vol</li>
+          <li>ABV: 4.5% vol</li>
         </ul>
         <div className="flex flex-row my-4">
           <label htmlFor="qty" className="mr-4">
