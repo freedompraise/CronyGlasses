@@ -1,5 +1,4 @@
 import React from "react";
-import wineglass from "../assets/wineglass.jpg";
 
 const FAQ = () => {
   return (
