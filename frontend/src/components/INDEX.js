@@ -6,3 +6,4 @@ export { default as Drinks } from "../components/Drinks";
 export { default as RandomDrink } from "../components/RandomDrink";
 export { default as Drink } from "../components/Drink";
 export { default as Subscribe } from "../components/Subscribe";
+export { default as FAQ } from "../components/FAQ";

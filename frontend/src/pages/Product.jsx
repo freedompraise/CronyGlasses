@@ -1,11 +1,11 @@
 import React from "react";
-import { Drink } from "../components/INDEX";
+import { Drink, FAQ } from "../components/INDEX";
 
 function Product() {
   return (
     <div className="">
       <Drink />
-      <h1 className="text-white">Welcome to the Product Page</h1>
+      <FAQ />
     </div>
   );
 }
