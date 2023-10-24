@@ -3,10 +3,6 @@ import axios from "axios";
 
 const url = "http://localhost:8000/api/drinks/";
 
-// const api = axios.create({
-//   baseURL: url,
-// });
-
 export const getDrinks = async () => {
   try {
     const response = await axios.get(url);
@@ -19,6 +15,15 @@ export const getDrinks = async () => {
 export const getRandDrink = async () => {
   try {
     const response = await axios.get(`${url}random`);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getDrink = async (id) => {
+  try {
+    const response = await axios.get(`${url}${id}`);
     return response;
   } catch (error) {
     console.log(error);
