@@ -17,8 +17,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 SECRET_KEY = os.environ["SECRET_KEY"]
 
-ROOT_URLCONF = "cronyGlasses.urls"
-
 CORS_ALLOW_ALL_ORIGINS = True
 
 ACCESS_CONTROL_ALLOW_ORIGIN = "*"
@@ -109,5 +107,3 @@ CLOUDINARY_STORAGE = {
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 MEDIA_URL = "/media/"
-
-# ROOT_URLCONF = BASE_DIR / "cronyGlasses/urls.py"
