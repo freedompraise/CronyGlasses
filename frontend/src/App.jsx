@@ -5,6 +5,7 @@ import Product from "./pages/Product";
 import Login from "./pages/Login";
 import Account from "./pages/Account";
 import Signup from "./pages/Signup";
+import Cart from "./pages/Cart";
 import { NavBar, Footer, Subscribe } from "./components/INDEX";
 import "tailwindcss/tailwind.css";
 
@@ -19,6 +20,7 @@ function App() {
           <Route path="/account/login" exact component={Login} />
           <Route path="/account/signup" exact component={Signup} />
           <Route path="/account" exact component={Account} />
+          <Route path="/cart" exact component={Cart} />
         </Switch>
         <Subscribe />
         <Footer />
