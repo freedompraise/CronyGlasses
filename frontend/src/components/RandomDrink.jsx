@@ -17,7 +17,9 @@ function RandomDrink() {
   return (
     <div className="flex flex-row">
       <div className="w-1/2">
-        <img src={randomDrink.image} alt={randomDrink.name} />
+        <a href={`/drinks/${randomDrink.id}`}>
+          <img src={randomDrink.image} alt={randomDrink.name} />
+        </a>
       </div>
       <div className="w-1/2 p-4">
         <h2 className="text-3xl font-bold">{randomDrink.name}</h2>
