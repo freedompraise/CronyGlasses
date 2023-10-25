@@ -45,13 +45,15 @@ const NavBar = () => {
       </div>
 
       {/* Right section */}
-      <div className="flex items-center space-x-4 mr-8">
+      <div className="flex items-center space-x-2 mr-8">
         {/* User Icon */}
-        <i className="fas fa-user">
-          <FontAwesomeIcon icon={faUser} className="fas fa-user" />
-        </i>
-        {/* Login */}
-        <span>Login</span>
+        <a href="/account">
+          <i className="fas fa-user">
+            <FontAwesomeIcon icon={faUser} className="fas fa-user" />
+          </i>
+          {/* Login */}
+          <span>LOGIN</span>
+        </a>
         {/* Cart Icon */}
         <div className="flex items-center">
           <i className="fas fa-shopping-cart">
