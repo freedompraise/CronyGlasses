@@ -73,15 +73,25 @@ const Cart = () => {
             Tax and shipping calculated at checkout
           </p>
           <div className="flex flex-col space-y-2 my-4">
-            <button className="bg-blue-500 text-white py-2 px-2/3 rounded-lg overflow-hidden ">
-              <div className="truncate"> Checkout</div>
-            </button>
-            <button className="bg-yellow-500 text-white py-2 px-2/3 rounded-lg overflow-hidden">
+            <a
+              className="bg-blue-500 text-white py-2 px-2/3 rounded-lg overflow-hidden text-center hover:bg-blue-700 "
+              href="/checkout"
+            >
+              <button>
+                <div className="truncate"> CHECKOUT</div>
+              </button>
+            </a>
+            <button className="bg-yellow-500 text-white py-2 px-2/3 rounded-lg overflow-hidden hover:bg-yellow-700 ">
               <div className="truncate">Pay with PayPal</div>
             </button>
-            <button className="border border-gray-500 text-gray-500 px-2/3 py-2 rounded-lg overflow-hidden ">
-              <div className="truncate">Continue Shopping</div>
-            </button>
+            <a
+              className="text-black py-2 px-2/3 rounded-lg overflow-hidden text-center border hover:border-black "
+              href="/"
+            >
+              <button>
+                <div className="truncate"> BACK TO SHOPPING</div>
+              </button>
+            </a>
           </div>
         </div>
       </div>
