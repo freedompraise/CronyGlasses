@@ -51,7 +51,9 @@ const Drinks = () => {
                 <div className="mx-0 h-1/2 w-1/2" key={i}>
                   {/* TO DO: make the div full width and height */}
                   <div className="flex items-center justify-center h-full">
-                    <img className="" src={prop.image} alt={prop.name} />
+                    <a href={`/drinks/${prop.id}`}>
+                      <img className="" src={prop.image} alt={prop.name} />
+                    </a>
                   </div>
                   <h2 className="mt-6 lg:text-xl text-black">{prop.name}</h2>
                   {console.log(prop)}
