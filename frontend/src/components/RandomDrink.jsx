@@ -64,7 +64,7 @@ function RandomDrink() {
                   name="qty"
                   value={quantity}
                   readOnly
-                  className="border border-gray-400 p-2 text-center appearance-none w-full md:w-2/5"
+                  className="border border-gray-400 p-2 text-center appearance-none w-full sm:w-2/5"
                 />
                 <button
                   className="bg-gray-100 border border-gray-400 rounded-r p-2"
@@ -76,7 +76,7 @@ function RandomDrink() {
             </div>
           </div>
 
-          <div className="flex flex-col md:flex-row justify-items-center ">
+          <div className="flex flex-col sm:flex-row justify-items-center ">
             {" "}
             <button className="hover:bg-blue-gray-400 md:my-0 my-2 text-black font-bold py-2 px-4 rounded border border-black mr-2 w-full">
               Add to Cart
