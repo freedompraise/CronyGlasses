@@ -39,7 +39,7 @@ function RandomDrink() {
         </div>
         <div className="w-1/2 mx-auto p-4">
           <h2 className="text-3xl font-bold">{randomDrink.name}</h2>
-          <hr className="my-4 border-t  border-gray-300" />
+          <hr className="my-4 border-t  border-black" />
           <h3 className="text-xl font-bold">${randomDrink.price}</h3>
           <p className="text-lg my-4">{randomDrink.description}</p>
           <ul className="list-disc list-inside">
@@ -48,7 +48,7 @@ function RandomDrink() {
             <li>ABV: {randomDrink.abv}% vol</li>
           </ul>
 
-          <div className=" my-8">
+          <div className=" mt-8 mb-2">
             <div className="text-center flex flex-row font-semibold ">Qty</div>
             <div className="text-center">
               <div className="flex items-center">
@@ -76,12 +76,15 @@ function RandomDrink() {
             </div>
           </div>
 
-          <button className="hover:bg-blue-gray-400 text-black font-bold py-2 px-4 rounded border border:bg-black mr-4">
-            Add to Cart
-          </button>
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Buy with Shop
-          </button>
+          <div className="flex flex-row justify-items-center ">
+            {" "}
+            <button className="hover:bg-blue-gray-400 text-black font-bold py-2 px-4 rounded border border-black mr-2 w-full">
+              Add to Cart
+            </button>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white  font-bold py-2 px-4 rounded w-full">
+              Buy with PayPal
+            </button>
+          </div>
         </div>
       </div>
     </div>
