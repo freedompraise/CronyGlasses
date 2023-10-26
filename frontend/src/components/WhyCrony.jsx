@@ -2,7 +2,7 @@ import React from "react";
 
 const WhyCrony = () => {
   return (
-    <div className="max-w-6xl mx-auto my-8 p-4 text-center">
+    <div className="max-w-6xl mx-auto mt-16 p-6 text-center">
       <h2 className="text-xl mb-4 font-semibold">
         WHY SHOP WITH CRONYGLASSES?
       </h2>
