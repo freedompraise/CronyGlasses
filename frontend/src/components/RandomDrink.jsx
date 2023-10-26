@@ -45,7 +45,7 @@ function RandomDrink() {
           <ul className="list-disc list-inside">
             <li>70cl bottle</li>
             <li>All Natural Flavourings</li>
-            <li>ABV: {randomDrink.abv}% vol</li>
+            <li>ABV: 3.5{randomDrink.abv}% vol</li>
           </ul>
 
           <div className=" mt-8 mb-2">
