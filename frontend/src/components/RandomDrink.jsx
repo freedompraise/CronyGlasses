@@ -47,31 +47,35 @@ function RandomDrink() {
             <li>All Natural Flavourings</li>
             <li>ABV: {randomDrink.abv}% vol</li>
           </ul>
-          <div className="flex flex-row my-8">
-            <label htmlFor="qty" className="mr-4 flex items-center ">
-              Qty
-            </label>
-            <button
-              className="bg-gray-300 border border-gray-400 rounded-l p-2"
-              onClick={handleDecrement}
-            >
-              <FontAwesomeIcon icon={faMinus} />
-            </button>
-            <input
-              type="number"
-              id="qty"
-              name="qty"
-              value={quantity}
-              placeholder="0"
-              className="border border-gray-400 rounded-md p-2 w-1/3 appearance-none text-center "
-            />
-            <button
-              className="bg-gray-300 border border-gray-400 rounded-r p-2"
-              onClick={handleIncrement}
-            >
-              <FontAwesomeIcon icon={faPlus} />
-            </button>
+
+          <div className=" my-8">
+            <div className="text-center flex flex-row">Qty</div>
+            <div className="text-center">
+              <div className="flex items-center">
+                <button
+                  className="bg-gray-300 border border-gray-400 rounded-l p-2"
+                  onClick={handleDecrement}
+                >
+                  <FontAwesomeIcon icon={faMinus} />
+                </button>
+                <input
+                  type="number"
+                  id="qty"
+                  name="qty"
+                  value={quantity}
+                  readOnly
+                  className="border border-gray-400 p-2 w-1/3 text-center appearance-none"
+                />
+                <button
+                  className="bg-gray-300 border border-gray-400 rounded-r p-2"
+                  onClick={handleIncrement}
+                >
+                  <FontAwesomeIcon icon={faPlus} />
+                </button>
+              </div>
+            </div>
           </div>
+
           <button className="hover:bg-blue-gray-400 text-black font-bold py-2 px-4 rounded border border:bg-black mr-4">
             Add to Cart
           </button>
