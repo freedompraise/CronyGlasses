@@ -6,8 +6,8 @@ function Home() {
   return (
     <div className="">
       <img src={banner} alt="banner" className="w-full h-340" />
-      <WhyCrony />
       <RandomDrink />
+      <WhyCrony />
       <Drinks />
     </div>
   );

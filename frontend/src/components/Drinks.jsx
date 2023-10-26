@@ -15,7 +15,6 @@ const Drinks = () => {
     getDrinks()
       .then((res) => {
         setDrinks(res.data.slice(0, 8)); // Update the popularDrinks state with the response data
-        // setTopDrinks(res.data.slice(4, 8)); // Update the topDrinks state with the response data
         setLoader(false);
       })
       .catch((err) => {
@@ -28,39 +27,35 @@ const Drinks = () => {
 
   return (
     <>
-      <div className="py-12 bg-[#fefefe]">
-        <div className="container max-w-6xl mx-auto my-8 p-4">
-          <h1 className="text-center py-4 text-xl mb-4 ">
-            {" "}
-            BROWSE OUR POPULAR ITEMS{" "}
-          </h1>
-          <hr className="border-gray-300 mb-8" />
-          <p className="text-center mt-4 mb-8">
-            Quench your thirst with our popular drinks. Try them today and
-            experience refreshment!
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:grid-cols-4 text-center gap-4">
-            {/* TO DO: make the drinks div centre aligned */}
-            <div className="absolute translate-x-1/2">
-              {loader && <Loader />}
-              <h1>{error}</h1>
-            </div>
-
-            {drinks &&
-              drinks.map((prop, i) => (
-                <div className="mx-0 h-1/2 w-1/2" key={i}>
-                  {/* TO DO: make the div full width and height */}
-                  <div className="flex items-center justify-center h-full">
-                    <a href={`/drinks/${prop.id}`}>
-                      <img className="" src={prop.image} alt={prop.name} />
-                    </a>
-                  </div>
-                  <h2 className="mt-6 lg:text-xl text-black">{prop.name}</h2>
-                  {console.log(prop)}
-                  <h2 className="text-xl font-bold mt-2">${prop.price} </h2>
-                </div>
-              ))}
+      <div className="container max-w-6xl mx-auto mt-6 p-6 text-center">
+        <h1 className="text-xl mb-4 font-semibold">
+          {" "}
+          BROWSE OUR POPULAR ITEMS{" "}
+        </h1>
+        <hr className="border-black mb-8" />
+        <p className="text-center mt-4 mb-8">
+          Quench your thirst with our popular drinks. Try them today and
+          experience refreshment!
+        </p>
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 lg:grid-cols-4 text-center gap-4">
+          <div className="absolute translate-x-1/2">
+            {loader && <Loader />}
+            <h1>{error}</h1>
           </div>
+
+          {drinks &&
+            drinks.map((prop, i) => (
+              <div className="mx-auto h-1/2 w-1/2" key={i}>
+                <div className="flex items-center justify-center h-full">
+                  <a href={`/drinks/${prop.id}`}>
+                    <img className="" src={prop.image} alt={prop.name} />
+                  </a>
+                </div>
+                <h2 className="mt-6 lg:text-xl text-black">{prop.name}</h2>
+                {console.log(prop)}
+                <h2 className="text-xl font-bold mt-2">${prop.price} </h2>
+              </div>
+            ))}
         </div>
       </div>
     </>
