@@ -27,7 +27,7 @@ function RandomDrink() {
 
   return (
     <div className="container bg-white px-6 mx-auto max-w-6xl mt-8">
-      <div className="flex flex-col md:flex-row mx-auto ">
+      <div className="flex flex-col md:flex-row ">
         <div className="w-80 md:my-0 my-6 mx-auto">
           <a href={`/drinks/${randomDrink.id}`}>
             <img
@@ -37,10 +37,10 @@ function RandomDrink() {
             />
           </a>
         </div>
-        <div className=" mx-auto">
+        <div className="">
           <h2 className="text-3xl font-bold">{randomDrink.name}</h2>
           <hr className="my-4 border-t  border-black" />
-          <h3 className="text-xl font-bold">${randomDrink.price}</h3>
+          <h3 className="text-xl">${randomDrink.price}</h3>
           <p className="text-lg my-4">{randomDrink.description}</p>
           <ul className="list-disc list-inside">
             <li>70cl bottle</li>
