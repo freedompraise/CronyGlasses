@@ -30,7 +30,7 @@ const Drinks = () => {
     <>
       <div className="py-12 bg-[#fefefe]">
         <div className="container max-w-6xl mx-auto my-8 p-4">
-          <h1 className="text-center py-4 text-xl mb-4 ">
+          <h1 className="text-center py-4 text-xl mb-4 font-semibold ">
             {" "}
             BROWSE OUR POPULAR ITEMS{" "}
           </h1>
