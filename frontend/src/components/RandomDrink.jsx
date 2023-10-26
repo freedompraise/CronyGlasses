@@ -27,8 +27,8 @@ function RandomDrink() {
 
   return (
     <div className="container bg-white p-4 mx-auto max-w-6xl mt-8">
-      <div className="flex flex-col md:flex-row mx-auto">
-        <div className="w-60">
+      <div className="flex flex-col md:flex-row mx-auto ">
+        <div className="w-60 md:my-0 my-6">
           <a href={`/drinks/${randomDrink.id}`}>
             <img
               src={randomDrink.image}
@@ -51,9 +51,9 @@ function RandomDrink() {
           <div className=" mt-8 mb-2">
             <div className="text-center flex flex-row font-semibold ">Qty</div>
             <div className="text-center">
-              <div className="flex items-center">
+              <div className="flex items-center ">
                 <button
-                  className="bg-gray-300 border border-gray-400 rounded-l p-2"
+                  className="bg-gray-100 border border-gray-400 rounded-l p-2"
                   onClick={handleDecrement}
                 >
                   <FontAwesomeIcon icon={faMinus} />
@@ -64,10 +64,10 @@ function RandomDrink() {
                   name="qty"
                   value={quantity}
                   readOnly
-                  className="border border-gray-400 p-2 w-1/3 text-center appearance-none"
+                  className="border border-gray-400 p-2 text-center appearance-none w-full md:w-2/5"
                 />
                 <button
-                  className="bg-gray-300 border border-gray-400 rounded-r p-2"
+                  className="bg-gray-100 border border-gray-400 rounded-r p-2"
                   onClick={handleIncrement}
                 >
                   <FontAwesomeIcon icon={faPlus} />
