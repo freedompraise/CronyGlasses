@@ -26,9 +26,9 @@ function RandomDrink() {
   }, []);
 
   return (
-    <div className="container bg-white p-4 md:p-8 mx-auto max-w-6xl mt-8">
-      <div className="flex flex-row">
-        <div className="w-1/3">
+    <div className="container bg-white p-4 mx-auto max-w-6xl mt-8">
+      <div className="flex flex-col md:flex-row mx-auto">
+        <div className="w-60">
           <a href={`/drinks/${randomDrink.id}`}>
             <img
               src={randomDrink.image}
@@ -37,7 +37,7 @@ function RandomDrink() {
             />
           </a>
         </div>
-        <div className="w-1/2 mx-auto p-4">
+        <div className=" mx-auto">
           <h2 className="text-3xl font-bold">{randomDrink.name}</h2>
           <hr className="my-4 border-t  border-black" />
           <h3 className="text-xl font-bold">${randomDrink.price}</h3>
@@ -76,9 +76,9 @@ function RandomDrink() {
             </div>
           </div>
 
-          <div className="flex flex-row justify-items-center ">
+          <div className="flex flex-col md:flex-row justify-items-center ">
             {" "}
-            <button className="hover:bg-blue-gray-400 text-black font-bold py-2 px-4 rounded border border-black mr-2 w-full">
+            <button className="hover:bg-blue-gray-400 md:my-0 my-2 text-black font-bold py-2 px-4 rounded border border-black mr-2 w-full">
               Add to Cart
             </button>
             <button className="bg-blue-500 hover:bg-blue-700 text-white  font-bold py-2 px-4 rounded w-full">
