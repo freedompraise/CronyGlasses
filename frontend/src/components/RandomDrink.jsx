@@ -26,9 +26,9 @@ function RandomDrink() {
   }, []);
 
   return (
-    <div className="container bg-white p-4 mx-auto max-w-6xl mt-8">
+    <div className="container bg-white px-6 mx-auto max-w-6xl mt-8">
       <div className="flex flex-col md:flex-row mx-auto ">
-        <div className="w-60 md:my-0 my-6">
+        <div className="w-80 md:my-0 my-6 mx-auto">
           <a href={`/drinks/${randomDrink.id}`}>
             <img
               src={randomDrink.image}
