@@ -39,7 +39,7 @@ function RandomDrink() {
         </div>
         <div className="w-1/2 mx-auto p-4">
           <h2 className="text-3xl font-bold">{randomDrink.name}</h2>
-          <hr className="my-4" />
+          <hr className="my-4 border-t  border-gray-300" />
           <h3 className="text-xl font-bold">${randomDrink.price}</h3>
           <p className="text-lg my-4">{randomDrink.description}</p>
           <ul className="list-disc list-inside">
@@ -49,7 +49,7 @@ function RandomDrink() {
           </ul>
 
           <div className=" my-8">
-            <div className="text-center flex flex-row">Qty</div>
+            <div className="text-center flex flex-row font-semibold ">Qty</div>
             <div className="text-center">
               <div className="flex items-center">
                 <button
