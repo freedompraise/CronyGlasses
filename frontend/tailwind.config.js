@@ -7,5 +7,19 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    require("@tailwindcss/forms"),
+    function ({ addComponents }) {
+      addComponents({
+        ".custom-container": {
+          backgroundColor: "#ffffff",
+          textAlign: "center",
+          paddingX: "8.5rem",
+          marginX: "auto",
+          maxWidth: "72rem",
+          marginTop: "2rem",
+        },
+      });
+    },
+  ],
 };
