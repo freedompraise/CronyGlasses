@@ -12,7 +12,7 @@ import "tailwindcss/tailwind.css";
 
 function App() {
   return (
-    <div>
+    <div className="font-serif">
       <Router>
         <NavBar />
         <Switch>

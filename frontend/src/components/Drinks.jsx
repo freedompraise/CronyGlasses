@@ -33,7 +33,7 @@ const Drinks = () => {
           BROWSE OUR POPULAR ITEMS{" "}
         </h1>
         <hr className="border-black mb-8" />
-        <p className="text-center mt-4 mb-8">
+        <p className="text-center mt-4 mb-8 font-sans ">
           Quench your thirst with our popular drinks. Try them today and
           experience refreshment!
         </p>
