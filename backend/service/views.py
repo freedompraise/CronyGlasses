@@ -1,17 +1,14 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib import messages
-from rest_framework import status
+from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.authentication import BasicAuthentication
 from rest_framework.generics import (
     CreateAPIView,
     ListCreateAPIView,
     RetrieveUpdateDestroyAPIView,
 )
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.contrib.auth import authenticate
 from .serializers import (
     DrinkSerializer,
     OrderSerializer,
@@ -19,8 +16,6 @@ from .serializers import (
     CartSerializer,
     UserSerializer,
 )
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.urls import reverse
 
@@ -30,7 +25,6 @@ from paypal.standard.forms import PayPalPaymentsForm
 from random import randint
 
 # Global Total variable is used in the views to help calculate the total price of the cart
-from .utils import total, related_products, reviews
 
 
 class UserRegisterView(CreateAPIView):
@@ -168,7 +162,7 @@ class PayPalCheckoutView(APIView):
             "invoice": product.id if product else cart.id,
         }
 
-        form = PayPalPaymentsForm(initial=paypal_dict)
+        PayPalPaymentsForm(initial=paypal_dict)
 
 
 class RandomDrinkView(APIView):
