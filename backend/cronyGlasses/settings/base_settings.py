@@ -1,7 +1,9 @@
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-import dj_database_url
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import db
 
 load_dotenv()
 
@@ -78,6 +80,7 @@ TEMPLATES = [
 ]
 
 # Database
+cred = credentials.Certificate(os.getenv("DATABASE_URL"))
 if str(os.environ.get("USE_SQLITE")).lower() == "true":
     DATABASES = {
         "default": {
@@ -86,11 +89,19 @@ if str(os.environ.get("USE_SQLITE")).lower() == "true":
         }
     }
 else:
-    DATABASES = {
-        "default": dj_database_url.parse(
-            os.environ.get("DATABASE_URL"), conn_max_age=600
-        ),
-    }
+    firebase_admin.initialize_app(cred, {"databaseURL": os.getenv("DATABASE_URL")})
+    # DATABASES = {
+    #     "default": {
+    #         "ENGINE": "django.db.backends.mysql",
+    #         "NAME": os.getenv("DATABASE_NAME"),
+    #         "USER": os.getenv("DATABASE_USER"),
+    #         "PASSWORD": os.getenv("DATABASE_PASSWORD"),
+    #         "HOST": os.getenv("DATABASE_HOST"),
+    #         "PORT": os.getenv("DATABASE_PORT"),
+    #     }
+    # }
+
+    ref = db.reference("/")
 
 # Internationalization
 LANGUAGE_CODE = "en-us"
