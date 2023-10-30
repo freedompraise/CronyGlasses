@@ -65,7 +65,7 @@ class DrinkDetailView(RetrieveUpdateDestroyAPIView):
         serializer = self.get_serializer(instance)
 
         # Get related drinks (4 random drinks excluding the current drink)
-        related_drinks = Drink.objects.exclude(pk=instance.pk).order_by("?")[:4]
+        related_drinks = Drink.objects.exclude(pk=instance.pk).order_by("?")[:3]
         related_drinks_serializer = DrinkSerializer(related_drinks, many=True)
 
         # Generate a random review count
