@@ -2,9 +2,9 @@ import React from "react";
 
 const FAQ = () => {
   return (
-    <div className="bg-white flex flex-col justify-center items-center p-4 md:p-10">
+    <div className="bg-white flex flex-col p-4 md:p-10">
       <div className="max-w-md mx-auto">
-        <div className="lg:text-center">
+        <div className="">
           <h2 className="text-base text-indigo-600 font-semibold tracking-wide uppercase">
             Frequently Asked Questions
           </h2>
