@@ -4,14 +4,12 @@ import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
 function Drink() {
   const [Drink, setDrink] = useState([]);
-  const [RelatedDrinks, setRelatedDrinks] = useState([]);
   const { id } = useParams();
 
   useEffect(() => {
     getDrink(id)
       .then((res) => {
         setDrink(res.data.drink);
-        setRelatedDrinks(res.data.relatedDrinks);
       })
       .catch((err) => {
         console.log(err);
