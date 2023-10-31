@@ -18,23 +18,20 @@ const FAQ = () => {
     <div className="mt-16">
       <div className="justify-center">
         <div>
-          <h2 className="text-base text-blue-600 font-semibold tracking-wide uppercase">
+          <h2 className="text-center text-lg font-bold uppercase mb-4">
             Frequently Asked Questions
           </h2>
-          <p className="mt-2 text-2xl leading-8 font-bold tracking-tight text-gray-900 sm:text-2xl">
-            Need more information?
-          </p>
-          <p className="mt-4 max-w-2xl text-xl text-gray-500 ">
+          <p className="max-w-2xl text-xl text-gray-500 ">
             Check out our frequently asked questions for more information about
             our products and services.
           </p>
         </div>
 
         <div className="mt-8">
-          <div className="mx-auto">
+          <div className="mx-auto justify-center">
             <h3
               onClick={toggleProductRelated}
-              className="text-lg font-medium text-indigo-600 cursor-pointer flex justify-between items-center"
+              className="text-lg font-medium cursor-pointer flex justify-between items-center"
             >
               Product Related
               <FontAwesomeIcon icon={productRelatedOpen ? faMinus : faPlus} />
@@ -59,7 +56,7 @@ const FAQ = () => {
           <div>
             <h3
               onClick={togglePurchaseRelated}
-              className="text-lg font-medium text-indigo-600 cursor-pointer flex justify-between items-center mt-8"
+              className="text-lg font-medium cursor-pointer flex justify-between items-center mt-8"
             >
               Purchase Related
               <FontAwesomeIcon icon={purchaseRelatedOpen ? faMinus : faPlus} />
