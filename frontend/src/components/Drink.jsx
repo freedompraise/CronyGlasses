@@ -56,12 +56,14 @@ function Drink(props) {
             </button>
           </div>
         </div>
-        <button className="hover:bg-black hover:text-white text-black font-bold py-2 px-4 rounded rounded-md border border-black  mr-4">
-          Add to Cart
-        </button>
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          Buy with Paypal
-        </button>
+        <div className="flex flex-col sm:flex-row justify-items-center ">
+          <button className="hover:bg-black hover:text-white md:my-0 my-2 text-black font-bold py-2 px-4 rounded rounded-md border border-black  mr-4">
+            Add to Cart
+          </button>
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ">
+            Buy with Paypal
+          </button>
+        </div>
       </div>
     </div>
   );
