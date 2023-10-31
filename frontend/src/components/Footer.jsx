@@ -7,7 +7,7 @@ const Footer = () => {
         <p>&copy; 2023 CronyGlasses</p>
         <ul className="flex justify-center mt-2">
           <li className="mx-2">
-            <a href="#" className="text-white hover:text-gray-300">
+            <a href="/" className="text-white hover:text-gray-300">
               Home
             </a>
           </li>
