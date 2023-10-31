@@ -146,6 +146,9 @@ class CreateOrderItemView(CreateAPIView):
 
 
 class PayPalCheckoutView(APIView):
+    authentication_classes = [BasicAuthentication]
+    permission_classes = [AllowAny]
+
     def post(self, request):
         cart = Cart.objects.get(user=request.user)
         # Get the product (if not cart checkout)
