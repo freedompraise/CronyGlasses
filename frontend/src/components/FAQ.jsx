@@ -19,7 +19,7 @@ const FAQ = () => {
       <div className="justify-center">
         <div>
           <h2 className="text-center text-lg font-bold uppercase mb-4">
-            Frequently Asked Questions
+            F A Q 's
           </h2>
           <p className="max-w-2xl text-xl text-gray-500 ">
             Check out our frequently asked questions for more information about
@@ -39,7 +39,7 @@ const FAQ = () => {
             {productRelatedOpen && (
               <dl className="space-y-10 mt-4">
                 <div>
-                  <dt className="text-lg leading-6 font-medium text-gray-900">
+                  <dt className="text-lg leading-6 font-medium text-gray-900 font-sans">
                     What's the best way to get started?
                   </dt>
                   <dd className="mt-2 text-base text-gray-500">
@@ -64,7 +64,7 @@ const FAQ = () => {
             {purchaseRelatedOpen && (
               <dl className="space-y-10 mt-4">
                 <div>
-                  <dt className="text-lg leading-6 font-medium text-gray-900">
+                  <dt className="text-lg leading-6 font-medium text-gray-900 font-sans ">
                     Do you offer any discounts?
                   </dt>
                   <dd className="mt-2 text-base text-gray-500">
