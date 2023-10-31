@@ -2,7 +2,7 @@ import React from "react";
 
 const RelatedDrinks = (props) => {
   return (
-    <div className="bg-white p-4 md:p-8">
+    <div className="bg-white p-4 md:p-8 mt-8">
       <h2 className="text-center text-lg font-bold uppercase mb-4">
         CHECK OUT OUR COLLECTIONS
       </h2>
