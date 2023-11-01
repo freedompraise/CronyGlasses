@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { getRandDrink } from "../services/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { postToCheckout } from "../services/api";
 
 function RandomDrink() {
   const [randomDrink, setRandomDrink] = useState([]);
@@ -81,7 +82,10 @@ function RandomDrink() {
             <button className="hover:bg-blue-gray-400 md:my-0 my-2 text-black font-bold py-2 px-4 rounded border hover:bg-gray-300 border-black mr-2 w-full">
               Add to Cart
             </button>
-            <button className="bg-blue-500 hover:bg-blue-700 text-white  font-bold font-mono py-2 px-4 rounded w-full">
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white  font-bold font-mono py-2 px-4 rounded w-full"
+              onClick={postToCheckout(1)}
+            >
               Buy with PayPal
             </button>
           </div>
