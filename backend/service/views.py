@@ -23,6 +23,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.urls import reverse
+from django.utils.decorators import method_decorator
 
 from .models import Drink, Cart, Order, OrderItem, User
 from paypal.standard.forms import PayPalPaymentsForm
@@ -145,17 +146,21 @@ class CreateOrderItemView(CreateAPIView):
         return response
 
 
+@method_decorator(login_required, name="dispatch")
 class PayPalCheckoutView(APIView):
     authentication_classes = [BasicAuthentication]
     permission_classes = [AllowAny]
 
     def post(self, request):
-        cart = Cart.objects.get(user=request.user)
-        # Get the product (if not cart checkout)
-        product = None
+        if request.user.is_authenticated:
+            cart = Cart.objects.get(user=request.user)
+        else:
+            return Response(
+                {"detail": "Authentication credentials were not provided."}, status=403
+            )
 
-        if "product_id" in request.POST:
-            product_id = request.POST["product_id"]
+        if "product_id" in request.data:
+            product_id = request.data["product_id"]
             product = get_object_or_404(Drink, id=product_id)
             paypal_total = product.price
 
