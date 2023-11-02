@@ -1,9 +1,11 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { postToCheckout } from "../services/api";
 
 function Drink(props) {
   const [quantity, setQuantity] = useState(1);
+  const [paypalUrl, setPaypalUrl] = useState("");
 
   const handleIncrement = () => {
     setQuantity(quantity + 1);
@@ -11,6 +13,17 @@ function Drink(props) {
 
   const handleDecrement = () => {
     setQuantity(quantity - 1);
+  };
+
+  useEffect(() => {
+    if (paypalUrl) {
+      window.location.href = paypalUrl;
+    }
+  }, [paypalUrl]);
+
+  const handleBuyWithPaypal = async () => {
+    const response = await postToCheckout(props.drink.id);
+    setPaypalUrl(response.data.paypal_url);
   };
 
   return (
@@ -60,7 +73,10 @@ function Drink(props) {
           <button className="hover:bg-black hover:text-white md:my-0 my-2 text-black font-bold py-2 px-4 rounded rounded-md border border-black  mr-4">
             Add to Cart
           </button>
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ">
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded "
+            onClick={handleBuyWithPaypal}
+          >
             Buy with Paypal
           </button>
         </div>
