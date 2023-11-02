@@ -157,9 +157,8 @@ class PayPalCheckoutView(APIView):
 
     def post(self, request):
         host = os.getenv("PAYPAL_RECEIVER_EMAIL")
-        data_string = request.data["_content"]
-        data_dict = ast.literal_eval(data_string)
-        product_id = data_dict.get("product_id", None)
+        product_id = request.data.get("product_id", None)
+        print(product_id)
 
         if product_id:
             product = get_object_or_404(Drink, id=product_id)
