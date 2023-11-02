@@ -21,6 +21,7 @@ from .serializers import (
 )
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from django.urls import reverse
 from django.utils.decorators import method_decorator
@@ -28,7 +29,10 @@ from django.utils.decorators import method_decorator
 from .models import Drink, Cart, Order, OrderItem, User
 from paypal.standard.forms import PayPalPaymentsForm
 
+from rest_framework.parsers import JSONParser
 from random import randint
+import ast
+import os
 
 # Global Total variable is used in the views to help calculate the total price of the cart
 from .utils import total, related_products, reviews
@@ -146,34 +150,43 @@ class CreateOrderItemView(CreateAPIView):
         return response
 
 
-@method_decorator(login_required, name="dispatch")
 class PayPalCheckoutView(APIView):
     authentication_classes = [BasicAuthentication]
     permission_classes = [AllowAny]
 
     def post(self, request):
-        if request.user.is_authenticated:
+        host = os.getenv("PAYPAL_RECEIVER_EMAIL")
+        data_string = request.data["_content"]
+        data_dict = ast.literal_eval(data_string)
+        product_id = data_dict.get("product_id", None)
+
+        if product_id:
+            product = get_object_or_404(Drink, id=product_id)
+            total = product.price
+            invoice_id = product.id
+            item_name = product.name
+        elif request.user.is_authenticated:
             cart = Cart.objects.get(user=request.user)
+            total = cart.total  # assuming 'total' attribute exists in Cart model
+            invoice_id = cart.id
+            item_name = "Cart Checkout"
         else:
-            return Response(
-                {"detail": "Authentication credentials were not provided."}, status=403
+            return JsonResponse(
+                {
+                    "detail": "Authentication credentials were not provided or no product selected."
+                },
+                status=403,
             )
 
-        if "product_id" in request.data:
-            product_id = request.data["product_id"]
-            product = get_object_or_404(Drink, id=product_id)
-            paypal_total = product.price
-
-        # Create PayPal payment form
         paypal_dict = {
             "business": settings.PAYPAL_RECEIVER_EMAIL,
-            "amount": str(paypal_total),
+            "amount": str(total),
             "currency_code": "USD",
             "notify_url": "http://{}{}".format(host, reverse("paypal-ipn")),
             "return_url": "http://{}{}".format(host, reverse("payment-done")),
             "cancel_return": "http://{}{}".format(host, reverse("payment-cancelled")),
-            "item_name": product.name if product else "Cart Checkout",
-            "invoice": product.id if product else cart.id,
+            "item_name": item_name,
+            "invoice": invoice_id,
         }
 
         form = PayPalPaymentsForm(initial=paypal_dict)
