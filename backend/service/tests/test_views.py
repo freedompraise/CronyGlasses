@@ -1,28 +1,11 @@
 from django.test import TestCase
-from django.urls import reverse
 from django.contrib.auth import get_user_model
-from service.models import Drink, Cart, OrderItem
-from service.views import (
-    UserRegisterView,
-    DrinkListView,
-    DrinkDetailView,
-    CartDetailView,
-    OrderDetailView,
-    OrderItemDetailView,
-    PayPalCheckoutView,
-    CreateCartView,
-    CreateOrderView,
-    CreateOrderItemView,
-)
-from decimal import Decimal
 from .test_utils import (
     create_test_user,
     create_test_drink,
     create_test_cart,
     create_test_order_item,
     create_test_order,
-    create_multiple_test_drinks,
-    create_multiple_test_order_items,
 )
 
 User = get_user_model()

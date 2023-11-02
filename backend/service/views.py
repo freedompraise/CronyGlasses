@@ -1,8 +1,7 @@
-from rest_framework import status
 from rest_framework.views import APIView
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.authentication import BasicAuthentication
 from rest_framework.generics import (
     CreateAPIView,
     ListCreateAPIView,
@@ -16,27 +15,18 @@ from .serializers import (
     CartSerializer,
     UserSerializer,
 )
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.decorators import login_required
-from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from django.urls import reverse
-from django.utils.decorators import method_decorator
 from django.http import JsonResponse
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib import messages
-from django.contrib.auth import authenticate
+from django.shortcuts import get_object_or_404
 
 from .models import Drink, Cart, Order, OrderItem, User
 from paypal.standard.forms import PayPalPaymentsForm
 
-from rest_framework.parsers import JSONParser
 from random import randint
-import ast
 import os
 
 # Global Total variable is used in the views to help calculate the total price of the cart
-from .utils import total, related_products, reviews
 
 
 class UserRegisterView(CreateAPIView):
@@ -84,6 +74,16 @@ class DrinkDetailView(RetrieveUpdateDestroyAPIView):
         }
 
         return Response(response_data)
+
+
+class RandomDrinkView(APIView):
+    permission_classes = [AllowAny]
+    authentication_classes = [BasicAuthentication]
+
+    def get(self, request):
+        random_drink = Drink.objects.order_by("?").first()
+        serializer = DrinkSerializer(random_drink)
+        return Response(serializer.data)
 
 
 class CreateCartView(CreateAPIView):
@@ -189,28 +189,18 @@ class PayPalCheckoutView(APIView):
             "invoice": invoice_id,
         }
 
-        form = PayPalPaymentsForm(initial=paypal_dict)
+        PayPalPaymentsForm(initial=paypal_dict)
 
         sandbox = settings.PAYPAL_TEST
 
         paypal_url = (
-            f"https://www.sandbox.paypal.com/cgi-bin/webscr"
+            "https://www.sandbox.paypal.com/cgi-bin/webscr"
             if sandbox
-            else f"https://www.paypal.com/cgi-bin/webscr"
+            else "https://www.paypal.com/cgi-bin/webscr"
         )
 
         # Return the PayPal URL in a JSON response
         return JsonResponse({"paypal_url": paypal_url})
-
-
-class RandomDrinkView(APIView):
-    permission_classes = [AllowAny]
-    authentication_classes = [BasicAuthentication]
-
-    def get(self, request):
-        random_drink = Drink.objects.order_by("?").first()
-        serializer = DrinkSerializer(random_drink)
-        return Response(serializer.data)
 
 
 class PaymentDoneView(APIView):

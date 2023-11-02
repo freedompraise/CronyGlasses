@@ -5,15 +5,16 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('service', '0004_alter_drink_image'),
+        ("service", "0004_alter_drink_image"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='drink',
-            name='image',
-            field=cloudinary.models.CloudinaryField(max_length=255, verbose_name='image'),
+            model_name="drink",
+            name="image",
+            field=cloudinary.models.CloudinaryField(
+                max_length=255, verbose_name="image"
+            ),
         ),
     ]
