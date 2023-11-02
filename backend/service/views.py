@@ -1,5 +1,3 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib import messages
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -11,7 +9,6 @@ from rest_framework.generics import (
     RetrieveUpdateDestroyAPIView,
 )
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.contrib.auth import authenticate
 from .serializers import (
     DrinkSerializer,
     OrderSerializer,
@@ -25,6 +22,10 @@ from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from django.urls import reverse
 from django.utils.decorators import method_decorator
+from django.http import JsonResponse
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+from django.contrib.auth import authenticate
 
 from .models import Drink, Cart, Order, OrderItem, User
 from paypal.standard.forms import PayPalPaymentsForm
@@ -191,6 +192,17 @@ class PayPalCheckoutView(APIView):
 
         form = PayPalPaymentsForm(initial=paypal_dict)
 
+        sandbox = settings.PAYPAL_TEST
+
+        paypal_url = (
+            f"https://www.sandbox.paypal.com/cgi-bin/webscr"
+            if sandbox
+            else f"https://www.paypal.com/cgi-bin/webscr"
+        )
+
+        # Return the PayPal URL in a JSON response
+        return JsonResponse({"paypal_url": paypal_url})
+
 
 class RandomDrinkView(APIView):
     permission_classes = [AllowAny]
@@ -200,3 +212,19 @@ class RandomDrinkView(APIView):
         random_drink = Drink.objects.order_by("?").first()
         serializer = DrinkSerializer(random_drink)
         return Response(serializer.data)
+
+
+class PaymentDoneView(APIView):
+    def get(self, request, *args, **kwargs):
+        host = request.get_host()
+        return_url = "http://{}{}".format(host, reverse("payment-done"))
+        # Your logic here
+        return Response({"return_url": return_url})
+
+
+class PaymentCancelledView(APIView):
+    def get(self, request, *args, **kwargs):
+        host = request.get_host()
+        cancel_return = "http://{}{}".format(host, reverse("payment-cancelled"))
+        # Your logic here
+        return Response({"cancel_return": cancel_return})
