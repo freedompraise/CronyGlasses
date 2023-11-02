@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from .models import Drink, Order, OrderItem, Cart, User
-from django.contrib.auth import authenticate
 
 
 class DrinkSerializer(serializers.ModelSerializer):

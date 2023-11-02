@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { getRandDrink } from "../services/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { postToCheckout } from "../services/api";
 
 function RandomDrink() {
   const [randomDrink, setRandomDrink] = useState([]);
   const [quantity, setQuantity] = useState(1);
+  const [paypalUrl, setPaypalUrl] = useState("");
 
   const handleIncrement = () => {
     setQuantity(quantity + 1);
@@ -24,6 +26,17 @@ function RandomDrink() {
         console.log(err);
       });
   }, []);
+
+  useEffect(() => {
+    if (paypalUrl) {
+      window.location.href = paypalUrl;
+    }
+  }, [paypalUrl]);
+
+  const handleBuyWithPaypal = async () => {
+    const response = await postToCheckout(randomDrink.id);
+    setPaypalUrl(response.data.paypal_url);
+  };
 
   return (
     <div className="container bg-white px-6 mx-auto max-w-6xl mt-8">
@@ -81,7 +94,10 @@ function RandomDrink() {
             <button className="hover:bg-blue-gray-400 md:my-0 my-2 text-black font-bold py-2 px-4 rounded border hover:bg-gray-300 border-black mr-2 w-full">
               Add to Cart
             </button>
-            <button className="bg-blue-500 hover:bg-blue-700 text-white  font-bold font-mono py-2 px-4 rounded w-full">
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white  font-bold font-mono py-2 px-4 rounded w-full"
+              onClick={handleBuyWithPaypal}
+            >
               Buy with PayPal
             </button>
           </div>
