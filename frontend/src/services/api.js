@@ -43,6 +43,8 @@ export const postToCheckout = async (productId) => {
         // Include any other headers your API requires
       },
     });
+
+    return response;
   } catch (error) {
     console.error("Error:", error);
   }

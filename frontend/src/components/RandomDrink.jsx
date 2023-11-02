@@ -27,17 +27,16 @@ function RandomDrink() {
       });
   }, []);
 
-  const handleBuyWithPaypal = async () => {
-    const url = await postToCheckout(randomDrink.id);
-    setPaypalUrl(url);
-    console.log(paypalUrl);
-  };
-
   useEffect(() => {
     if (paypalUrl) {
       window.location.href = paypalUrl;
     }
   }, [paypalUrl]);
+
+  const handleBuyWithPaypal = async () => {
+    const response = await postToCheckout(randomDrink.id);
+    setPaypalUrl(response.data.paypal_url);
+  };
 
   return (
     <div className="container bg-white px-6 mx-auto max-w-6xl mt-8">
