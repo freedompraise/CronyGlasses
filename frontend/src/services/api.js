@@ -37,18 +37,12 @@ export const postToCheckout = async (productId) => {
   };
 
   try {
-    const response = await axios.post(
-      "http://localhost:8000/paypal/checkout",
-      postData,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          // Include any other headers your API requires
-        },
-      }
-    );
-
-    console.log(response.data);
+    const response = await axios.post(checkoutUrl, postData, {
+      headers: {
+        "Content-Type": "application/json",
+        // Include any other headers your API requires
+      },
+    });
   } catch (error) {
     console.error("Error:", error);
   }

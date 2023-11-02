@@ -7,6 +7,7 @@ import { postToCheckout } from "../services/api";
 function RandomDrink() {
   const [randomDrink, setRandomDrink] = useState([]);
   const [quantity, setQuantity] = useState(1);
+  const [paypalUrl, setPaypalUrl] = useState("");
 
   const handleIncrement = () => {
     setQuantity(quantity + 1);
@@ -25,6 +26,18 @@ function RandomDrink() {
         console.log(err);
       });
   }, []);
+
+  const handleBuyWithPaypal = async () => {
+    const url = await postToCheckout(randomDrink.id);
+    setPaypalUrl(url);
+    console.log(paypalUrl);
+  };
+
+  useEffect(() => {
+    if (paypalUrl) {
+      window.location.href = paypalUrl;
+    }
+  }, [paypalUrl]);
 
   return (
     <div className="container bg-white px-6 mx-auto max-w-6xl mt-8">
@@ -84,7 +97,7 @@ function RandomDrink() {
             </button>
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white  font-bold font-mono py-2 px-4 rounded w-full"
-              onClick={postToCheckout(1)}
+              onClick={handleBuyWithPaypal}
             >
               Buy with PayPal
             </button>
