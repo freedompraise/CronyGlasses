@@ -18,11 +18,14 @@ from .serializers import (
 )
 from django.conf import settings
 from django.urls import reverse
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
 
 from .models import Drink, Cart, Order, OrderItem, User
 from paypal.standard.forms import PayPalPaymentsForm
 
 from random import randint
+import os
 
 # Global Total variable is used in the views to help calculate the total price of the cart
 
@@ -59,7 +62,7 @@ class DrinkDetailView(RetrieveUpdateDestroyAPIView):
         serializer = self.get_serializer(instance)
 
         # Get related drinks (4 random drinks excluding the current drink)
-        related_drinks = Drink.objects.exclude(pk=instance.pk).order_by("?")[:4]
+        related_drinks = Drink.objects.exclude(pk=instance.pk).order_by("?")[:3]
         related_drinks_serializer = DrinkSerializer(related_drinks, many=True)
 
         # Generate a random review count
@@ -72,6 +75,16 @@ class DrinkDetailView(RetrieveUpdateDestroyAPIView):
         }
 
         return Response(response_data)
+
+
+class RandomDrinkView(APIView):
+    permission_classes = [AllowAny]
+    authentication_classes = [BasicAuthentication]
+
+    def get(self, request):
+        random_drink = Drink.objects.order_by("?").first()
+        serializer = DrinkSerializer(random_drink)
+        return Response(serializer.data)
 
 
 class CreateCartView(CreateAPIView):
@@ -140,36 +153,68 @@ class CreateOrderItemView(CreateAPIView):
 
 
 class PayPalCheckoutView(APIView):
+    authentication_classes = [BasicAuthentication]
+    permission_classes = [AllowAny]
+
     def post(self, request):
-        cart = Cart.objects.get(user=request.user)
-        # Get the product (if not cart checkout)
-        product = None
+        host = os.getenv("PAYPAL_RECEIVER_EMAIL")
+        product_id = request.data.get("product_id", None)
+        print(product_id)
 
-        if "product_id" in request.POST:
-            product_id = request.POST["product_id"]
+        if product_id:
             product = get_object_or_404(Drink, id=product_id)
-            paypal_total = product.price
+            total = product.price
+            invoice_id = product.id
+            item_name = product.name
+        elif request.user.is_authenticated:
+            cart = Cart.objects.get(user=request.user)
+            total = cart.total  # assuming 'total' attribute exists in Cart model
+            invoice_id = cart.id
+            item_name = "Cart Checkout"
+        else:
+            return JsonResponse(
+                {
+                    "detail": "Authentication credentials were not provided or no product selected."
+                },
+                status=403,
+            )
 
-        # Create PayPal payment form
         paypal_dict = {
             "business": settings.PAYPAL_RECEIVER_EMAIL,
-            "amount": str(paypal_total),
+            "amount": str(total),
             "currency_code": "USD",
             "notify_url": "http://{}{}".format(host, reverse("paypal-ipn")),
             "return_url": "http://{}{}".format(host, reverse("payment-done")),
             "cancel_return": "http://{}{}".format(host, reverse("payment-cancelled")),
-            "item_name": product.name if product else "Cart Checkout",
-            "invoice": product.id if product else cart.id,
+            "item_name": item_name,
+            "invoice": invoice_id,
         }
 
         PayPalPaymentsForm(initial=paypal_dict)
 
+        sandbox = settings.PAYPAL_TEST
 
-class RandomDrinkView(APIView):
-    permission_classes = [AllowAny]
-    authentication_classes = [BasicAuthentication]
+        paypal_url = (
+            "https://www.sandbox.paypal.com/cgi-bin/webscr"
+            if sandbox
+            else "https://www.paypal.com/cgi-bin/webscr"
+        )
 
-    def get(self, request):
-        random_drink = Drink.objects.order_by("?").first()
-        serializer = DrinkSerializer(random_drink)
-        return Response(serializer.data)
+        # Return the PayPal URL in a JSON response
+        return JsonResponse({"paypal_url": paypal_url})
+
+
+class PaymentDoneView(APIView):
+    def get(self, request, *args, **kwargs):
+        host = request.get_host()
+        return_url = "http://{}{}".format(host, reverse("payment-done"))
+        # Your logic here
+        return Response({"return_url": return_url})
+
+
+class PaymentCancelledView(APIView):
+    def get(self, request, *args, **kwargs):
+        host = request.get_host()
+        cancel_return = "http://{}{}".format(host, reverse("payment-cancelled"))
+        # Your logic here
+        return Response({"cancel_return": cancel_return})

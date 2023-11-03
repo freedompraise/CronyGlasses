@@ -23,8 +23,6 @@ const Drinks = () => {
       });
   }, []);
 
-  console.log("Drinks State:", drinks);
-
   return (
     <>
       <div className="container max-w-6xl mx-auto mt-6 p-6 text-center">
@@ -52,7 +50,6 @@ const Drinks = () => {
                   </a>
                 </div>
                 <h2 className="mt-6 lg:text-xl text-black">{prop.name}</h2>
-                {console.log(prop)}
                 <h2 className="text-xl font-bold mt-2">${prop.price} </h2>
               </div>
             ))}

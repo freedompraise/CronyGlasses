@@ -11,6 +11,8 @@ from .views import (
     CreateOrderView,
     CreateOrderItemView,
     RandomDrinkView,
+    PaymentDoneView,
+    PaymentCancelledView,
 )
 
 urlpatterns = [
@@ -25,4 +27,8 @@ urlpatterns = [
     path("orderitem/<int:pk>/", OrderItemDetailView.as_view(), name="orderitem-detail"),
     path("orderitem/", CreateOrderItemView.as_view(), name="orderitem-create"),
     path("paypal/checkout/", PayPalCheckoutView.as_view(), name="paypal-checkout"),
+    path("payment-done/", PaymentDoneView.as_view(), name="payment-done"),
+    path(
+        "payment-cancelled/", PaymentCancelledView.as_view(), name="payment-cancelled"
+    ),
 ]
