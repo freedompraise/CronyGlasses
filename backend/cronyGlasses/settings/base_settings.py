@@ -80,7 +80,23 @@ TEMPLATES = [
 ]
 
 # Database
-cred = credentials.Certificate(os.getenv("DATABASE_URL"))
+
+cred = credentials.Certificate(
+    {
+        "type": os.environ.get("FIREBASE_TYPE"),
+        "project_id": os.environ.get("FIREBASE_PROJECT_ID"),
+        "private_key_id": os.environ.get("FIREBASE_PRIVATE_KEY_ID"),
+        "private_key": os.environ.get("FIREBASE_PRIVATE_KEY").replace("\\n", "\n"),
+        "client_email": os.environ.get("FIREBASE_CLIENT_EMAIL"),
+        "client_id": os.environ.get("FIREBASE_CLIENT_ID"),
+        "auth_uri": os.environ.get("FIREBASE_AUTH_URI"),
+        "token_uri": os.environ.get("FIREBASE_TOKEN_URI"),
+        "auth_provider_x509_cert_url": os.environ.get(
+            "FIREBASE_AUTH_PROVIDER_X509_CERT_URL"
+        ),
+        "client_x509_cert_url": os.environ.get("FIREBASE_CLIENT_X509_CERT_URL"),
+    }
+)
 if str(os.environ.get("USE_SQLITE")).lower() == "true":
     DATABASES = {
         "default": {
@@ -90,16 +106,6 @@ if str(os.environ.get("USE_SQLITE")).lower() == "true":
     }
 else:
     firebase_admin.initialize_app(cred, {"databaseURL": os.getenv("DATABASE_URL")})
-    # DATABASES = {
-    #     "default": {
-    #         "ENGINE": "django.db.backends.mysql",
-    #         "NAME": os.getenv("DATABASE_NAME"),
-    #         "USER": os.getenv("DATABASE_USER"),
-    #         "PASSWORD": os.getenv("DATABASE_PASSWORD"),
-    #         "HOST": os.getenv("DATABASE_HOST"),
-    #         "PORT": os.getenv("DATABASE_PORT"),
-    #     }
-    # }
 
     ref = db.reference("/")
 
