@@ -15,7 +15,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-SECRET_KEY = os.environ["SECRET_KEY"]
+SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
 
 CORS_ALLOW_ALL_ORIGINS = True
 
@@ -99,9 +99,9 @@ USE_I18N = True
 USE_TZ = True
 
 CLOUDINARY_STORAGE = {
-    "CLOUD_NAME": os.getenv("CLOUD_NAME"),
-    "API_KEY": os.getenv("API_KEY"),
-    "API_SECRET": os.getenv("API_SECRET"),
+    "CLOUDINARY_CLOUD_NAME": os.getenv("CLOUDINARY_CLOUD_NAME"),
+    "CLOUDINARY_API_KEY": os.getenv("CLOUDINARY_API_KEY"),
+    "CLOUDINARY_API_SECRET": os.getenv("CLOUDINARY_API_SECRET"),
 }
 
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"

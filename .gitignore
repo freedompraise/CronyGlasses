@@ -16,3 +16,4 @@ backend/service/management/commands/__pycache__/
 backend/service/tests/__pycache__/
 backend/cronyGlasses/__pycache__/
 backend/cronyGlasses/settings/__pycache__/
+backend/cronyglasses.json
