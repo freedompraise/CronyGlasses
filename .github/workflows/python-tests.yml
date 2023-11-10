@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DJANGO_SETTINGS_MODULE: "cronyGlasses.settings.dev"
-      SECRET_KEY: "thisisnotasecret"
+      DJANGO_SECRET_KEY: "thisisnotasecret"
       PAYPAL_RECEIVER_EMAIL: secrets.PAYPAL_RECEIVER_EMAIL
       USE_SQLITE: True
       ALLOWED_HOSTS: "127.0.0.1 localhost"
