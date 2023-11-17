@@ -1,12 +1,14 @@
 // api.js
 import axios from "axios";
 
-const url = "http://localhost:8000/api/drinks/";
-const checkoutUrl = "http://localhost:8000/api/paypal/checkout/";
+const baseUrl = process.env.REACT_APP_BASE_URL;
+console.log(baseUrl, "is the base url");
+const drinkUrl = baseUrl + "api/drinks/";
+const checkoutUrl = baseUrl + "paypal/checkout/";
 
 export const getDrinks = async () => {
   try {
-    const response = await axios.get(url);
+    const response = await axios.get(drinkUrl);
     return response;
   } catch (error) {
     console.log(error);
@@ -15,7 +17,7 @@ export const getDrinks = async () => {
 
 export const getRandDrink = async () => {
   try {
-    const response = await axios.get(`${url}random`);
+    const response = await axios.get(`${drinkUrl}random`);
     return response;
   } catch (error) {
     console.log(error);
@@ -24,7 +26,7 @@ export const getRandDrink = async () => {
 
 export const getDrink = async (id) => {
   try {
-    const response = await axios.get(`${url}${id}`);
+    const response = await axios.get(`${drinkUrl}${id}`);
     return response;
   } catch (error) {
     console.log(error);
