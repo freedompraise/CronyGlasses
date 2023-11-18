@@ -16,14 +16,13 @@ const FAQ = () => {
 
   return (
     <div className="mt-16">
-      <div className="justify-center">
+      <div className="w-full">
         <div>
           <h2 className="text-center text-lg font-bold uppercase mb-4">
             F A Q 's
           </h2>
-          <p className="max-w-2xl text-xl text-gray-500 ">
-            Check out our frequently asked questions for more information about
-            our products and services.
+          <p className=" mx-auto mb:w-1/2 w-full font-sans text-center text-xl ">
+            Find the Most Frequently asked questions
           </p>
         </div>
 

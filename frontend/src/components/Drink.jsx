@@ -27,58 +27,68 @@ function Drink(props) {
   };
 
   return (
-    <div className="flex flex-row">
-      <div className="w-1/2">
-        <img src={props.drink.image} alt={props.drink.name} />
-      </div>
-      <div className="w-1/2 p-4">
-        <h2 className="text-3xl font-bold">{props.drink.name}</h2>
-        <hr className="my-4" />
-        <h3 className="text-xl font-bold">${props.drink.price}</h3>
-        <p className="text-lg my-4">{props.drink.description}</p>
-        <ul className="list-disc list-inside">
-          <li>70cl bottle</li>
-          <li>All Natural Flavourings</li>
-          <li>ABV: 4.5% vol</li>
-        </ul>
-        <div className="text-center flex flex-row font-semibold mt-4 mb-0">
-          Qty
-        </div>
-        <div className="flex flex-row my-4">
-          <div className="flex items-center ">
-            <button
-              className="bg-gray-100 border border-gray-400 rounded-l p-2 hover:bg-gray-300"
-              onClick={handleDecrement}
-            >
-              <FontAwesomeIcon icon={faMinus} />
-            </button>
-            <input
-              type="number"
-              id="qty"
-              name="qty"
-              value={quantity}
-              placeholder="0"
-              readOnly
-              className="border border-gray-400 p-2 text-center appearance-none w-full sm:w-2/5"
+    <div className="">
+      <div className="flex flex-col md:flex-row ">
+        <div className="w-80 md:my-0 my-6 mx-auto">
+          <a href={`/drinks/${props.drink.id}`}>
+            <img
+              src={props.drink.image}
+              alt={props.drink.name}
+              className="w-full"
             />
+          </a>
+        </div>
+        <div className="">
+          <h2 className="text-3xl font-bold">{props.drink.name}</h2>
+          <hr className="my-4 border-t  border-black" />
+          <h3 className="text-xl">${props.drink.price}</h3>
+          <p className="text-lg my-4">{props.drink.description}</p>
+          <ul className="list-disc list-inside">
+            <li>70cl bottle</li>
+            <li>All Natural Flavourings</li>
+            <li>Gluten Free</li>
+            <li>100% Vegan</li>
+          </ul>
+          <div className=" mt-8 mb-2">
+            <div className="text-center flex flex-row font-semibold ">Qty</div>
+            <div className="text-center">
+              <div className="flex items-center ">
+                <button
+                  className="bg-gray-100 border border-gray-400 rounded-l p-2"
+                  onClick={handleDecrement}
+                >
+                  <FontAwesomeIcon icon={faMinus} />
+                </button>
+                <input
+                  type="number"
+                  id="qty"
+                  name="qty"
+                  value={quantity}
+                  readOnly
+                  className="border border-gray-400 p-2 text-center appearance-none w-full sm:w-2/5"
+                />
+                <button
+                  className="bg-gray-100 border border-gray-400 rounded-r p-2"
+                  onClick={handleIncrement}
+                >
+                  <FontAwesomeIcon icon={faPlus} />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex flex-col sm:flex-row justify-items-center ">
+            {" "}
+            <button className="hover:bg-blue-gray-400 md:my-0 my-2 text-black font-bold py-2 px-4 rounded border hover:bg-gray-300 border-black mr-2 w-full">
+              Add to Cart
+            </button>
             <button
-              className="bg-gray-100 border border-gray-400 rounded-r p-2 hover:bg-gray-300"
-              onClick={handleIncrement}
+              className="bg-blue-500 hover:bg-blue-700 text-white  font-bold font-mono py-2 px-4 rounded w-full"
+              onClick={handleBuyWithPaypal}
             >
-              <FontAwesomeIcon icon={faPlus} />
+              Buy with PayPal
             </button>
           </div>
-        </div>
-        <div className="flex flex-col sm:flex-row justify-items-center ">
-          <button className="hover:bg-black hover:text-white md:my-0 my-2 text-black font-bold py-2 px-4 rounded rounded-md border border-black  mr-4">
-            Add to Cart
-          </button>
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded "
-            onClick={handleBuyWithPaypal}
-          >
-            Buy with Paypal
-          </button>
         </div>
       </div>
     </div>
