@@ -48,7 +48,7 @@ const NavBar = () => {
       <div className="flex flex-col items-center">
         {/* Project Icon */}
         <a href="/" className="flex items-center flex-col">
-          <img src={icon} alt="Project Icon" className="w-full h-12 mr-2 " />
+          <img src={icon} alt="Project Icon" className="w-auto h-12 mr-2 " />
         </a>
       </div>
 
