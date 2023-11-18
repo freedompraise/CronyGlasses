@@ -27,7 +27,7 @@ function Drink(props) {
   };
 
   return (
-    <div className="container bg-white px-4 mx-auto max-w-6xl mt-8">
+    <div className="">
       <div className="flex flex-col md:flex-row ">
         <div className="w-80 md:my-0 my-6 mx-auto">
           <a href={`/drinks/${props.drink.id}`}>
