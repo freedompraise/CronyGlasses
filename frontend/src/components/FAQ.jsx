@@ -22,8 +22,7 @@ const FAQ = () => {
             F A Q 's
           </h2>
           <p className=" mx-auto mb:w-1/2 w-full font-sans text-center text-xl ">
-            Check out our frequently asked questions for more information about
-            our products and services.
+            Find the Most Frequently asked questions
           </p>
         </div>
 
