@@ -20,7 +20,7 @@ function Product() {
   }, [id]);
 
   return (
-    <div className="container bg-white px-6 mx-auto max-w-4xl mt-8">
+    <div className="container bg-white px-6 mx-auto max-w-6xl mt-8">
       <Drink drink={drink} />
       <FAQ />
       <RelatedDrinks relatedDrinks={relatedDrinks} />
