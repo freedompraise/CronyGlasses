@@ -1,7 +1,12 @@
 // api.js
 import axios from "axios";
 
-const baseUrl = "https://cronyglasses-api.onrender.com/";
+const isDevelopment = process.env.NODE_ENV === "development";
+
+const baseUrl = isDevelopment
+  ? "http://localhost:8000"
+  : "https://cronyglasses-api.onrender.com/";
+
 console.log(baseUrl, "is the base url");
 const drinkUrl = baseUrl + "api/drinks/";
 const checkoutUrl = baseUrl + "paypal/checkout/";
