@@ -90,7 +90,7 @@ class RandomDrinkView(APIView):
 
 class CreateCartView(APIView):
     permission_classes = [AllowAny]
-
+    authentication_classes = [BasicAuthentication]
     def post(self, request, *args, **kwargs):
         cart = Cart.objects.create()
 
@@ -102,6 +102,7 @@ class CreateCartView(APIView):
 
 class CartDetailView(APIView):
     permission_classes = [AllowAny]
+    authentication_classes = [BasicAuthentication]
 
     def get(self, request, *args, **kwargs):
         cart_id = request.session.get("cart_id")
