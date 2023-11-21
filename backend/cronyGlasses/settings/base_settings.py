@@ -109,3 +109,5 @@ DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 MEDIA_URL = "/media/"
 
 ROOT_URLCONF = "cronyGlasses.urls"
+
+SESSION_ENGINE = "django.contrib.sessions.backends.db"
