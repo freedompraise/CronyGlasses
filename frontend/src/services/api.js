@@ -11,7 +11,7 @@ console.log(baseUrl, "is the base url");
 const drinkUrl = baseUrl + "api/drinks/";
 const checkoutUrl = baseUrl + "paypal/checkout/";
 const createCartUrl = baseUrl + "api/cart/create/";
-const getCartDetailsUrl = baseUrl + "api/cart/";
+const getCartUrl = baseUrl + "api/cart/";
 
 export const getDrinks = async () => {
   try {
@@ -76,9 +76,9 @@ export const addToCart = async (productId) => {
   }
 };
 
-export const getCartDetails = async () => {
+export const getCart = async () => {
   try {
-    const response = await axios.get(createCartUrl);
+    const response = await axios.get(getCartUrl);
     return response;
   } catch (error) {
     console.error("Error fetching cart details:", error);
