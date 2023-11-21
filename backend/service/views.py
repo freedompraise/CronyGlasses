@@ -18,6 +18,8 @@ from .serializers import (
 from django.conf import settings
 from django.urls import reverse
 from django.http import JsonResponse
+from django.contrib.sessions.models import Session
+from django.contrib.sessions.backends.db import SessionStore
 from django.shortcuts import get_object_or_404
 
 from .models import Drink, Cart, Order, OrderItem, User
@@ -86,25 +88,37 @@ class RandomDrinkView(APIView):
         return Response(serializer.data)
 
 
-class CreateCartView(CreateAPIView):
-    queryset = Cart.objects.all()
-    serializer_class = CartSerializer
+class CreateCartView(APIView):
+    permission_classes = [AllowAny]
+    authentication_classes = [BasicAuthentication]
+    def post(self, request, *args, **kwargs):
+        cart = Cart.objects.create()
+
+        request.session["cart_id"] = cart.id
+
+        serializer = CartSerializer(cart)
+        return Response(serializer.data)
+
+
+class CartDetailView(APIView):
     permission_classes = [AllowAny]
     authentication_classes = [BasicAuthentication]
 
-    def create(self, request, *args, **kwargs):
-        response = super().create(request, *args, **kwargs)
-        cart = Cart.objects.get(pk=response.data["id"])
-        cart.user = request.user
-        cart.save()
-        return response
+    def get(self, request, *args, **kwargs):
+        cart_id = request.session.get("cart_id")
 
+        if cart_id:
+            cart = get_object_or_404(Cart, id=cart_id)
+        else:
+            cart = Cart.objects.create()
+            request.session["cart_id"] = cart.id
 
-class CartDetailView(RetrieveUpdateDestroyAPIView):
-    queryset = Cart.objects.all()
-    serializer_class = CartSerializer
-    permission_classes = [AllowAny]
-    authentication_classes = [BasicAuthentication]
+        serializer = CartSerializer(cart)
+        return Response(serializer.data)
+
+    def delete(self, request, *args, **kwargs):
+        request.session.pop("cart_id", None)
+        return Response(status=204)
 
 
 class OrderDetailView(RetrieveUpdateDestroyAPIView):

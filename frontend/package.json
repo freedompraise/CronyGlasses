@@ -24,9 +24,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "cross-env BROWSER=none react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --coverage",
+    "start": "cross-env BROWSER=none NODE_ENV=production react-scripts start",
+    "build": "cross-env NODE_ENV=production react-scripts build",
+    "test": "cross-env NODE_ENV=test react-scripts test --coverage",
     "test:verbose": "jest --verbose",
     "test:coverage": "jest --coverage",
     "eject": "react-scripts eject"

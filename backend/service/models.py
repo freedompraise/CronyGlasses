@@ -60,12 +60,11 @@ class OrderItem(models.Model):
 
 
 class Cart(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
     order_items = models.ManyToManyField(OrderItem)
     total = models.DecimalField(max_digits=6, decimal_places=2, default=0, null=True)
 
     def __str__(self):
-        return f"{self.user}'s cart"
+        return f"Cart {self.id}"
 
     def update_total(self):
         self.total = sum(item.total_price for item in self.order_items.all())
