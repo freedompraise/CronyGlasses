@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { getRandDrink } from "../services/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
-import { postToCheckout } from "../services/api";
+import { postToCheckout, addToCart } from "../services/api";
 
 function RandomDrink() {
   const [randomDrink, setRandomDrink] = useState([]);
@@ -15,6 +15,15 @@ function RandomDrink() {
 
   const handleDecrement = () => {
     setQuantity(quantity - 1);
+  };
+
+  const handleAddToCart = async () => {
+    try {
+      const response = await addToCart(randomDrink.id);
+      console.log("Product {randomDrink.id} added to cart", response.data);
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+    }
   };
 
   useEffect(() => {
@@ -91,7 +100,10 @@ function RandomDrink() {
 
           <div className="flex flex-col sm:flex-row justify-items-center ">
             {" "}
-            <button className="hover:bg-blue-gray-400 md:my-0 my-2 text-black font-bold py-2 px-4 rounded border hover:bg-gray-300 border-black mr-2 w-full">
+            <button
+              className="hover:bg-blue-gray-400 md:my-0 my-2 text-black font-bold py-2 px-4 rounded border hover:bg-gray-300 border-black mr-2 w-full"
+              onClick={handleAddToCart}
+            >
               Add to Cart
             </button>
             <button
