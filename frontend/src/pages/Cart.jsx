@@ -89,15 +89,15 @@ const Cart = () => {
             </div>
           </>
         ) : (
-          <div className="w-full text-center flex flex-col">
+          <div className="w-full items-center text-center flex flex-col">
             <div className="p-4 mb-4 inline-block ">
-              <p className="text-center font-mono ">
+              <p className="text-center text-lg ">
                 There are no items in your cart
               </p>
             </div>
             <a
               href="/"
-              className="p-4 mb-4 rounded-lg border border-bg-black overflow-hidden hover:bg-gray-100"
+              className="p-4 mb-4 w-2/3 rounded-lg border border-bg-black overflow-hidden hover:bg-gray-100 font-sans"
             >
               Continue shopping
             </a>
