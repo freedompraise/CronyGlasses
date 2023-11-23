@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Drink, Order, OrderItem, Cart, User
+from .models import Drink, CartItem, Cart, User
 
 
 class DrinkSerializer(serializers.ModelSerializer):
@@ -8,21 +8,11 @@ class DrinkSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class OrderItemSerializer(serializers.ModelSerializer):
+class CartItemSerializer(serializers.ModelSerializer):
     drink = DrinkSerializer()  # Serialize the related Drink instance
 
     class Meta:
-        model = OrderItem
-        fields = "__all__"
-
-
-class OrderSerializer(serializers.ModelSerializer):
-    order_items = OrderItemSerializer(
-        many=True, read_only=True
-    )  # Serialize the related OrderItem instances
-
-    class Meta:
-        model = Order
+        model = CartItem
         fields = "__all__"
 
 

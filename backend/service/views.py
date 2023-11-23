@@ -10,8 +10,7 @@ from rest_framework.generics import (
 from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import (
     DrinkSerializer,
-    OrderSerializer,
-    OrderItemSerializer,
+    CartItemSerializer,
     CartSerializer,
     UserSerializer,
 )
@@ -22,7 +21,7 @@ from django.contrib.sessions.models import Session
 from django.contrib.sessions.backends.db import SessionStore
 from django.shortcuts import get_object_or_404
 
-from .models import Drink, Cart, Order, OrderItem, User
+from .models import Drink, Cart, CartItem, User
 from paypal.standard.forms import PayPalPaymentsForm
 
 from random import randint
@@ -91,6 +90,7 @@ class RandomDrinkView(APIView):
 class CreateCartView(APIView):
     permission_classes = [AllowAny]
     authentication_classes = [BasicAuthentication]
+
     def post(self, request, *args, **kwargs):
         cart = Cart.objects.create()
 
@@ -119,50 +119,6 @@ class CartDetailView(APIView):
     def delete(self, request, *args, **kwargs):
         request.session.pop("cart_id", None)
         return Response(status=204)
-
-
-class OrderDetailView(RetrieveUpdateDestroyAPIView):
-    queryset = Order.objects.all()
-    serializer_class = OrderSerializer
-    permission_classes = [AllowAny]
-    authentication_classes = [BasicAuthentication]
-
-
-class CreateOrderView(CreateAPIView):
-    queryset = Order.objects.all()
-    serializer_class = OrderSerializer
-    permission_classes = [AllowAny]
-    authentication_classes = [BasicAuthentication]
-
-    def create(self, request, *args, **kwargs):
-        response = super().create(request, *args, **kwargs)
-        order = Order.objects.get(pk=response.data["id"])
-        cart = Cart.objects.get(user=request.user)
-        order.cart = cart
-        order.save()
-        return response
-
-
-class OrderItemDetailView(RetrieveUpdateDestroyAPIView):
-    queryset = OrderItem.objects.all()
-    serializer_class = OrderItemSerializer
-    permission_classes = [AllowAny]
-    authentication_classes = [BasicAuthentication]
-
-
-class CreateOrderItemView(CreateAPIView):
-    queryset = OrderItem.objects.all()
-    serializer_class = OrderItemSerializer
-    permission_classes = [AllowAny]
-    authentication_classes = [BasicAuthentication]
-
-    def create(self, request, *args, **kwargs):
-        response = super().create(request, *args, **kwargs)
-        orderitem = OrderItem.objects.get(pk=response.data["id"])
-        order = Order.objects.get(cart__user=request.user, is_ordered=False)
-        orderitem.order = order
-        orderitem.save()
-        return response
 
 
 class PayPalCheckoutView(APIView):
