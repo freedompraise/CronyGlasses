@@ -19,7 +19,7 @@ class Drink(models.Model):
         return reverse("drinks", kwargs={"pk": self.pk})
 
 
-class Carttem(models.Model):
+class CartItem(models.Model):
     cart_id = models.CharField(max_length=50, blank=True, null=True)
 
     drink = models.ForeignKey(Drink, on_delete=models.CASCADE)
@@ -43,7 +43,7 @@ class Carttem(models.Model):
 
 
 class Cart(models.Model):
-    cart_items = models.ManyToManyField(Carttem)
+    cart_items = models.ManyToManyField(CartItem)
 
     total = models.DecimalField(max_digits=6, decimal_places=2, default=0, null=True)
 

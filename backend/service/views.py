@@ -12,7 +12,6 @@ from .serializers import (
     DrinkSerializer,
     CartItemSerializer,
     CartSerializer,
-    UserSerializer,
 )
 from django.conf import settings
 from django.urls import reverse
@@ -21,27 +20,13 @@ from django.contrib.sessions.models import Session
 from django.contrib.sessions.backends.db import SessionStore
 from django.shortcuts import get_object_or_404
 
-from .models import Drink, Cart, CartItem, User
+from .models import Drink, Cart, CartItem
 from paypal.standard.forms import PayPalPaymentsForm
 
 from random import randint
 import os
 
 # Global Total variable is used in the views to help calculate the total price of the cart
-
-
-class UserRegisterView(CreateAPIView):
-    serializer_class = UserSerializer
-    permission_classes = [AllowAny]
-    authentication_classes = [BasicAuthentication]
-
-    def create(self, request, *args, **kwargs):
-        response = super().create(request, *args, **kwargs)
-        user = User.objects.get(pk=response.data["id"])
-        refresh = RefreshToken.for_user(user)
-        response.data["refresh"] = str(refresh)
-        response.data["access"] = str(refresh.access_token)
-        return response
 
 
 class DrinkListView(ListCreateAPIView):
@@ -87,17 +72,32 @@ class RandomDrinkView(APIView):
         return Response(serializer.data)
 
 
-class CreateCartView(APIView):
+class AddToCartView(APIView):
     permission_classes = [AllowAny]
     authentication_classes = [BasicAuthentication]
 
     def post(self, request, *args, **kwargs):
-        cart = Cart.objects.create()
+        cart_id = request.session.get("cart_id")
 
-        request.session["cart_id"] = cart.id
+        if cart_id:
+            cart = get_object_or_404(Cart, id=cart_id)
+        else:
+            cart = Cart.objects.create()
+            request.session["cart_id"] = cart.id
+
+        drink_id = request.data.get("drink_id")
+        drink = get_object_or_404(Drink, id=drink_id)
+
+        cart_item, created = CartItem.objects.get_or_create(cart=cart, drink=drink)
+
+        if not created:
+            cart_item.quantity += 1
+            cart_item.save()
+
+        cart.update_total()
 
         serializer = CartSerializer(cart)
-        return Response(serializer.data)
+        return Response(serializer.data, status=200)
 
 
 class CartDetailView(APIView):
@@ -122,55 +122,31 @@ class CartDetailView(APIView):
 
 
 class PayPalCheckoutView(APIView):
-    authentication_classes = [BasicAuthentication]
     permission_classes = [AllowAny]
+    authentication_classes = [BasicAuthentication]
 
-    def post(self, request):
-        host = os.getenv("PAYPAL_RECEIVER_EMAIL")
-        product_id = request.data.get("product_id", None)
-        print(product_id)
-
-        if product_id:
-            product = get_object_or_404(Drink, id=product_id)
-            total = product.price
-            invoice_id = product.id
-            item_name = product.name
-        elif request.user.is_authenticated:
-            cart = Cart.objects.get(user=request.user)
-            total = cart.total  # assuming 'total' attribute exists in Cart model
-            invoice_id = cart.id
-            item_name = "Cart Checkout"
-        else:
-            return JsonResponse(
-                {
-                    "detail": "Authentication credentials were not provided or no product selected."
-                },
-                status=403,
-            )
+    def get(self, request, *args, **kwargs):
+        cart_id = request.session.get("cart_id")
+        cart = get_object_or_404(Cart, id=cart_id)
 
         paypal_dict = {
             "business": settings.PAYPAL_RECEIVER_EMAIL,
-            "amount": str(total),
-            "currency_code": "USD",
-            "notify_url": "http://{}{}".format(host, reverse("paypal-ipn")),
-            "return_url": "http://{}{}".format(host, reverse("payment-done")),
-            "cancel_return": "http://{}{}".format(host, reverse("payment-cancelled")),
-            "item_name": item_name,
-            "invoice": invoice_id,
+            "amount": cart.total,
+            "item_name": "Order {}".format(cart.id),
+            "invoice": str(cart.id),
+            "notify_url": "http://{}{}".format(
+                request.get_host(), reverse("paypal-ipn")
+            ),
+            "return_url": "http://{}{}".format(
+                request.get_host(), reverse("payment-done")
+            ),
+            "cancel_return": "http://{}{}".format(
+                request.get_host(), reverse("payment-cancelled")
+            ),
         }
 
-        PayPalPaymentsForm(initial=paypal_dict)
-
-        sandbox = settings.PAYPAL_TEST
-
-        paypal_url = (
-            "https://www.sandbox.paypal.com/cgi-bin/webscr"
-            if sandbox
-            else "https://www.paypal.com/cgi-bin/webscr"
-        )
-
-        # Return the PayPal URL in a JSON response
-        return JsonResponse({"paypal_url": paypal_url})
+        form = PayPalPaymentsForm(initial=paypal_dict)
+        return Response({"form": form.render()})
 
 
 class PaymentDoneView(APIView):
