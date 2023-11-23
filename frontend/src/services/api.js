@@ -1,16 +1,14 @@
 // api.js
 import axios from "axios";
 
-const isDevelopment = process.env.NODE_ENV === "development";
+// const isDevelopment = process.env.NODE_ENV === "development";
 
-const baseUrl = isDevelopment
-  ? "http://127.0.0.1:8000"
-  : "https://cronyglasses-api.onrender.com/";
+const baseUrl = "https://cronyglasses-api.onrender.com/";
 
 console.log(baseUrl, "is the base url");
 const drinkUrl = baseUrl + "api/drinks/";
 const checkoutUrl = baseUrl + "paypal/checkout/";
-const createCartUrl = baseUrl + "api/cart/create/";
+const createCartUrl = baseUrl + "api/cart/add/";
 const getCartUrl = baseUrl + "api/cart/";
 
 export const getDrinks = async () => {
@@ -60,7 +58,7 @@ export const postToCheckout = async (productId) => {
 
 export const addToCart = async (productId) => {
   const postData = {
-    product_id: productId,
+    drink_id: productId,
   };
 
   try {
@@ -72,7 +70,7 @@ export const addToCart = async (productId) => {
 
     return response;
   } catch (error) {
-    console.error("Error adding to cart:", error);
+    console.error("Error:", error);
   }
 };
 
