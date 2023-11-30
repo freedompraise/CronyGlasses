@@ -5,7 +5,6 @@ import axios from "axios";
 
 const baseUrl = "https://cronyglasses-api.onrender.com/";
 
-console.log(baseUrl, "is the base url");
 const drinkUrl = baseUrl + "api/drinks/";
 const checkoutUrl = baseUrl + "paypal/checkout/";
 const createCartUrl = baseUrl + "api/cart/add/";
