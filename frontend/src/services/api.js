@@ -55,9 +55,10 @@ export const postToCheckout = async (productId) => {
   }
 };
 
-export const addToCart = async (productId) => {
+export const addToCart = async (productId, quantity) => {
   const postData = {
     drink_id: productId,
+    quantity: quantity,
   };
 
   try {

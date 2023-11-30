@@ -19,7 +19,7 @@ function RandomDrink() {
 
   const handleAddToCart = async () => {
     try {
-      const response = await addToCart(randomDrink.id);
+      const response = await addToCart(randomDrink.id, quantity);
       console.log("Product {randomDrink.id} added to cart", response.data);
     } catch (error) {
       console.error("Error adding to cart:", error);
