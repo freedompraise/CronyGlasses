@@ -81,7 +81,8 @@ class AddToCartView(APIView):
         cart, created = Cart.objects.get_or_create(session_id=session_key)
 
         drink_id = request.data.get("drink_id")
-        drink = get_object_or_404(Drink, id=drink_id)
+        quantity = request.data.get("quantity")
+        drink = get_object_or_404(Drink, id=drink_id, quantity=quantity)
 
         cart_item, created = CartItem.objects.get_or_create(cart=cart, drink=drink)
 
