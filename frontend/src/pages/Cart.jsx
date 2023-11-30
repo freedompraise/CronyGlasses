@@ -11,7 +11,8 @@ const Cart = () => {
     const fetchCart = async () => {
       try {
         const response = await getCart();
-        setCartItems(response.data.products);
+        console.log("Cart items fetched:", response.data);
+        setCartItems(response.data.cart_items);
       } catch (error) {
         console.error("Error fetching cart items:", error);
       }
@@ -19,12 +20,6 @@ const Cart = () => {
 
     fetchCart();
   }, []); // Empty dependency array to fetch data only once when the component mounts
-
-  // Calculate subtotal
-  const subtotal = cartItems.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0
-  );
 
   const hasItemsInCart = cartItems.length > 0;
 
@@ -60,7 +55,8 @@ const Cart = () => {
             </div>
             <div className="w-2/5 pl-4">
               <h3 className="text-2xl font-bold">
-                Subtotal: ${subtotal.toFixed(2)}
+                {/* Subtotal: ${subtotal.toFixed(2)} */}
+                Subtotal: 0
               </h3>
               <p className="text-gray-500 text-sm my-2">
                 Tax and shipping calculated at checkout

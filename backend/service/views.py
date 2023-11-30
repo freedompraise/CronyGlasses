@@ -78,7 +78,10 @@ class AddToCartView(APIView):
 
     def post(self, request, *args, **kwargs):
         session_key = request.session.session_key
+        if not session_key:
+            request.session.create()
         cart, created = Cart.objects.get_or_create(session_id=session_key)
+        request.session["cart_id"] = cart.id
 
         drink_id = request.data.get("drink_id")
         quantity = request.data.get("quantity")
@@ -105,12 +108,10 @@ class CartDetailView(APIView):
 
         if cart_id:
             cart = get_object_or_404(Cart, id=cart_id)
+            serializer = CartSerializer(cart)
+            return Response(serializer.data)
         else:
-            cart = Cart.objects.create()
-            request.session["cart_id"] = cart.id
-
-        serializer = CartSerializer(cart)
-        return Response(serializer.data)
+            return Response({"message": "No cart found"}, status=404)
 
     def delete(self, request, *args, **kwargs):
         request.session.pop("cart_id", None)
