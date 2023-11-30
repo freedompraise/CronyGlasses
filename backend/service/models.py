@@ -48,7 +48,7 @@ class CartItem(models.Model):
         unique_together = ["cart", "drink"]
 
     def __str__(self):
-        return f"{self.quantity} of {self.drink.name} in Cart {self.cart_id}"
+        return f"{self.quantity} of {self.drink.name} in Cart {self.cart}"
 
     def save(self, *args, **kwargs):
         self.total_price = self.quantity * self.drink.price
