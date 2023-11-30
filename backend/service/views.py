@@ -77,13 +77,8 @@ class AddToCartView(APIView):
     authentication_classes = [BasicAuthentication]
 
     def post(self, request, *args, **kwargs):
-        cart_id = request.session.get("cart_id")
-
-        if cart_id:
-            cart = get_object_or_404(Cart, id=cart_id)
-        else:
-            cart = Cart.objects.create()
-            request.session["cart_id"] = cart.id
+        session_key = request.session.session_key
+        cart, created = Cart.objects.get_or_create(session_id=session_key)
 
         drink_id = request.data.get("drink_id")
         drink = get_object_or_404(Drink, id=drink_id)
