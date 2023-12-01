@@ -1,34 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { getCart } from "../services/api"; // Adjust the import path based on your project structure
+import { useCart } from "../CartContext";
 
-const Cart = () => {
-  const [cartItems, setCartItems] = useState([]);
-
-  useEffect(() => {
-    // Fetch cart items when the component mounts
-    const fetchCart = async () => {
-      try {
-        const response = await getCart();
-        console.log("Cart items fetched:", response.data);
-        setCartItems(response.data.cart_items);
-      } catch (error) {
-        console.error("Error fetching cart items:", error);
-      }
-    };
-
-    fetchCart();
-  }, []); // Empty dependency array to fetch data only once when the component mounts
-
-  const hasItemsInCart = cartItems.length > 0;
+function Cart() {
+  const { cartItems, removeFromCart } = useCart();
 
   return (
     <div className="container bg-white p-4 md:p-8 mx-auto max-w-6xl mt-8">
       <h2 className="text-2xl mb-4 font-bold">SHOPPING CART</h2>
       <hr className="border-t-2 border-black mb-0" />
       <div className="mx-auto mt-0 px-20 py-20 flex">
-        {hasItemsInCart ? (
+        {cartItems.length > 0 ? (
           <>
             <div className="w-3/5 pr-4">
               {cartItems.map((item) => (
@@ -46,7 +29,7 @@ const Cart = () => {
                   </div>
                   <button
                     className="ml-auto"
-                    // onClick={() => handleRemoveFromCart(item.id)}
+                    onClick={() => removeFromCart(item.id)}
                   >
                     <FontAwesomeIcon icon={faTrash} className="text-red-500" />
                   </button>
@@ -102,6 +85,6 @@ const Cart = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Cart;
