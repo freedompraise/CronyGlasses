@@ -24,12 +24,13 @@ const cartReducer = (state, action) => {
       return newCart;
 
     case "REMOVE_FROM_CART":
+      const updatedCartItems = state.cartItems.filter(
+        (_, index) => index !== action.payload
+      );
       const updatedCart = {
         ...state,
-        cartItems: state.cartItems.filter(
-          (_, index) => index !== action.payload
-        ),
-        totalItems: state.totalItems - 1,
+        cartItems: updatedCartItems,
+        totalItems: Math.max(0, state.totalItems - 1),
       };
       localStorage.setItem("cart", JSON.stringify(updatedCart));
       return updatedCart;
