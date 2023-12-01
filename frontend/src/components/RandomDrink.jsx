@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import { getRandDrink } from "../services/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
-import { postToCheckout, addToCart } from "../services/api";
+import { postToCheckout } from "../services/api";
+import { useCart } from "../CartContext";
 
 function RandomDrink() {
   const [randomDrink, setRandomDrink] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const [paypalUrl, setPaypalUrl] = useState("");
+  const { addToCart } = useCart();
 
   const handleIncrement = () => {
     setQuantity(quantity + 1);
@@ -17,13 +19,8 @@ function RandomDrink() {
     setQuantity(quantity - 1);
   };
 
-  const handleAddToCart = async () => {
-    try {
-      const response = await addToCart(randomDrink.id);
-      console.log("Product {randomDrink.id} added to cart", response.data);
-    } catch (error) {
-      console.error("Error adding to cart:", error);
-    }
+  const handleAddToCart = () => {
+    addToCart(randomDrink, quantity);
   };
 
   useEffect(() => {

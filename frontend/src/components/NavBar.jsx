@@ -7,10 +7,11 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 
 import { faUser, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useCart } from "../CartContext";
 
-const NavBar = () => {
+function NavBar() {
+  const { totalItems } = useCart();
   return (
     <nav
       className="flex justify-between items-center text-white h-16"
@@ -75,12 +76,12 @@ const NavBar = () => {
                 className="fas fa-shopping-cart"
               />
             </i>
-            <span className="ml-1">0</span>
+            <span className="ml-1">{totalItems}</span>
           </div>
         </a>
       </div>
     </nav>
   );
-};
+}
 
 export default NavBar;

@@ -1,16 +1,14 @@
 // api.js
 import axios from "axios";
 
-const isDevelopment = process.env.NODE_ENV === "development";
+// const isDevelopment = process.env.NODE_ENV === "development";
 
-const baseUrl = isDevelopment
-  ? "http://127.0.0.1:8000"
-  : "https://cronyglasses-api.onrender.com/";
+const baseUrl = "https://cronyglasses-api.onrender.com/";
 
-console.log(baseUrl, "is the base url");
 const drinkUrl = baseUrl + "api/drinks/";
 const checkoutUrl = baseUrl + "paypal/checkout/";
-const cartUrl = baseUrl + "api/cart/";
+const createCartUrl = baseUrl + "api/cart/add/";
+const getCartUrl = baseUrl + "api/cart/";
 
 export const getDrinks = async () => {
   try {
@@ -57,13 +55,14 @@ export const postToCheckout = async (productId) => {
   }
 };
 
-export const addToCart = async (productId) => {
+export const addToCart = async (productId, quantity) => {
   const postData = {
-    product_id: productId,
+    drink_id: productId,
+    quantity: quantity,
   };
 
   try {
-    const response = await axios.post(cartUrl, postData, {
+    const response = await axios.post(createCartUrl, postData, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -71,13 +70,13 @@ export const addToCart = async (productId) => {
 
     return response;
   } catch (error) {
-    console.error("Error adding to cart:", error);
+    console.error("Error:", error);
   }
 };
 
-export const getCartDetails = async () => {
+export const getCart = async () => {
   try {
-    const response = await axios.get(cartUrl);
+    const response = await axios.get(getCartUrl);
     return response;
   } catch (error) {
     console.error("Error fetching cart details:", error);
