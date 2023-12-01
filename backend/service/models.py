@@ -29,11 +29,6 @@ class Cart(models.Model):
     def __str__(self):
         return f"Cart {self.id}"
 
-    def update_total(self):
-        self.total = sum(item.total_price for item in self.cart_items.all())
-
-        self.save()
-
 
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
