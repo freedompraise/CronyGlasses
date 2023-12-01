@@ -5,6 +5,12 @@ import { useCart } from "../CartContext";
 
 function Cart() {
   const { cartItems, removeFromCart } = useCart();
+  const calculateTotal = () => {
+    return cartItems.reduce(
+      (total, item) => total + item.price * item.quantity,
+      0
+    );
+  };
 
   return (
     <div className="container bg-white p-4 md:p-8 mx-auto max-w-6xl mt-8">
@@ -38,7 +44,7 @@ function Cart() {
             </div>
             <div className="md:w-2/5 pl-4">
               <h3 className="text-2xl font-bold mb-4">
-                Subtotal: $0 {/* Replace with dynamic value */}
+                Subtotal: ${calculateTotal().toFixed(2)}
               </h3>
               <p className="text-gray-500 text-sm mb-2">
                 Tax and shipping calculated at checkout
