@@ -77,45 +77,34 @@ class AddToCartView(APIView):
     authentication_classes = [BasicAuthentication]
 
     def post(self, request, *args, **kwargs):
-        session_key = request.session.session_key
-        if not session_key:
-            request.session.create()
-        cart, created = Cart.objects.get_or_create(session_id=session_key)
-        request.session["cart_id"] = cart.id
-
         drink_id = request.data.get("drink_id")
         quantity = request.data.get("quantity")
-        drink = get_object_or_404(Drink, id=drink_id, quantity=quantity)
 
-        cart_item, created = CartItem.objects.get_or_create(cart=cart, drink=drink)
+        drink = get_object_or_404(Drink, pk=drink_id)
+
+        cart_id = request.session.get("cart_id")
+        if cart_id:
+            cart = get_object_or_404(Cart, pk=cart_id)
+        else:
+            cart = Cart.objects.create()
+            request.session["cart_id"] = cart.id
+
+        cart_item, created = CartItem.objects.get_or_create(
+            cart=cart, drink=drink, defaults={"quantity": quantity}
+        )
 
         if not created:
-            cart_item.quantity += 1
+            cart_item.quantity += int(quantity)
             cart_item.save()
 
         cart.update_total()
 
-        serializer = CartSerializer(cart)
-        return Response(serializer.data, status=200)
+        return Response({"cart_id": cart.id})
 
 
 class CartDetailView(APIView):
     permission_classes = [AllowAny]
     authentication_classes = [BasicAuthentication]
-
-    def get(self, request, *args, **kwargs):
-        cart_id = request.session.get("cart_id")
-
-        if cart_id:
-            cart = get_object_or_404(Cart, id=cart_id)
-            serializer = CartSerializer(cart)
-            return Response(serializer.data)
-        else:
-            return Response({"message": "No cart found"}, status=404)
-
-    def delete(self, request, *args, **kwargs):
-        request.session.pop("cart_id", None)
-        return Response(status=204)
 
 
 class PayPalCheckoutView(APIView):
