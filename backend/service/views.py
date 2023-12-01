@@ -106,6 +106,17 @@ class CartDetailView(APIView):
     permission_classes = [AllowAny]
     authentication_classes = [BasicAuthentication]
 
+    def get(self, request, *args, **kwargs):
+        cart_id = request.session.get("cart_id")
+        if cart_id:
+            cart = get_object_or_404(Cart, pk=cart_id)
+        else:
+            cart = None
+
+        serializer = CartSerializer(cart)
+
+        return Response(serializer.data)
+
 
 class PayPalCheckoutView(APIView):
     permission_classes = [AllowAny]
