@@ -9,7 +9,7 @@ function RandomDrink() {
   const [randomDrink, setRandomDrink] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const [paypalUrl, setPaypalUrl] = useState("");
-  const { addToCart } = useCart();
+  const { manageCart } = useCart();
 
   const handleIncrement = () => {
     setQuantity(quantity + 1);
@@ -20,7 +20,7 @@ function RandomDrink() {
   };
 
   const handleAddToCart = () => {
-    addToCart(randomDrink, quantity);
+    manageCart(randomDrink, quantity);
   };
 
   useEffect(() => {

@@ -14,26 +14,50 @@ const getInitialState = () => {
 
 const cartReducer = (state, action) => {
   switch (action.type) {
-    case "ADD_TO_CART":
-      const newCart = {
-        ...state,
-        cartItems: [...state.cartItems, action.payload],
-        totalItems: state.totalItems + action.payload.quantity,
+    case "MANAGE_CART_ITEM":
+      const existingItemIndex = state.cartItems.findIndex(item => item.id === action.payload.id);
+        const newCart =  {
+          ...state,
+          cartItems: [
+            ...state.cartItems.slice(0, existingItemIndex), // Retain items before potential match
+            ...(existingItemIndex !== -1 
+              ? [
+                {
+                  ...state.cartItems[existingItemIndex],
+                  quantity: state.cartItems[existingItemIndex].quantity + action.payload.quantity,  // Update quantity of matching item
+                }, 
+          ]
+              : [action.payload]), // Add new item to cart
+                ...state.cartItems.slice(existingItemIndex + 1), // Retain items after potential match
+        ],
+         totalItems: state.totalItems + (existingItemIndex !== -1 ? action.payload.quantity - state.cartItems[existingItemIndex].quantity : action.payload.quantity),
       };
+
       localStorage.setItem("cart", JSON.stringify(newCart));
       return newCart;
+      
 
-    case "REMOVE_FROM_CART":
-      const updatedCartItems = state.cartItems.filter(
-        (_, index) => index !== action.payload
-      );
-      const updatedCart = {
-        ...state,
-        cartItems: updatedCartItems,
-        totalItems: Math.max(0, state.totalItems - 1),
-      };
-      localStorage.setItem("cart", JSON.stringify(updatedCart));
-      return updatedCart;
+      case "REMOVE_FROM_CART": {
+        const existingItemIndex = state.cartItems.findIndex(item => item.id === action.payload.id);
+      
+        if (existingItemIndex !== -1) {
+          let newCart = {
+            ...state,
+            cartItems: [
+              ...state.cartItems.slice(0, existingItemIndex),
+              ...state.cartItems.slice(existingItemIndex + 1),
+            ],
+            totalItems: state.totalItems - state.cartItems[existingItemIndex].quantity,
+          };
+      
+          localStorage.setItem("cart", JSON.stringify(newCart));
+      
+          return newCart;
+        } else {
+          return state; // No change if item not found
+        }
+      }
+      
 
     default:
       return state;
@@ -43,8 +67,8 @@ const cartReducer = (state, action) => {
 const CartContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, getInitialState());
 
-  const addToCart = (item, quantity) => {
-    dispatch({ type: "ADD_TO_CART", payload: { ...item, quantity } });
+  const manageCart = (item, quantity) => {
+    dispatch({ type: "MANAGE_CART_ITEM", payload: { ...item, quantity } });
   };
 
   const removeFromCart = (index) => {
@@ -52,7 +76,7 @@ const CartContextProvider = ({ children }) => {
   };
 
   return (
-    <CartContext.Provider value={{ ...state, addToCart, removeFromCart }}>
+    <CartContext.Provider value={{ ...state, manageCart, removeFromCart }}>
       {children}
     </CartContext.Provider>
   );
