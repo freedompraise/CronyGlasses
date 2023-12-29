@@ -30,7 +30,7 @@ const cartReducer = (state, action) => {
               : [action.payload]), // Add new item to cart
                 ...state.cartItems.slice(existingItemIndex + 1), // Retain items after potential match
         ],
-         totalItems: state.totalItems + (existingItemIndex !== -1 ? action.payload.quantity - state.cartItems[existingItemIndex].quantity : action.payload.quantity),
+         totalItems: state.totalItems + action.payload.quantity
       };
 
       localStorage.setItem("cart", JSON.stringify(newCart));
@@ -75,8 +75,12 @@ const CartContextProvider = ({ children }) => {
     dispatch({ type: "REMOVE_FROM_CART", payload: index });
   };
 
+  const getTotalItems = () => {
+    return state.cartItems.reduce((total, item) => total + item.quantity, 0);
+  };
+
   return (
-    <CartContext.Provider value={{ ...state, manageCart, removeFromCart }}>
+    <CartContext.Provider value={{ ...state, manageCart, removeFromCart, getTotalItems }}>
       {children}
     </CartContext.Provider>
   );
