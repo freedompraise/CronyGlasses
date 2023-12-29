@@ -11,7 +11,9 @@ function Cart() {
       0
     );
   };
-
+  const handleRemoveFromCart = (item) => {
+    removeFromCart(item);
+  }
   return (
     <div className="container bg-white p-4 md:p-8 mx-auto max-w-6xl mt-8">
       <h2 className="text-2xl mb-4 font-bold">SHOPPING CART</h2>
@@ -35,7 +37,7 @@ function Cart() {
                   </div>
                   <button
                     className="ml-auto"
-                    onClick={() => removeFromCart(item.id)}
+                    onClick={() => handleRemoveFromCart(item)}
                   >
                     <FontAwesomeIcon icon={faTrash} className="text-red-500" />
                   </button>
