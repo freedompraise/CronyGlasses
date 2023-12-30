@@ -39,7 +39,7 @@ const cartReducer = (state, action) => {
 
       case "REMOVE_FROM_CART": {
         const existingItemIndex = state.cartItems.findIndex(item => item.id === action.payload.id);
-      
+        const newTotalItems = Math.max(state.totalItems - action.payload.quantity, 0);
         if (existingItemIndex !== -1) {
           let newCart = {
             ...state,
@@ -47,7 +47,7 @@ const cartReducer = (state, action) => {
               ...state.cartItems.slice(0, existingItemIndex),
               ...state.cartItems.slice(existingItemIndex + 1),
             ],
-            totalItems: state.totalItems - state.cartItems[existingItemIndex].quantity,
+            totalItems: newTotalItems,
           };
       
           localStorage.setItem("cart", JSON.stringify(newCart));
