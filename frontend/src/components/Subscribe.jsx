@@ -1,6 +1,13 @@
-import React from "react";
+import React, {useState} from "react";
 
 function Subscribe() {
+  const  [isSubscribed, setIsSubscribed] = useState(false)
+  const handleSubscribe = () => {
+    setTimeout(() => {
+      setIsSubscribed(true)
+    }, 2000);
+  }
+
   return (
     <div
       className=""
@@ -15,6 +22,12 @@ function Subscribe() {
         <p className="text-center pb-4 ">
           Subscribe to our newsletter and get 10% off your first purchase
         </p>
+        {isSubscribed ? (
+          <p className="text-center text-lg mb-4 font-semibold text-green-500">
+            You're successfully subscribed!
+          </p>
+        ) : (
+          <div>
         <input
           type="email"
           placeholder="Enter your email address..."
@@ -25,9 +38,12 @@ function Subscribe() {
           <option value="African">African</option>
           <option value="Other">Other</option>
         </select>
-        <button className="bg-black hover:bg-black text-white font-bold py-2 w-full mb-4 rounded">
+        <button onClick={handleSubscribe} className="bg-black hover:bg-black text-white font-bold py-2 w-full mb-4 rounded">
           Sign Up
         </button>
+        </div>
+        )
+        }
       </div>
     </div>
   );
