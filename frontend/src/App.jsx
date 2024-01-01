@@ -6,7 +6,8 @@ import Login from "./pages/Login";
 import Account from "./pages/Account";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
-import { NavBar, Footer, Subscribe } from "./components/INDEX";
+import OrderConfirmation from "./pages/ThankYou";
+import { NavBar, Footer, Subscribe, PrivateRoute } from "./components/INDEX";
 import { CartContextProvider } from "./CartContext";
 import "tailwindcss/tailwind.css";
 
@@ -20,9 +21,10 @@ function App() {
             <Route path="/" exact component={Home} />
             <Route path="/drinks/:id" exact component={Product} />
             <Route path="/login" exact component={Login} />
-            <Route path="/account" exact component={Account} />
+            <PrivateRoute path="/account" exact component={Account} />
             <Route path="/cart" exact component={Cart} />
             <Route path="/checkout" exact component={Checkout} />
+            <Route path="/thank-you" exact component={OrderConfirmation} />
           </Switch>
           <Subscribe />
           <Footer />

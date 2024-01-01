@@ -4,15 +4,12 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useCart } from "../CartContext";
 
 function Cart() {
-  const { cartItems, removeFromCart } = useCart();
-  const calculateTotal = () => {
-    return cartItems.reduce(
-      (total, item) => total + item.price * item.quantity,
-      0
-    );
-  };
+  const { cartItems, removeFromCart, getSubTotal } = useCart();
   const handleRemoveFromCart = (item) => {
     removeFromCart(item);
+  }
+  const calculateTotal = () => {
+    return getSubTotal();
   }
   return (
     <div className="container bg-white p-4 md:p-8 mx-auto max-w-6xl mt-8">
@@ -39,7 +36,7 @@ function Cart() {
                     className="ml-auto"
                     onClick={() => handleRemoveFromCart(item)}
                   >
-                    <FontAwesomeIcon icon={faTrash} className="text-red-500" />
+                    <FontAwesomeIcon icon={faTrash} className="text-red-500 hover:text-red-700" />
                   </button>
                 </div>
               ))}
@@ -53,7 +50,7 @@ function Cart() {
               </p>
               <div className="flex flex-col space-y-2">
                 <a
-                  className="bg-blue-500 text-white py-2 px-2/3 rounded-lg overflow-hidden text-center hover:bg-blue-700 "
+                  className="bg-gray-800 text-white py-2 px-2/3 rounded-lg overflow-hidden text-center hover:bg-blue-700 "
                   href="/checkout"
                 >
                   <button className="truncate">CHECKOUT</button>

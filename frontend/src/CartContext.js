@@ -5,6 +5,7 @@ const CartContext = createContext();
 const initialState = {
   cartItems: [],
   totalItems: 0,
+  subTotal: 0,
 };
 
 const getInitialState = () => {
@@ -24,7 +25,7 @@ const cartReducer = (state, action) => {
               ? [
                 {
                   ...state.cartItems[existingItemIndex],
-                  quantity: state.cartItems[existingItemIndex].quantity + action.payload.quantity,  // Update quantity of matching item
+                  quantity: state.cartItems[existingItemIndex].quantity + action.payload.quantity, 
                 }, 
           ]
               : [action.payload]), // Add new item to cart
@@ -54,7 +55,7 @@ const cartReducer = (state, action) => {
       
           return newCart;
         } else {
-          return state; // No change if item not found
+          return state; 
         }
       }
       
@@ -79,8 +80,12 @@ const CartContextProvider = ({ children }) => {
     return state.cartItems.reduce((total, item) => total + item.quantity, 0);
   };
 
+  const getSubTotal = () => {
+    return state.cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  }
+
   return (
-    <CartContext.Provider value={{ ...state, manageCart, removeFromCart, getTotalItems }}>
+    <CartContext.Provider value={{ ...state, manageCart, removeFromCart, getTotalItems, getSubTotal }}>
       {children}
     </CartContext.Provider>
   );
