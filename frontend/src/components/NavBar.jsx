@@ -12,6 +12,7 @@ import { useCart } from "../CartContext";
 
 function NavBar() {
   const { totalItems } = useCart();
+  const isLoggedIn = !!localStorage.getItem('userEmail');
   return (
     <nav
       className="flex justify-between items-center text-white h-16"
@@ -59,14 +60,22 @@ function NavBar() {
 
       {/* Right section */}
       <div className="flex items-center space-x-2 mr-8 ">
-        {/* User Icon */}
-        <a href="/account" className="hover:text-black">
+    {isLoggedIn ? (<a href="/account" className="hover:text-black">
           <i className="fas fa-user">
             <FontAwesomeIcon icon={faUser} className="fas fa-user" />
           </i>
-          {/* Login */}
+          <span>ACCOUNT</span>
+        </a> 
+        ) : (
+          <a href="/login" className="hover:text-black">
+          <i className="fas fa-user">
+            <FontAwesomeIcon icon={faUser} className="fas fa-user" />
+          </i>
           <span>LOGIN</span>
         </a>
+        )
+        }
+        
         {/* Cart Icon */}
         <a href="/cart" className="hover:text-black">
           <div className="flex items-center">
