@@ -8,3 +8,4 @@ export { default as Drink } from "../components/Drink";
 export { default as Subscribe } from "../components/Subscribe";
 export { default as FAQ } from "../components/FAQ";
 export { default as RelatedDrinks } from "../components/RelatedDrinks";
+export {default as PrivateRoute} from "../components/PrivateRoute";
