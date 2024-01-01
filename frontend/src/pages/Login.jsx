@@ -23,6 +23,7 @@ function Login () {
           type="email"
           id="email"
           name="email"
+          placeholder="johndoe@gmail.com"
           className="border border-gray-400 rounded-md p-2 w-full mb-4"
           required
         />
