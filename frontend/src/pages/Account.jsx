@@ -6,8 +6,7 @@ function Account () {
   const hasOrder = localStorage.getItem("order");
 
   const handleLogout = () => {
-    localStorage.removeItem("userEmail");
-    // localStorage.removeItem("order");
+    localStorage.clear();
     window.location.href = "/";
   }
 
