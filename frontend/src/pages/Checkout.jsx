@@ -1,8 +1,9 @@
 import React from "react";
-
+import { useCart } from "../CartContext";
 function Checkout () {
-//  const cartItems = localStorage.getItem("cartItems")
- const subTotal = 0;
+
+ const subTotal = useCart().getSubTotal().toFixed(2);
+
   return (
     <div className="container bg-white p-4 md:p-8 mx-auto max-w-6xl mt-8">
       <div className="flex flex-row">
@@ -51,7 +52,7 @@ function Checkout () {
                     type="text"
                     id="cvv"
                     name="cvv"
-                    placeholder="123"
+                    value="123"
                   />
                 </div>
                 {/* Add more payment form fields as needed */}

@@ -4,15 +4,12 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useCart } from "../CartContext";
 
 function Cart() {
-  const { cartItems, removeFromCart } = useCart();
-  const calculateTotal = () => {
-    return cartItems.reduce(
-      (total, item) => total + item.price * item.quantity,
-      0
-    );
-  };
+  const { cartItems, removeFromCart, getSubTotal } = useCart();
   const handleRemoveFromCart = (item) => {
     removeFromCart(item);
+  }
+  const calculateTotal = () => {
+    return getSubTotal();
   }
   return (
     <div className="container bg-white p-4 md:p-8 mx-auto max-w-6xl mt-8">
