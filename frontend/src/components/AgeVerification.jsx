@@ -17,7 +17,9 @@ function AgeVerificationPopup() {
     setShowPopup(false);
   };
   const handleDeny = () => {
+    localStorage.setItem('isOver18', false);
     window.location.href = 'https://www.google.com';
+    setShowPopup(false);
   }
 
   return (
