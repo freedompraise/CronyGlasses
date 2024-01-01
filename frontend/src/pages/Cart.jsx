@@ -39,7 +39,7 @@ function Cart() {
                     className="ml-auto"
                     onClick={() => handleRemoveFromCart(item)}
                   >
-                    <FontAwesomeIcon icon={faTrash} className="text-red-500" />
+                    <FontAwesomeIcon icon={faTrash} className="text-red-500 hover:text-red-700" />
                   </button>
                 </div>
               ))}
@@ -53,7 +53,7 @@ function Cart() {
               </p>
               <div className="flex flex-col space-y-2">
                 <a
-                  className="bg-blue-500 text-white py-2 px-2/3 rounded-lg overflow-hidden text-center hover:bg-blue-700 "
+                  className="bg-gray-800 text-white py-2 px-2/3 rounded-lg overflow-hidden text-center hover:bg-blue-700 "
                   href="/checkout"
                 >
                   <button className="truncate">CHECKOUT</button>
