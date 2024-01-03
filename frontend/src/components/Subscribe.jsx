@@ -1,16 +1,19 @@
 import React, {useState} from "react";
+import { useForm } from "react-hook-form";
 
 function Subscribe() {
   const  [isSubscribed, setIsSubscribed] = useState(false)
   const handleSubscribe = () => {
     setTimeout(() => {
       setIsSubscribed(true)
-    }, 2000);
+    }, 1000);
   }
+  const {register, handleSubmit} = useForm();
 
   return (
-    <div
+    <form id="subscriptionForm"
       className=""
+      onSubmit={handleSubmit(handleSubscribe)}
       style={{
         backgroundColor: "rgb(140, 140, 140)",
       }}
@@ -23,29 +26,33 @@ function Subscribe() {
           Subscribe to our newsletter and get 10% off your first purchase
         </p>
         {isSubscribed ? (
-          <p className="text-center text-lg mb-4 font-semibold text-green-500">
+          <p className="text-center text-lg mb-4 font-semibold font-mono text-white-500">
             You're successfully subscribed!
           </p>
         ) : (
           <div>
         <input
+        {...register("email", { required: true })}
           type="email"
-          placeholder="Enter your email address..."
-          className="w-full mb-4 h-8"
+          id="email"
+          name="email"
+          placeholder="johndoe@gmail.com"
+          className="border border-gray-400 rounded-md p-2 w-full mb-4"
+          required
         />
         <select className="w-full mb-4">
           <option value="American">American</option>
           <option value="African">African</option>
           <option value="Other">Other</option>
         </select>
-        <button onClick={handleSubscribe} className="bg-black hover:bg-black text-white font-bold py-2 w-full mb-4 rounded">
+        <button  className="bg-black hover:bg-black text-white font-bold py-2 w-full mb-4 rounded">
           Sign Up
         </button>
         </div>
         )
         }
       </div>
-    </div>
+    </form>
   );
 }
 
