@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getDrink } from "../services/api";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
-import { Drink, FAQ, RelatedDrinks, AgeVerificationPopup } from "../components/INDEX";
+import { Drink, FAQ, RelatedDrinks} from "../components/INDEX";
 
 function Product() {
   const [relatedDrinks, setRelatedDrinks] = useState([]);
@@ -24,7 +24,7 @@ function Product() {
       <Drink drink={drink} />
       <FAQ />
       <RelatedDrinks relatedDrinks={relatedDrinks} />
-      <AgeVerificationPopup />
+      {/* <AgeVerificationPopup /> */}  
     </div>
   );
 }

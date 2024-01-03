@@ -1,30 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
+import { AgeVerificationContext } from '../AgeVerificationContext';
 
 function AgeVerificationPopup() {
-  const [showPopup, setShowPopup] = useState(false);
-
-  useEffect(() => {
-    const isConfirmed = localStorage.getItem('isOver18');
-    if (!isConfirmed) {
-      setTimeout(() => {
-        setShowPopup(true);
-      }, 5000);
-    }
-  }, []);
-
-  const handleConfirm = () => {
-    localStorage.setItem('isOver18', true);
-    setShowPopup(false);
-  };
-  const handleDeny = () => {
-    localStorage.setItem('isOver18', false);
-    window.location.href = 'https://www.google.com';
-    setShowPopup(false);
-  }
+const {isOver18, handleConfirm } = useContext(AgeVerificationContext);
 
   return (
     <div
-      className={`fixed top-0 left-0 w-full h-screen z-50 flex items-center justify-center bg-gray-900/75 transition duration-150 ease-in-out ${showPopup ? 'opacity-100' : 'opacity-0'}`}
+      className={`fixed top-0 left-0 w-full h-screen z-50 flex items-center justify-center bg-gray-900/75 transition duration-150 ease-in-out ${!isOver18 ? 'opacity-100' : 'opacity-0'}`}
     >
       <div className="bg-white rounded-lg shadow-lg max-w-md mx-auto p-8 text-center">
         <h2 className="text-3xl font-sans mb-4">Age Verification</h2>
@@ -45,7 +27,9 @@ function AgeVerificationPopup() {
           >
             Yes, I'm Over 18
           </button>
-          <button onClick={handleDeny} className="btn btn-secondary rounded-lg border border-gray-400 sm:p-1 p-2 hover:bg-red-800">No, I'm Not 18</button>
+          <a href='https://www.google.com' className='bg-white'>
+          <button className="btn btn-secondary rounded-lg border border-gray-400 sm:p-1 p-2 hover:bg-red-800">No, I'm Not 18</button>
+          </a>
         </div>
       </div>
     </div>
