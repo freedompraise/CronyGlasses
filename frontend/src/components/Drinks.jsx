@@ -1,20 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { getDrinks } from "../services/api";
 import Loader from "./Loader";
+import { getAllDrinks } from "../services/api";
 
 const Drinks = () => {
-  // const [popularDrinks, setPopularDrinks] = useState([]);
-  // const [topDrinks, setTopDrinks] = useState([]);
   const [drinks, setDrinks] = useState([]);
   const [loader, setLoader] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
     setLoader(true);
-
-    getDrinks()
+    getAllDrinks()
       .then((res) => {
-        setDrinks(res.data.slice(0, 8)); // Update the popularDrinks state with the response data
+        setDrinks(res);
         setLoader(false);
       })
       .catch((err) => {
@@ -22,6 +19,7 @@ const Drinks = () => {
         setLoader(false);
       });
   }, []);
+
 
   return (
     <>

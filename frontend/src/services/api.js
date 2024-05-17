@@ -4,15 +4,14 @@ import { supabase } from "./supabaseClient";
 
 const baseUrl = "https://cronyglasses-api.onrender.com/";
 
-const drinkUrl = baseUrl + "api/drinks/";
 const checkoutUrl = baseUrl + "paypal/checkout/";
 const createCartUrl = baseUrl + "api/cart/add/";
 const getCartUrl = baseUrl + "api/cart/";
 
-export const getDrinks = async () => {
+export const getAllDrinks = async () => {
   try {
-    const response = await axios.get(drinkUrl);
-    return response;
+    const response = await supabase.from("Drinks").select("*");
+    return response.data;
   } catch (error) {
     console.log(error);
   }
@@ -31,8 +30,8 @@ export const getRandDrink = async () => {
 
 export const getDrink = async (id) => {
   try {
-    const response = await axios.get(`${drinkUrl}${id}`);
-    return response;
+    const response = await supabase.from("Drinks").select("*").eq("id", id);
+    return response.data;
   } catch (error) {
     console.log(error);
   }
