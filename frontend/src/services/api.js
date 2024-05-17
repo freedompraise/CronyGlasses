@@ -8,32 +8,50 @@ const checkoutUrl = baseUrl + "paypal/checkout/";
 const createCartUrl = baseUrl + "api/cart/add/";
 const getCartUrl = baseUrl + "api/cart/";
 
+
 export const getAllDrinks = async () => {
+  if (localStorage.getItem("drinks")) {
+    return JSON.parse(localStorage.getItem("drinks"));
+  } else {
   try {
     const response = await supabase.from("Drinks").select("*");
+    localStorage.setItem("drinks", JSON.stringify(response.data));
     return response.data;
   } catch (error) {
     console.log(error);
   }
+  }
 };
+
 
 export const getRandDrink = async () => {
   try {
     const randomDrinkId = Math.floor(Math.random() * 8) + 1;
-    const response = await supabase.from("Drinks").select("*").eq("id", randomDrinkId);
-    return response.data;
-  }
-  catch (error) {
+    
+    if (localStorage.getItem("drinks")) {
+      const drinks = JSON.parse(localStorage.getItem("drinks"));
+      return drinks.filter((drink) => drink.id === randomDrinkId);
+    } else {
+      const response = await supabase.from("Drinks").select("*").eq("id", randomDrinkId);
+      return response.data;
+    }
+  } catch (error) {
     console.log(error);
   }
 };
 
 export const getDrink = async (id) => {
+  if (localStorage.getItem("drinks")) {
+    const drinks = JSON.parse(localStorage.getItem("drinks"));
+    return drinks.filter((drink) => drink.id === id);
+  } else {
   try {
     const response = await supabase.from("Drinks").select("*").eq("id", id);
+    console.log("The drink is:", response.data)
     return response.data;
   } catch (error) {
     console.log(error);
+  }
   }
 };
 
