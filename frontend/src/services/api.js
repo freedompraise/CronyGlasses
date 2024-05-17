@@ -1,7 +1,6 @@
 // api.js
 import axios from "axios";
-
-// const isDevelopment = process.env.NODE_ENV === "development";
+import { supabase } from "./supabaseClient";
 
 const baseUrl = "https://cronyglasses-api.onrender.com/";
 
@@ -21,9 +20,11 @@ export const getDrinks = async () => {
 
 export const getRandDrink = async () => {
   try {
-    const response = await axios.get(`${drinkUrl}random`);
-    return response;
-  } catch (error) {
+    const randomDrinkId = Math.floor(Math.random() * 8) + 1;
+    const response = await supabase.from("Drinks").select("*").eq("id", randomDrinkId);
+    return response.data;
+  }
+  catch (error) {
     console.log(error);
   }
 };

@@ -31,7 +31,8 @@ function RandomDrink() {
   useEffect(() => {
     getRandDrink()
       .then((res) => {
-        setRandomDrink(res.data);
+        setRandomDrink(res[0]);
+        console.log("The random drink is:", res.data)
       })
       .catch((err) => {
         console.log(err);
