@@ -3,8 +3,7 @@ service/migrations
 Procfile
 venv
 .env
-cert.pem
-key.pem
+*.pem
 # dev.py
 /images/
 /media/
@@ -18,3 +17,6 @@ backend/cronyGlasses/__pycache__/
 backend/cronyGlasses/settings/__pycache__/
 backend/cronyglasses.json
 backend/datadump.json
+*.pyc
+backend/service/migrations/__pycache__/0001_initial.cpython-310.pyc
+backend/data.json
