@@ -11,8 +11,8 @@ function Product() {
   useEffect(() => {
     getDrink(id)
       .then((res) => {
-        setDrink(res.data.drink);
-        setRelatedDrinks(res.data.related_drinks);
+        setDrink(res[0]);
+        // setRelatedDrinks(res.data.related_drinks);
       })
       .catch((err) => {
         console.log(err);
