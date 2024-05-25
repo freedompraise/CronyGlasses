@@ -19,7 +19,7 @@ function Subscribe() {
       }}
     >
       <div className="flex flex-col mt-6 items-center justify-center w-2/5 mx-auto">
-        <h1 className="text-center text-2xl font-bold uppercase mb-4">
+        <h1 className="text-center text-lg uppercase mb-4">
           SUBSCRIBE
         </h1>
         <p className="text-center pb-4 ">
