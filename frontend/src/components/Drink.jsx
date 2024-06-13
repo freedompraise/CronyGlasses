@@ -97,7 +97,7 @@ function Drink(props) {
               {isAddedToCart ? (
                 <FontAwesomeIcon icon={faCheck} className="text-gray-500" />
               ) : (
-              "Add to Cart"
+                "Add to Cart"
               )}
             </button>
             <button
