@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getDrink, getRelatedDrinks } from "../services/api";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
-import { Drink, FAQ, RelatedDrinks } from "../components/INDEX";
+import { Drink, FAQ, RelatedDrinks } from "../components";
 
 function Product() {
   const [relatedDrinks, setRelatedDrinks] = useState([]);

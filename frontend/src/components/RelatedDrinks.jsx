@@ -1,5 +1,3 @@
-import React from "react";
-
 const RelatedDrinks = (props) => {
   return (
     <div className="bg-white p-4 md:p-8 mt-8">
