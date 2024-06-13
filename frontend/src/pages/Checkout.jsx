@@ -1,14 +1,14 @@
 import React from "react";
-import { useCart } from "../CartContext";
+import { useCart } from "../contexts/CartContext";
 import { useForm } from "react-hook-form";
 
-function Checkout () {
- const subTotal = useCart().getSubTotal().toFixed(2);
- const {handleSubmit} = useForm();
- const onSubmit = () => {
-  localStorage.removeItem("cart");
-  window.location.href = "/thank-you";
- }
+function Checkout() {
+  const subTotal = useCart().getSubTotal().toFixed(2);
+  const { handleSubmit } = useForm();
+  const onSubmit = () => {
+    localStorage.removeItem("cart");
+    window.location.href = "/thank-you";
+  };
 
   return (
     <div className="container bg-white p-4 md:p-8 mx-auto max-w-6xl mt-8">
@@ -73,7 +73,10 @@ function Checkout () {
             <p className="text-gray-500 text-sm my-2">
               Tax and shipping calculated at checkout
             </p>
-            <button type="submit" className="bg-gray-800 hover:bg-green-800 text-white font-bold py-2 px-4 rounded">
+            <button
+              type="submit"
+              className="bg-gray-800 hover:bg-green-800 text-white font-bold py-2 px-4 rounded"
+            >
               Place Order
             </button>
           </div>
@@ -81,6 +84,6 @@ function Checkout () {
       </div>
     </div>
   );
-};
+}
 
 export default Checkout;

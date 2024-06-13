@@ -2,13 +2,11 @@
   "name": "CronyGlasses",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "start": "cross-env react-scripts start",
-    "build": "cross-env react-scripts build",
-    "test": "cross-env react-scripts test --coverage",
-    "test:verbose": "jest --verbose",
-    "test:coverage": "jest --coverage",
-    "eject": "react-scripts eject"
+    "start": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
   },
   "dependencies": {
     "@craco/craco": "^7.1.0",

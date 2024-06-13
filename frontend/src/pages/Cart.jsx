@@ -1,16 +1,16 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { useCart } from "../CartContext";
+import { useCart } from "../contexts/CartContext";
 
 function Cart() {
   const { cartItems, removeFromCart, getSubTotal } = useCart();
   const handleRemoveFromCart = (item) => {
     removeFromCart(item);
-  }
+  };
   const calculateTotal = () => {
     return getSubTotal();
-  }
+  };
   return (
     <div className="container bg-white p-4 md:p-8 mx-auto max-w-6xl mt-8">
       <h2 className="text-2xl mb-4 font-bold">SHOPPING CART</h2>
@@ -36,7 +36,10 @@ function Cart() {
                     className="ml-auto"
                     onClick={() => handleRemoveFromCart(item)}
                   >
-                    <FontAwesomeIcon icon={faTrash} className="text-red-500 hover:text-red-700" />
+                    <FontAwesomeIcon
+                      icon={faTrash}
+                      className="text-red-500 hover:text-red-700"
+                    />
                   </button>
                 </div>
               ))}

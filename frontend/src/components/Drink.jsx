@@ -2,7 +2,7 @@ import { React, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus, faPlus, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { postToCheckout } from "../services/api";
-import { useCart } from "../CartContext";
+import { useCart } from "../contexts/CartContext";
 
 function Drink({ drink }) {
   const [quantity, setQuantity] = useState(1);

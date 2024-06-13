@@ -8,7 +8,7 @@ import {
 
 import { faUser, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useCart } from "../CartContext";
+import { useCart } from "../contexts/CartContext";
 
 function NavBar() {
   const { totalItems } = useCart();

@@ -10,7 +10,7 @@ import {
   ThankYou as OrderConfirmation,
 } from "./pages";
 import { NavBar, Footer, Subscribe, PrivateRoute } from "./components";
-import { CartContextProvider } from "./CartContext";
+import { CartContextProvider } from "./contexts/CartContext";
 import "tailwindcss/tailwind.css";
 
 function App() {
