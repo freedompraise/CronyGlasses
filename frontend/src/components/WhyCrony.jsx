@@ -1,5 +1,3 @@
-import React from "react";
-
 const WhyCrony = () => {
   return (
     <div className="max-w-6xl mx-auto mt-16 p-6 text-center">
@@ -7,36 +5,43 @@ const WhyCrony = () => {
         WHY SHOP WITH CRONYGLASSES?
       </h2>
       <div className="font-sans">
-        <hr className="my-4 border-t  border-black" />
+        <hr className="my-4 border-t border-black" />
+
         <p className="text-base mb-4">
-          <strong>Quality Eyewear Selection:</strong> At CronyGlasses, we curate
-          a collection of eyewear that stands for quality, style, and
-          durability. Our frames are meticulously chosen to ensure they not only
-          look great but also provide utmost comfort and longevity.
+          <strong>Hand-Crafted with Real Ingredients:</strong>
+          We use only the finest natural flavors and ingredients to create our
+          delicious drinks. From real fruits and botanicals to premium spirits,
+          every sip is a testament to quality.
         </p>
+
         <p className="text-base mb-4">
-          <strong>Affordable Pricing:</strong> We believe that everyone should
-          have access to high-quality eyewear without breaking the bank. Our
-          pricing is designed to be affordable, allowing customers to find the
-          perfect pair of glasses without compromising on their budget.
+          <strong>Perfectly Balanced Flavors:</strong>
+          Our expert mixologists meticulously craft each drink to achieve a
+          perfect balance of taste. Whether you prefer something sweet, tart, or
+          refreshing, we have a drink to tantalize your taste buds.
         </p>
+
         <p className="text-base mb-4">
-          <strong>Customer-Centric Approach:</strong> Putting our customers
-          first is our mantra. We listen to your needs, preferences, and
-          feedback to tailor our offerings and services, ensuring a delightful
-          shopping experience every time.
+          <strong>Something for Every Occasion:</strong>
+          Our diverse drink selection caters to any mood or setting. Whether
+          you're looking for a celebratory cocktail, a relaxing weekend
+          beverage, or a thirst-quenching mocktail, we have the perfect drink to
+          enhance your experience.
         </p>
+
         <p className="text-base mb-4">
-          <strong>Quick and Secure Delivery:</strong> We understand the
-          excitement of receiving a new pair of glasses. That's why we strive
-          for swift and secure deliveries, so you can start flaunting your new
-          eyewear without unnecessary delays.
+          <strong>Crafted with Care for Sustainability:</strong>
+          We're committed to responsible sourcing and environmentally friendly
+          practices. From recyclable packaging to using local ingredients
+          whenever possible, we strive to minimize our environmental impact.
         </p>
-        <p className="text-base">
-          <strong>Personalized Style Consultations: </strong>
-          Unsure about the frame that suits you best? Our experts are here to
-          help. We offer personalized style consultations to guide you in
-          choosing eyewear that complements your features and lifestyle.
+
+        <p className="text-base mb-4">
+          <strong>Always Evolving and Innovative: </strong>
+          Our passion for drinks keeps us constantly exploring new flavor
+          combinations and techniques. We regularly introduce new and exciting
+          drinks to our menu, ensuring you have a delightful surprise every
+          visit.
         </p>
       </div>
     </div>
