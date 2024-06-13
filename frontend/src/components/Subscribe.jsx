@@ -1,17 +1,18 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 function Subscribe() {
-  const  [isSubscribed, setIsSubscribed] = useState(false)
+  const [isSubscribed, setIsSubscribed] = useState(false);
   const handleSubscribe = () => {
     setTimeout(() => {
-      setIsSubscribed(true)
+      setIsSubscribed(true);
     }, 1000);
-  }
-  const {register, handleSubmit} = useForm();
+  };
+  const { register, handleSubmit } = useForm();
 
   return (
-    <form id="subscriptionForm"
+    <form
+      id="subscriptionForm"
       className=""
       onSubmit={handleSubmit(handleSubscribe)}
       style={{
@@ -19,7 +20,7 @@ function Subscribe() {
       }}
     >
       <div className="flex flex-col mt-6 items-center justify-center w-2/5 mx-auto">
-        <h1 className="text-center text-lg uppercase mb-4">
+        <h1 className="text-center font-bold mt-2 text-lg uppercase mb-4">
           SUBSCRIBE
         </h1>
         <p className="text-center pb-4 ">
@@ -31,26 +32,25 @@ function Subscribe() {
           </p>
         ) : (
           <div>
-        <input
-        {...register("email", { required: true })}
-          type="email"
-          id="email"
-          name="email"
-          placeholder="johndoe@gmail.com"
-          className="border border-gray-400 rounded-md p-2 w-full mb-4"
-          required
-        />
-        <select className="w-full mb-4">
-          <option value="American">American</option>
-          <option value="African">African</option>
-          <option value="Other">Other</option>
-        </select>
-        <button  className="bg-black hover:bg-black text-white font-bold py-2 w-full mb-4 rounded">
-          Sign Up
-        </button>
-        </div>
-        )
-        }
+            <input
+              {...register("email", { required: true })}
+              type="email"
+              id="email"
+              name="email"
+              placeholder="johndoe@gmail.com"
+              className="border border-gray-400 rounded-md p-2 w-full mb-4"
+              required
+            />
+            <select className="w-full mb-4">
+              <option value="American">American</option>
+              <option value="African">African</option>
+              <option value="Other">Other</option>
+            </select>
+            <button className="bg-black hover:bg-black text-white font-bold py-2 w-full mb-4 rounded">
+              Sign Up
+            </button>
+          </div>
+        )}
       </div>
     </form>
   );
