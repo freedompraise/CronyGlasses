@@ -3,7 +3,7 @@ import { getRandDrink } from "../services/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { postToCheckout } from "../services/api";
-import { useCart } from "../CartContext";
+import { useCart } from "../contexts/CartContext";
 
 function RandomDrink() {
   const [randomDrink, setRandomDrink] = useState([]);
