@@ -7,7 +7,7 @@ import Account from "./pages/Account";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import OrderConfirmation from "./pages/ThankYou";
-import { NavBar, Footer, Subscribe, PrivateRoute } from "./components/INDEX";
+import { NavBar, Footer, Subscribe, PrivateRoute } from "./components";
 import { CartContextProvider } from "./CartContext";
 import "tailwindcss/tailwind.css";
 
