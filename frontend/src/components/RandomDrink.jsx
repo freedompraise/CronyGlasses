@@ -31,7 +31,7 @@ function RandomDrink() {
   useEffect(() => {
     getRandDrink()
       .then((res) => {
-        setRandomDrink(res.data);
+        setRandomDrink(res[0]);
       })
       .catch((err) => {
         console.log(err);
@@ -109,11 +109,12 @@ function RandomDrink() {
               {isAddedToCart ? (
                 <FontAwesomeIcon icon={faCheck} className="text-gray-500" />
               ) : (
-              "Add to Cart"
+                "Add to Cart"
               )}
             </button>
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white  font-bold font-mono py-2 px-4 rounded w-full"f
+              className="bg-blue-500 hover:bg-blue-700 text-white  font-bold font-mono py-2 px-4 rounded w-full"
+              f
               onClick={handleBuyWithPaypal}
             >
               Buy with PayPal

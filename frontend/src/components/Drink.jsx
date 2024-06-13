@@ -4,7 +4,7 @@ import { faMinus, faPlus, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { postToCheckout } from "../services/api";
 import { useCart } from "../CartContext";
 
-function Drink(props) {
+function Drink({ drink }) {
   const [quantity, setQuantity] = useState(1);
   const [isAddedToCart, setIsAddedToCart] = useState(false);
   const { manageCart } = useCart();
@@ -19,7 +19,7 @@ function Drink(props) {
   };
 
   const handleAddToCart = () => {
-    manageCart(props.drink, quantity);
+    manageCart(drink.drink, quantity);
     setIsAddedToCart(true);
     setTimeout(() => {
       setIsAddedToCart(false);
@@ -33,7 +33,7 @@ function Drink(props) {
   }, [paypalUrl]);
 
   const handleBuyWithPaypal = async () => {
-    const response = await postToCheckout(props.drink.id);
+    const response = await postToCheckout(drink.id);
     setPaypalUrl(response.data.paypal_url);
   };
 
@@ -41,19 +41,15 @@ function Drink(props) {
     <div className="">
       <div className="flex flex-col md:flex-row ">
         <div className="w-80 md:my-0 my-6 mx-auto">
-          <a href={`/drinks/${props.drink.id}`}>
-            <img
-              src={props.drink.image}
-              alt={props.drink.name}
-              className="w-full"
-            />
+          <a href={`/drinks/${drink.id}`}>
+            <img src={drink.image} alt={drink.name} className="w-full" />
           </a>
         </div>
         <div className="">
-          <h2 className="text-3xl font-bold">{props.drink.name}</h2>
+          <h2 className="text-3xl font-bold">{drink.name}</h2>
           <hr className="my-4 border-t  border-black" />
-          <h3 className="text-xl">${props.drink.price}</h3>
-          <p className="text-lg my-4">{props.drink.description}</p>
+          <h3 className="text-xl">${drink.price}</h3>
+          <p className="text-lg my-4">{drink.description}</p>
           <ul className="list-disc list-inside">
             <li>70cl bottle</li>
             <li>All Natural Flavourings</li>
@@ -97,7 +93,7 @@ function Drink(props) {
               {isAddedToCart ? (
                 <FontAwesomeIcon icon={faCheck} className="text-gray-500" />
               ) : (
-              "Add to Cart"
+                "Add to Cart"
               )}
             </button>
             <button

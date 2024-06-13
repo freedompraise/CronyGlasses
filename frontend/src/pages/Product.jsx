@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { getDrink } from "../services/api";
+import { getDrink, getRelatedDrinks } from "../services/api";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
-import { Drink, FAQ, RelatedDrinks} from "../components/INDEX";
+import { Drink, FAQ, RelatedDrinks } from "../components/INDEX";
 
 function Product() {
   const [relatedDrinks, setRelatedDrinks] = useState([]);
@@ -11,20 +11,26 @@ function Product() {
   useEffect(() => {
     getDrink(id)
       .then((res) => {
-        setDrink(res.data.drink);
-        setRelatedDrinks(res.data.related_drinks);
+        if (res && res.length > 0) {
+          setDrink(res[0]);
+        }
       })
       .catch((err) => {
         console.log(err);
       });
   }, [id]);
 
+  useEffect(() => {
+    const relatedDrinks = getRelatedDrinks(id);
+    setRelatedDrinks(relatedDrinks);
+  }, [id]);
+
   return (
     <div className="container bg-white px-6 mx-auto max-w-6xl mt-8">
       <Drink drink={drink} />
       <FAQ />
-      <RelatedDrinks relatedDrinks={relatedDrinks} />
-      {/* <AgeVerificationPopup /> */}  
+      {/* <RelatedDrinks props={relatedDrinks} /> */}
+      {/* <AgeVerificationPopup /> */}
     </div>
   );
 }
