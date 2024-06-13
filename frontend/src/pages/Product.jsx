@@ -21,8 +21,15 @@ function Product() {
   }, [id]);
 
   useEffect(() => {
-    const relatedDrinks = getRelatedDrinks(id);
-    setRelatedDrinks(relatedDrinks);
+    getRelatedDrinks(id)
+      .then((res) => {
+        if (res && res.length > 0) {
+          setRelatedDrinks(res);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, [id]);
 
   return (
