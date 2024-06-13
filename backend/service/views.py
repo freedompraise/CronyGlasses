@@ -26,8 +26,6 @@ from paypal.standard.forms import PayPalPaymentsForm
 from random import randint
 import os
 
-# Global Total variable is used in the views to help calculate the total price of the cart
-
 
 class DrinkListView(ListCreateAPIView):
     queryset = Drink.objects.all()

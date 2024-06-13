@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 
 function Subscribe() {
   const [isSubscribed, setIsSubscribed] = useState(false);
+
   const handleSubscribe = () => {
     setTimeout(() => {
       setIsSubscribed(true);

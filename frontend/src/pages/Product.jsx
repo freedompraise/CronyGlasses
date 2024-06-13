@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getDrink, getRelatedDrinks } from "../services/api";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
-import { Drink, FAQ, RelatedDrinks } from "../components/INDEX";
+import { Drink, FAQ, RelatedDrinks } from "../components";
 
 function Product() {
   const [relatedDrinks, setRelatedDrinks] = useState([]);
@@ -21,8 +21,15 @@ function Product() {
   }, [id]);
 
   useEffect(() => {
-    const relatedDrinks = getRelatedDrinks(id);
-    setRelatedDrinks(relatedDrinks);
+    getRelatedDrinks(id)
+      .then((res) => {
+        if (res && res.length > 0) {
+          setRelatedDrinks(res);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, [id]);
 
   return (
