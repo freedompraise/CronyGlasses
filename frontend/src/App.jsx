@@ -9,7 +9,7 @@ import {
   Checkout,
   ThankYou as OrderConfirmation,
 } from "./pages";
-import { NavBar, Footer, Subscribe, PrivateRoute } from "./components";
+import { NavBar, Footer, Subscribe, PrivateRoute } from "./components/index";
 import { CartContextProvider } from "./contexts/CartContext";
 import "tailwindcss/tailwind.css";
 
