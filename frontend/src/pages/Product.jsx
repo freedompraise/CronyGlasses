@@ -13,9 +13,6 @@ function Product() {
       .then((res) => {
         if (res && res.length > 0) {
           setDrink(res[0]);
-          console.log("The set drink is:", drink);
-        } else {
-          console.log("No drink found");
         }
       })
       .catch((err) => {
@@ -30,7 +27,6 @@ function Product() {
 
   return (
     <div className="container bg-white px-6 mx-auto max-w-6xl mt-8">
-      {console.log("The drink is:", drink)}
       <Drink drink={drink} />
       <FAQ />
       {/* <RelatedDrinks props={relatedDrinks} /> */}
