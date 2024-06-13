@@ -1,5 +1,5 @@
 import React from "react";
-import icon from "../assets/icon.png";
+import icon from "../assets/light-icon.png";
 import {
   faXTwitter,
   faGithub,
@@ -12,7 +12,7 @@ import { useCart } from "../CartContext";
 
 function NavBar() {
   const { totalItems } = useCart();
-  const isLoggedIn = !!localStorage.getItem('userEmail');
+  const isLoggedIn = !!localStorage.getItem("userEmail");
   return (
     <nav
       className="flex justify-between items-center text-white h-16"
@@ -53,29 +53,29 @@ function NavBar() {
           <img
             src={icon}
             alt="Project Icon"
-            className="w-auto h-12 mr-2 px-2 "
+            className="w-auto rounded-full object-cover h-12 mr-2 px-2 "
           />
         </a>
       </div>
 
       {/* Right section */}
       <div className="flex items-center space-x-2 mr-8 ">
-    {isLoggedIn ? (<a href="/account" className="hover:text-black">
-          <i className="fas fa-user">
-            <FontAwesomeIcon icon={faUser} className="fas fa-user" />
-          </i>
-          <span>ACCOUNT</span>
-        </a> 
+        {isLoggedIn ? (
+          <a href="/account" className="hover:text-black">
+            <i className="fas fa-user">
+              <FontAwesomeIcon icon={faUser} className="fas fa-user" />
+            </i>
+            <span>ACCOUNT</span>
+          </a>
         ) : (
           <a href="/login" className="hover:text-black">
-          <i className="fas fa-user">
-            <FontAwesomeIcon icon={faUser} className="fas fa-user" />
-          </i>
-          <span>LOGIN</span>
-        </a>
-        )
-        }
-        
+            <i className="fas fa-user">
+              <FontAwesomeIcon icon={faUser} className="fas fa-user" />
+            </i>
+            <span>LOGIN</span>
+          </a>
+        )}
+
         {/* Cart Icon */}
         <a href="/cart" className="hover:text-black">
           <div className="flex items-center">
