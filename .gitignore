@@ -4,6 +4,7 @@ Procfile
 venv
 .env
 *.pem
+*.json
 # dev.py
 /images/
 /media/
