@@ -27,7 +27,7 @@ export const getRelatedDrinks = async (currentDrinkId) => {
     const relatedDrinks = drinks.filter(
       (drink) => drink.id !== currentDrinkId && drink.id >= 1 && drink.id <= 8
     );
-    return relatedDrinks.slice(0, 4);
+    return relatedDrinks.slice(0, 3);
   } else {
     return ["No related drinks found"];
   }
@@ -65,8 +65,6 @@ export const getDrink = async (id) => {
     if (error) {
       throw error;
     }
-
-    console.log("The drink response is:", data);
     return data;
   } catch (error) {
     console.log("Error fetching drink:", error);

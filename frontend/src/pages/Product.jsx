@@ -36,7 +36,7 @@ function Product() {
     <div className="container bg-white px-6 mx-auto max-w-6xl mt-8">
       <Drink drink={drink} />
       <FAQ />
-      {/* <RelatedDrinks props={relatedDrinks} /> */}
+      <RelatedDrinks props={relatedDrinks} />
       {/* <AgeVerificationPopup /> */}
     </div>
   );
