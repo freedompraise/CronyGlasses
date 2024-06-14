@@ -1,6 +1,8 @@
 import React from "react";
 import banner from "../assets/banner.png";
-import { Drinks, RandomDrink, WhyCrony } from "../components/index";
+import RandomDrink from "../components/RandomDrink";
+import WhyCrony from "../components/WhyCrony";
+import Drinks from "../components/Drinks";
 
 function Home() {
   return (
