@@ -7,7 +7,7 @@ import {
   Account,
   Cart,
   Checkout,
-  ThankYou as OrderConfirmation,
+  OrderConfirmation,
 } from "./pages/index";
 import { NavBar, Footer, Subscribe, PrivateRoute } from "./components/index";
 import { CartContextProvider } from "./contexts/CartContext";
