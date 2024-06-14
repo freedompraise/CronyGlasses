@@ -1,15 +1,15 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import {
-  Home,
-  Product,
-  Login,
-  Account,
-  Cart,
-  Checkout,
-  OrderConfirmation,
-} from "./pages/index";
-import { NavBar, Footer, Subscribe, PrivateRoute } from "./components/index";
+
+import Home from "./pages/Home";
+import Product from "./pages/Product";
+import Login from "./pages/Login";
+import Account from "./pages/Account";
+import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
+import OrderConfirmation from "./pages/ThankYou";
+
+import { NavBar, Footer, Subscribe, PrivateRoute } from "./components";
 import { CartContextProvider } from "./contexts/CartContext";
 import "tailwindcss/tailwind.css";
 
