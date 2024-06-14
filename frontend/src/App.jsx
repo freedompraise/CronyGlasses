@@ -8,8 +8,8 @@ import {
   Cart,
   Checkout,
   ThankYou as OrderConfirmation,
-} from "./pages";
-import { NavBar, Footer, Subscribe, PrivateRoute } from "./components";
+} from "./pages/index";
+import { NavBar, Footer, Subscribe, PrivateRoute } from "./components/index";
 import { CartContextProvider } from "./contexts/CartContext";
 import "tailwindcss/tailwind.css";
 
