@@ -48,7 +48,7 @@ function Drink({ drink }) {
         <div className="">
           <h2 className="text-3xl font-bold">{drink.name}</h2>
           <hr className="my-4 border-t  border-black" />
-          <h3 className="text-xl">${drink.price}</h3>
+          <h3 className="text-xl font-bold">${drink.price}</h3>
           <p className="text-lg my-4">{drink.description}</p>
           <ul className="list-disc list-inside">
             <li>70cl bottle</li>
