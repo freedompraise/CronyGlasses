@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { getDrink, getRelatedDrinks } from "../services/api";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
-import { Drink, FAQ, RelatedDrinks } from "../components";
+import Drink from "../components/Drink";
+import FAQ from "../components/FAQ";
+import RelatedDrinks from "../components/RelatedDrinks";
+// import AgeVerificationPopup from "../components/AgeVerification";
 
 function Product() {
   const [relatedDrinks, setRelatedDrinks] = useState([]);

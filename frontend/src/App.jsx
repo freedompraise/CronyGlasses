@@ -9,7 +9,10 @@ import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import OrderConfirmation from "./pages/ThankYou";
 
-import { NavBar, Footer, Subscribe, PrivateRoute } from "./components";
+import NavBar from "./components/NavBar";
+import Subscribe from "./components/Subscribe";
+import Footer from "./components/Footer";
+import PrivateRoute from "./components/PrivateRoute";
 import { CartContextProvider } from "./contexts/CartContext";
 import "tailwindcss/tailwind.css";
 
