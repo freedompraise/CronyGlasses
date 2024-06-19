@@ -1,13 +1,19 @@
 import React from "react";
 
-function Account () {
-  const Name = localStorage.getItem("userEmail").slice(0, localStorage.getItem("userEmail").indexOf("@"));
+function Account() {
+  const Name = localStorage
+    .getItem("userEmail")
+    .slice(0, localStorage.getItem("userEmail").indexOf("@"));
   const Email = localStorage.getItem("userEmail");
   const hasOrder = localStorage.getItem("order");
 
   const handleLogout = () => {
     localStorage.clear();
     window.location.href = "/";
+  };
+
+  if (!localStorage.getItem("userEmail")) {
+    window.location.href = "/login";
   }
 
   return (
@@ -16,7 +22,10 @@ function Account () {
         <h2 className="text-2xl text-gray-800 font-semibold tracking-wide uppercase">
           ACCOUNT DETAILS
         </h2>
-        <button onClick={handleLogout} className="bg-gray-800  hover:bg-black text-white font-bold py-2 px-4 rounded">
+        <button
+          onClick={handleLogout}
+          className="bg-gray-800 hover:bg-black text-white font-bold py-2 px-4 rounded"
+        >
           Logout
         </button>
       </div>
@@ -49,6 +58,6 @@ function Account () {
       </div>
     </div>
   );
-};
+}
 
 export default Account;
