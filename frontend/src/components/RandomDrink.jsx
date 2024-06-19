@@ -9,7 +9,7 @@ function RandomDrink() {
   const [randomDrink, setRandomDrink] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const [isAddedToCart, setIsAddedToCart] = useState(false);
-  const [paypalUrl, setPaypalUrl] = useState("");
+  const [stripeUrl, setStripeUrl] = useState("");
   const { manageCart } = useCart();
 
   const handleIncrement = () => {
@@ -39,14 +39,14 @@ function RandomDrink() {
   }, []);
 
   useEffect(() => {
-    if (paypalUrl) {
-      window.location.href = paypalUrl;
+    if (stripeUrl) {
+      window.location.href = stripeUrl;
     }
-  }, [paypalUrl]);
+  }, [stripeUrl]);
 
-  const handleBuyWithPaypal = async () => {
+  const handleBuyWithStripe = async () => {
     const response = await postToCheckout(randomDrink.id);
-    setPaypalUrl(response.data.paypal_url);
+    setStripeUrl(response.data.stripe_url);
   };
 
   return (
@@ -115,9 +115,9 @@ function RandomDrink() {
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white  font-bold font-mono py-2 px-4 rounded w-full"
               f
-              onClick={handleBuyWithPaypal}
+              onClick={handleBuyWithStripe}
             >
-              Buy with PayPal
+              Buy with Stripe
             </button>
           </div>
         </div>
