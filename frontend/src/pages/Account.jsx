@@ -12,6 +12,10 @@ function Account() {
     window.location.href = "/";
   };
 
+  if (!localStorage.getItem("userEmail")) {
+    window.location.href = "/login";
+  }
+
   return (
     <div className="bg-white p-4 sm:p-8 mx-auto max-w-6xl my-16">
       <div className="flex justify-between items-center mb-4">
