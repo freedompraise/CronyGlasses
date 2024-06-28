@@ -16,6 +16,7 @@ function Cart() {
       <h2 className="text-2xl mb-4 font-bold">SHOPPING CART</h2>
       <hr className="border-t-2 border-black mb-0" />
       <div className="mx-auto mt-0 md:flex md:space-x-8 md:px-8 py-8">
+        {/* start here */}
         {cartItems.length > 0 ? (
           <>
             <div className="md:w-4/5 pr-4">
@@ -49,7 +50,7 @@ function Cart() {
                 Subtotal: ${calculateTotal().toFixed(2)}
               </h3>
               <p className="text-gray-500 text-sm mb-2">
-                Tax and shipping calculated at checkout
+                Taxes and shipping calculated at checkout
               </p>
               <div className="flex flex-col space-y-2">
                 <a
@@ -58,8 +59,9 @@ function Cart() {
                 >
                   <button className="truncate">CHECKOUT</button>
                 </a>
-                <button className="bg-yellow-500 text-white py-2 px-2/3 rounded-lg overflow-hidden hover:bg-yellow-700 ">
-                  <div className="truncate">Pay with PayPal</div>
+                {/* stop here */}
+                <button className="bg-yellow-500 text-white py-2 px-2/3 rounded-lg overflow-hidden hover:bg-yellow-700">
+                  <div className="truncate">Pay with Stripe</div>
                 </button>
                 <a
                   className="text-black py-2 px-2/3 rounded-lg overflow-hidden text-center border hover:border-black "

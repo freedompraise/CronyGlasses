@@ -8,21 +8,21 @@ const WhyCrony = () => {
         <hr className="my-4 border-t border-black" />
 
         <p className="text-base mb-4">
-          <strong>Hand-Crafted with Real Ingredients:</strong>
+          <strong className="mr-2">Hand-Crafted with Real Ingredients:</strong>
           We use only the finest natural flavors and ingredients to create our
           delicious drinks. From real fruits and botanicals to premium spirits,
           every sip is a testament to quality.
         </p>
 
         <p className="text-base mb-4">
-          <strong>Perfectly Balanced Flavors:</strong>
+          <strong className="mr-2">Perfectly Balanced Flavors:</strong>
           Our expert mixologists meticulously craft each drink to achieve a
           perfect balance of taste. Whether you prefer something sweet, tart, or
           refreshing, we have a drink to tantalize your taste buds.
         </p>
 
         <p className="text-base mb-4">
-          <strong>Something for Every Occasion:</strong>
+          <strong className="mr-2">Something for Every Occasion:</strong>
           Our diverse drink selection caters to any mood or setting. Whether
           you're looking for a celebratory cocktail, a relaxing weekend
           beverage, or a thirst-quenching mocktail, we have the perfect drink to
@@ -30,7 +30,9 @@ const WhyCrony = () => {
         </p>
 
         <p className="text-base mb-4">
-          <strong>Crafted with Care for Sustainability:</strong>
+          <strong className="mr-2">
+            Crafted with Care for Sustainability:
+          </strong>
           We're committed to responsible sourcing and environmentally friendly
           practices. From recyclable packaging to using local ingredients
           whenever possible, we strive to minimize our environmental impact.
