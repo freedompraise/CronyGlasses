@@ -1,11 +1,5 @@
-// api.js
 import axios from "axios";
 import { supabase } from "./supabaseClient";
-
-const baseUrl = "https://cronyglasses-api.onrender.com/";
-const checkoutUrl = baseUrl + "paypal/checkout/";
-const createCartUrl = baseUrl + "api/cart/add/";
-const getCartUrl = baseUrl + "api/cart/";
 
 export const getAllDrinks = async () => {
   if (localStorage.getItem("drinks")) {
@@ -29,7 +23,7 @@ export const getRelatedDrinks = async (currentDrinkId) => {
     );
     return relatedDrinks.slice(0, 3);
   } else {
-    return ["No related drinks found"];
+    throw new Error("No drinks found in local storage");
   }
 };
 
@@ -44,6 +38,7 @@ export const getRandDrink = async () => {
         .from("Drinks")
         .select("*")
         .eq("id", randomDrinkId);
+      localStorage.setItem("drinks", JSON.stringify(response.data));
       return response.data;
     } catch (error) {
       console.log(error);
@@ -68,24 +63,6 @@ export const getDrink = async (id) => {
     return data;
   } catch (error) {
     console.log("Error fetching drink:", error);
-  }
-};
-
-export const postToCheckout = async (productId) => {
-  const postData = {
-    product_id: productId,
-  };
-
-  try {
-    const response = await axios.post(checkoutUrl, postData, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    return response;
-  } catch (error) {
-    console.error("Error:", error);
   }
 };
 
