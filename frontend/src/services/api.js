@@ -65,31 +65,3 @@ export const getDrink = async (id) => {
     console.log("Error fetching drink:", error);
   }
 };
-
-export const addToCart = async (productId, quantity) => {
-  const postData = {
-    drink_id: productId,
-    quantity: quantity,
-  };
-
-  try {
-    const response = await axios.post(createCartUrl, postData, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    return response;
-  } catch (error) {
-    console.error("Error:", error);
-  }
-};
-
-export const getCart = async () => {
-  try {
-    const response = await axios.get(getCartUrl);
-    return response;
-  } catch (error) {
-    console.error("Error fetching cart details:", error);
-  }
-};
