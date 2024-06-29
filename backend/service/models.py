@@ -5,11 +5,8 @@ from django.urls import reverse
 
 class Drink(models.Model):
     name = models.CharField(max_length=100)
-
     price = models.DecimalField(max_digits=6, decimal_places=2)
-
     description = models.TextField()
-
     image = models.ImageField(upload_to="images", blank=True, null=True)
 
     def __str__(self):
@@ -23,7 +20,6 @@ class Cart(models.Model):
     session = models.ForeignKey(
         Session, on_delete=models.CASCADE, null=True, blank=True
     )
-
     total = models.DecimalField(max_digits=6, decimal_places=2, default=0, null=True)
 
     def __str__(self):
@@ -32,11 +28,8 @@ class Cart(models.Model):
 
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
-
     drink = models.ForeignKey(Drink, on_delete=models.CASCADE)
-
     quantity = models.IntegerField(default=1, null=True)
-
     total_price = models.DecimalField(max_digits=6, decimal_places=2, null=True)
 
     class Meta:
@@ -47,5 +40,4 @@ class CartItem(models.Model):
 
     def save(self, *args, **kwargs):
         self.total_price = self.quantity * self.drink.price
-
         super().save(*args, **kwargs)
