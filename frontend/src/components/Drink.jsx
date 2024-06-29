@@ -1,7 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus, faPlus, faCheck } from "@fortawesome/free-solid-svg-icons";
-import { postToCheckout } from "../services/api";
 import { useCart } from "../contexts/CartContext";
 
 function Drink({ drink }) {
@@ -33,8 +32,7 @@ function Drink({ drink }) {
   }, [paypalUrl]);
 
   const handleBuyWithPaypal = async () => {
-    const response = await postToCheckout(drink.id);
-    setPaypalUrl(response.data.paypal_url);
+    // const response = await postToCheckout(drink.id);
   };
 
   return (
