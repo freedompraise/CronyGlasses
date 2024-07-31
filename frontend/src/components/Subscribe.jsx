@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 function Subscribe() {
@@ -20,19 +20,19 @@ function Subscribe() {
         backgroundColor: "rgb(140, 140, 140)",
       }}
     >
-      <div className="flex flex-col mt-6 items-center justify-center w-2/5 mx-auto">
-        <h1 className="text-center font-bold mt-2 text-lg uppercase mb-4">
-          SUBSCRIBE
-        </h1>
-        <p className="text-center pb-4 ">
-          Subscribe to our newsletter and get 10% off your first purchase
-        </p>
+      <div className="flex flex-col mt-6 items-center justify-center w-3/5 mx-auto">
         {isSubscribed ? (
-          <p className="text-center text-lg mb-4 font-semibold font-mono text-white-500">
+          <p className="text-center text-lg my-4 font-semibold font-mono text-white-500">
             You're successfully subscribed!
           </p>
         ) : (
           <div>
+            <h1 className="text-center font-bold mt-2 text-lg uppercase mb-4">
+              SUBSCRIBE
+            </h1>
+            <p className="text-center pb-4 font-sans font-bold">
+              Subscribe to our newsletter and get 10% off your first purchase
+            </p>
             <input
               {...register("email", { required: true })}
               type="email"
