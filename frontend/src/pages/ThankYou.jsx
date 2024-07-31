@@ -1,4 +1,6 @@
 function ThankYou() {
+  const randomCode = Math.floor(10000 + Math.random() * 9000).toString();
+
   return (
     <div className="bg-white p-4 sm:p-8 mx-auto max-w-6xl my-16">
       <div className="flex justify-between items-center mb-4"></div>
@@ -7,7 +9,9 @@ function ThankYou() {
         <h1 className="confirmation-heading text-2xl sm:text-3xl font-bold mb-4">
           Order Successful!
         </h1>
-        <p className="text-base sm:text-lg">Your order number is: 12345</p>
+        <p className="text-base sm:text-lg">
+          Your order number is: {randomCode}
+        </p>
         <p className="text-base sm:text-lg">
           A confirmation email has been sent to your address.
         </p>
