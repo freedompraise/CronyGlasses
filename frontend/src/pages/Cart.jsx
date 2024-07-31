@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useCart } from "../contexts/CartContext";
+import { toast } from "sonner";
 import MockPaymentModal from "../components/MockPaymentModal";
 
 function Cart() {
@@ -21,7 +22,11 @@ function Cart() {
   };
 
   const handlePaymentSuccess = () => {
-    console.log("Payment succeeded for the cart items");
+    toast.success("Payment successful! 🎉", {
+      position: "top-right",
+      autoClose: 3000,
+    });
+    localStorage.removeItem("cart");
   };
 
   return (
