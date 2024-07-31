@@ -30,7 +30,7 @@ function Subscribe() {
             <h1 className="text-center font-bold mt-2 text-lg uppercase mb-4">
               SUBSCRIBE
             </h1>
-            <p className="text-center pb-4 font-sans font">
+            <p className="text-center pb-4 font-sans font-bold">
               Subscribe to our newsletter and get 10% off your first purchase
             </p>
             <input
