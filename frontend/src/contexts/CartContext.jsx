@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useContext } from "react";
+import { createContext, useReducer, useContext } from "react";
 
 const CartContext = createContext();
 
@@ -16,49 +16,56 @@ const getInitialState = () => {
 const cartReducer = (state, action) => {
   switch (action.type) {
     case "MANAGE_CART_ITEM":
-      const existingItemIndex = state.cartItems.findIndex(item => item.id === action.payload.id);
-        const newCart =  {
-          ...state,
-          cartItems: [
-            ...state.cartItems.slice(0, existingItemIndex), // Retain items before potential match
-            ...(existingItemIndex !== -1 
-              ? [
+      const existingItemIndex = state.cartItems.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      const newCart = {
+        ...state,
+        cartItems: [
+          ...state.cartItems.slice(0, existingItemIndex), // Retain items before potential match
+          ...(existingItemIndex !== -1
+            ? [
                 {
                   ...state.cartItems[existingItemIndex],
-                  quantity: state.cartItems[existingItemIndex].quantity + action.payload.quantity, 
-                }, 
-          ]
-              : [action.payload]), // Add new item to cart
-                ...state.cartItems.slice(existingItemIndex + 1), // Retain items after potential match
+                  quantity:
+                    state.cartItems[existingItemIndex].quantity +
+                    action.payload.quantity,
+                },
+              ]
+            : [action.payload]), // Add new item to cart
+          ...state.cartItems.slice(existingItemIndex + 1), // Retain items after potential match
         ],
-         totalItems: state.totalItems + action.payload.quantity
+        totalItems: state.totalItems + action.payload.quantity,
       };
 
       localStorage.setItem("cart", JSON.stringify(newCart));
       return newCart;
-      
 
-      case "REMOVE_FROM_CART": {
-        const existingItemIndex = state.cartItems.findIndex(item => item.id === action.payload.id);
-        const newTotalItems = Math.max(state.totalItems - action.payload.quantity, 0);
-        if (existingItemIndex !== -1) {
-          let newCart = {
-            ...state,
-            cartItems: [
-              ...state.cartItems.slice(0, existingItemIndex),
-              ...state.cartItems.slice(existingItemIndex + 1),
-            ],
-            totalItems: newTotalItems,
-          };
-      
-          localStorage.setItem("cart", JSON.stringify(newCart));
-      
-          return newCart;
-        } else {
-          return state; 
-        }
+    case "REMOVE_FROM_CART": {
+      const existingItemIndex = state.cartItems.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      const newTotalItems = Math.max(
+        state.totalItems - action.payload.quantity,
+        0
+      );
+      if (existingItemIndex !== -1) {
+        let newCart = {
+          ...state,
+          cartItems: [
+            ...state.cartItems.slice(0, existingItemIndex),
+            ...state.cartItems.slice(existingItemIndex + 1),
+          ],
+          totalItems: newTotalItems,
+        };
+
+        localStorage.setItem("cart", JSON.stringify(newCart));
+
+        return newCart;
+      } else {
+        return state;
       }
-      
+    }
 
     default:
       return state;
@@ -81,11 +88,22 @@ const CartContextProvider = ({ children }) => {
   };
 
   const getSubTotal = () => {
-    return state.cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
-  }
+    return state.cartItems.reduce(
+      (total, item) => total + item.price * item.quantity,
+      0
+    );
+  };
 
   return (
-    <CartContext.Provider value={{ ...state, manageCart, removeFromCart, getTotalItems, getSubTotal }}>
+    <CartContext.Provider
+      value={{
+        ...state,
+        manageCart,
+        removeFromCart,
+        getTotalItems,
+        getSubTotal,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );
