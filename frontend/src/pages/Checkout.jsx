@@ -1,4 +1,3 @@
-import React from "react";
 import { useCart } from "../contexts/CartContext";
 import { useForm } from "react-hook-form";
 
@@ -68,14 +67,13 @@ function Checkout() {
         <form onSubmit={handleSubmit(onSubmit)} className="mb-8">
           <div className="w-auto">
             <h2 className="text-2xl font-bold mb-4">Order Details</h2>
-            {/* Order details go here */}
             <h3 className="text-2xl font-bold mt-4">Subtotal: ${subTotal}</h3>
             <p className="text-gray-500 text-sm my-2">
               Tax and shipping calculated at checkout
             </p>
             <button
               type="submit"
-              className="bg-gray-800 hover:bg-green-800 text-white font-bold py-2 px-4 rounded"
+              className="bg-gray-800 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded"
             >
               Place Order
             </button>
