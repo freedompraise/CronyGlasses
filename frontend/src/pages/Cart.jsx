@@ -1,22 +1,34 @@
-import React from "react";
+import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useCart } from "../contexts/CartContext";
+import MockPaymentModal from "../components/MockPaymentModal";
 
 function Cart() {
   const { cartItems, removeFromCart, getSubTotal } = useCart();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const handleRemoveFromCart = (item) => {
     removeFromCart(item);
   };
+
   const calculateTotal = () => {
     return getSubTotal();
   };
+
+  const handlePayWithStripe = () => {
+    setIsModalOpen(true);
+  };
+
+  const handlePaymentSuccess = () => {
+    console.log("Payment succeeded for the cart items");
+  };
+
   return (
     <div className="container bg-white p-4 md:p-8 mx-auto max-w-6xl mt-8">
       <h2 className="text-2xl mb-4 font-bold">SHOPPING CART</h2>
       <hr className="border-t-2 border-black mb-0" />
       <div className="mx-auto mt-0 md:flex md:space-x-8 md:px-8 py-8">
-        {/* start here */}
         {cartItems.length > 0 ? (
           <>
             <div className="md:w-4/5 pr-4">
@@ -59,8 +71,10 @@ function Cart() {
                 >
                   <button className="truncate">CHECKOUT</button>
                 </a>
-                {/* stop here */}
-                <button className="bg-yellow-500 text-white py-2 px-2/3 rounded-lg overflow-hidden hover:bg-yellow-700">
+                <button
+                  className="bg-blue-500 text-white py-2 px-2/3 rounded-lg overflow-hidden hover:bg-yellow-700"
+                  onClick={handlePayWithStripe}
+                >
                   <div className="truncate">Pay with Stripe</div>
                 </button>
                 <a
@@ -87,8 +101,13 @@ function Cart() {
             </a>
           </div>
         )}
-        
       </div>
+      <MockPaymentModal
+        isOpen={isModalOpen}
+        onRequestClose={() => setIsModalOpen(false)}
+        amount={calculateTotal()}
+        onPaymentSuccess={handlePaymentSuccess}
+      />
     </div>
   );
 }
