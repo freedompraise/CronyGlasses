@@ -27,7 +27,7 @@ function Subscribe() {
           </p>
         ) : (
           <div>
-            <h1 className="text-center font-bold mt-2 text-lg uppercase mb-4">
+            <h1 className="text-center font-serif font-bold mt-2 text-lg uppercase mb-4">
               SUBSCRIBE
             </h1>
             <p className="text-center pb-4 font-sans font-bold">

@@ -1,19 +1,26 @@
-import React from "react";
+import { useOrderHistory } from "../contexts/OrderHistoryContext";
+import { useEffect } from "react";
 
 function Account() {
-  const Name = localStorage
-    .getItem("userEmail")
-    .slice(0, localStorage.getItem("userEmail").indexOf("@"));
-  const Email = localStorage.getItem("userEmail");
-  const hasOrder = localStorage.getItem("order");
+  const userEmail = localStorage.getItem("userEmail");
+
+  useEffect(() => {
+    if (!userEmail) {
+      window.location.href = "/login";
+    }
+  }, [userEmail]);
+
+  const Name = userEmail ? userEmail.slice(0, userEmail.indexOf("@")) : "";
+  const Email = userEmail || "";
+  const { orderHistory } = useOrderHistory();
 
   const handleLogout = () => {
     localStorage.clear();
     window.location.href = "/";
   };
 
-  if (!localStorage.getItem("userEmail")) {
-    window.location.href = "/login";
+  if (!userEmail) {
+    return null; // Prevents rendering if userEmail is null, the useEffect will redirect to login
   }
 
   return (
@@ -46,10 +53,16 @@ function Account() {
         <div className="flex flex-col w-full md:w-1/2">
           <h3 className="text-lg font-bold mb-2">Order History</h3>
           <ul>
-            {hasOrder ? (
-              <li className="mb-2">
-                <span className="font-bold">Order #:</span> 12345
-              </li>
+            {orderHistory.length > 0 ? (
+              orderHistory.map((order) => (
+                <li className="mb-2" key={order.orderId}>
+                  <span className="font-bold">Order #:</span> {order.orderId}
+                  <br />
+                  <span className="font-bold">Amount:</span> ${order.amount}
+                  <br />
+                  <span className="font-bold">Date:</span> {order.date}
+                </li>
+              ))
             ) : (
               <li className="mb-2">No orders yet.</li>
             )}
