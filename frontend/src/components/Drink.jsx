@@ -2,37 +2,37 @@ import { React, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus, faPlus, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { useCart } from "../contexts/CartContext";
+import MockPaymentModal from "./MockPaymentModal";
 
 function Drink({ drink }) {
   const [quantity, setQuantity] = useState(1);
   const [isAddedToCart, setIsAddedToCart] = useState(false);
   const { manageCart } = useCart();
-  const [paypalUrl, setPaypalUrl] = useState("");
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
   const handleIncrement = () => {
     setQuantity(quantity + 1);
   };
 
   const handleDecrement = () => {
-    setQuantity(quantity - 1);
+    setQuantity(quantity > 1 ? quantity - 1 : 1);
   };
 
   const handleAddToCart = () => {
-    manageCart(drink.drink, quantity);
+    manageCart(drink, quantity);
     setIsAddedToCart(true);
     setTimeout(() => {
       setIsAddedToCart(false);
     }, 3000);
   };
 
-  useEffect(() => {
-    if (paypalUrl) {
-      window.location.href = paypalUrl;
-    }
-  }, [paypalUrl]);
+  const handleBuyWithStripe = () => {
+    setIsPaymentModalOpen(true);
+  };
 
-  const handleBuyWithPaypal = async () => {
-    // const response = await postToCheckout(drink.id);
+  const handlePaymentSuccess = () => {
+    setIsAddedToCart(false);
+    setQuantity(1);
   };
 
   return (
@@ -54,10 +54,10 @@ function Drink({ drink }) {
             <li>Gluten Free</li>
             <li>100% Vegan</li>
           </ul>
-          <div className=" mt-8 mb-2">
-            <div className="text-center flex flex-row font-semibold ">Qty</div>
+          <div className="mt-8 mb-2">
+            <div className="text-center flex flex-row font-semibold">Qty</div>
             <div className="text-center">
-              <div className="flex items-center ">
+              <div className="flex items-center">
                 <button
                   className="bg-gray-100 border border-gray-400 rounded-l p-2"
                   onClick={handleDecrement}
@@ -82,8 +82,7 @@ function Drink({ drink }) {
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row justify-items-center ">
-            {" "}
+          <div className="flex flex-col sm:flex-row justify-items-center">
             <button
               className="hover:bg-blue-gray-400 md:my-0 my-2 text-black font-bold py-2 px-4 rounded border hover:bg-gray-300 border-black mr-2 w-full"
               onClick={handleAddToCart}
@@ -95,14 +94,21 @@ function Drink({ drink }) {
               )}
             </button>
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white  font-bold font-mono py-2 px-4 rounded w-full"
-              onClick={handleBuyWithPaypal}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold font-mono py-2 px-4 rounded w-full"
+              onClick={handleBuyWithStripe}
             >
-              Buy with PayPal
+              Buy with Stripe
             </button>
           </div>
         </div>
       </div>
+
+      <MockPaymentModal
+        isOpen={isPaymentModalOpen}
+        onRequestClose={() => setIsPaymentModalOpen(false)}
+        amount={(drink.price * quantity).toFixed(2)}
+        onPaymentSuccess={handlePaymentSuccess}
+      />
     </div>
   );
 }
