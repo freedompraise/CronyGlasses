@@ -16,6 +16,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import { CartContextProvider } from "./contexts/CartContext";
 import { OrderHistoryProvider } from "./contexts/OrderHistoryContext";
 import "tailwindcss/tailwind.css";
+import "./index.css";
 
 function App() {
   return (
