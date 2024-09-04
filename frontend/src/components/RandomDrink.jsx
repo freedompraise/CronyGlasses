@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
 import { getRandDrink } from "../services/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCheck,
+  faMinus,
+  faPlus,
+  faSearchPlus,
+} from "@fortawesome/free-solid-svg-icons";
 import { useCart } from "../contexts/CartContext";
 import MockPaymentModal from "./MockPaymentModal";
 
@@ -62,13 +67,16 @@ function RandomDrink() {
   return (
     <div className="container bg-white px-6 mx-auto max-w-6xl mt-8">
       <div className="flex flex-col md:flex-row">
-        <div className="w-80 md:my-0 my-6 mx-auto">
+        <div className="w-80 md:my-0 my-6 mx-auto relative drink-image-container">
           <a href={`/drinks/${randomDrink.id}`}>
             <img
               src={randomDrink.image}
               alt={randomDrink.name}
-              className="w-full"
+              className="w-full drink-image"
             />
+            <div className="overlay">
+              <FontAwesomeIcon icon={faSearchPlus} className="zoom-icon" />
+            </div>
           </a>
         </div>
         <div className="">
