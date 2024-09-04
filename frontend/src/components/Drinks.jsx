@@ -20,7 +20,6 @@ const Drinks = () => {
       });
   }, []);
 
-
   return (
     <>
       <div className="container max-w-6xl mx-auto mt-6 p-6 text-center">
@@ -42,9 +41,13 @@ const Drinks = () => {
           {drinks &&
             drinks.map((prop, i) => (
               <div className="mx-auto h-1/2 w-1/2" key={i}>
-                <div className="flex items-center justify-center h-full">
+                <div className="flex items-center justify-center drink-image-container h-full">
                   <a href={`/drinks/${prop.id}`}>
-                    <img className="" src={prop.image} alt={prop.name} />
+                    <img
+                      className="drink-image"
+                      src={prop.image}
+                      alt={prop.name}
+                    />
                   </a>
                 </div>
                 <h2 className="mt-6 lg:text-xl text-black">{prop.name}</h2>
