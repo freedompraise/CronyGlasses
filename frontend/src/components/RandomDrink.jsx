@@ -9,6 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useCart } from "../contexts/CartContext";
 import MockPaymentModal from "./MockPaymentModal";
+import { Loader } from "./INDEX";
 
 function RandomDrink() {
   const [randomDrink, setRandomDrink] = useState(null);
@@ -61,7 +62,7 @@ function RandomDrink() {
   }, []);
 
   if (!randomDrink) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   return (
