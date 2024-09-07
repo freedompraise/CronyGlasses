@@ -1,11 +1,9 @@
-import React from "react";
-
-const Loader = () => {
+function Loader() {
   return (
-    <>
-      <span className="w-12 h-12 rounded-full relative animate-spin absolute"></span>
-    </>
+    <div className="loader-container">
+      <div className="spinner"></div>
+    </div>
   );
-};
+}
 
 export default Loader;
