@@ -11,11 +11,17 @@ function Home() {
   }, []);
 
   return (
-    <div className="fade-in">
+    <div>
       <img src={banner} alt="banner" className="w-full h-340" />
-      <RandomDrink />
-      <WhyCrony />
-      <Drinks />
+      <div className="fade-in">
+        <RandomDrink />
+      </div>
+      <div className="fade-in">
+        <WhyCrony />
+      </div>
+      <div className="fade-in">
+        <Drinks />
+      </div>
     </div>
   );
 }
