@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { getDrink, getRelatedDrinks } from "../services/api";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import Drink from "../components/Drink";
