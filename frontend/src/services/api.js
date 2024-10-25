@@ -1,20 +1,19 @@
 import { supabase } from "./supabaseClient";
 
 export const getAllDrinks = async () => {
-  try {
-    const response = await supabase.from("Drinks").select("*");
-    return response.data;
-  } catch (error) {
-    console.log(error);
+  const { data, error } = await supabase.from("Drink").select("*");
+  if (error) {
+    throw error;
   }
+  return data;
 };
 
 export const getRelatedDrinks = async (currentDrinkId) => {
   try {
     const response = await supabase
-      .from("Drinks")
+      .from("Drink")
       .select("*")
-      .neq("id", currentDrinkId)
+      .neq("id", currentDrinkId.toString())
       .limit(3);
     return response.data;
   } catch (error) {
@@ -23,13 +22,12 @@ export const getRelatedDrinks = async (currentDrinkId) => {
 };
 
 export const getRandDrink = async () => {
-  const randomDrinkId = Math.floor(Math.random() * 8) + 1;
+  const randomDrinkId = (Math.floor(Math.random() * 8) + 1).toString();
   try {
     const response = await supabase
-      .from("Drinks")
+      .from("Drink")
       .select("*")
       .eq("id", randomDrinkId);
-    localStorage.setItem("drinks", JSON.stringify(response.data));
     return response.data;
   } catch (error) {
     console.log(error);
@@ -37,15 +35,11 @@ export const getRandDrink = async () => {
 };
 
 export const getDrink = async (id) => {
-  // if (localStorage.getItem("drinks")) {
-  //   const drinks = JSON.parse(localStorage.getItem("drinks"));
-  //   return drinks.filter((drink) => drink.id === id);
-  // } else {
   try {
     const { data, error } = await supabase
-      .from("Drinks")
+      .from("Drink")
       .select("*")
-      .eq("id", id);
+      .eq("id", id.toString());
 
     if (error) {
       throw error;
