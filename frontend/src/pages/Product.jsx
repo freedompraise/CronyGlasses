@@ -45,7 +45,7 @@ function Product() {
     <div className="container bg-white px-6 mx-auto max-w-6xl mt-8">
       <Drink drink={drink} />
       <FAQ />
-      <ReviewsList drinkId={drink.id} currentUserId={user?.id} />
+      <ReviewsList drinkId={drink.id} />
       <RelatedDrinks props={relatedDrinks} />
     </div>
   );

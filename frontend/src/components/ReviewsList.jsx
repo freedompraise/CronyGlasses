@@ -38,8 +38,11 @@ const ReviewsList = ({ drinkId }) => {
     }
   }, [drinkId, user]);
 
-  const handleReviewAdded = () => {
-    fetchReviews();
+  const handleReviewAdded = (newReview) => {
+    setReviews((prev) => [
+      { ...newReview, isOwner: true },
+      ...prev.filter((r) => r.id !== newReview.id),
+    ]);
     setShowForm(false);
     setEditingReview(null);
   };
@@ -50,11 +53,13 @@ const ReviewsList = ({ drinkId }) => {
   };
 
   const handleDelete = async (reviewId) => {
+    const originalReviews = [...reviews];
+    setReviews((prev) => prev.filter((review) => review.id !== reviewId));
     try {
-      await deleteReview(reviewId);
-      setReviews((prev) => prev.filter((review) => review.id !== reviewId));
+      await deleteReview(reviewId, user.id);
     } catch (error) {
       setError('Failed to delete review.');
+      setReviews(originalReviews);
     }
   };
 
@@ -81,6 +86,7 @@ const ReviewsList = ({ drinkId }) => {
             setShowForm(false);
             setEditingReview(null);
           }}
+          userId={user?.id}
         />
       )}
 

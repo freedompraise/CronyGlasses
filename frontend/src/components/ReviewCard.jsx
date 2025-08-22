@@ -2,7 +2,7 @@ import React from 'react';
 
 const ReviewCard = ({ review, onEdit, onDelete }) => {
   const { user } = review.profiles || {};
-  const username = user?.username || 'Anonymous';
+  const username = user?.username || 'Praise Dike';
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-md">
