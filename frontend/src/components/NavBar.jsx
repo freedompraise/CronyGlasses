@@ -63,7 +63,7 @@ function NavBar() {
         {isLoggedIn ? (
           <a href="/account" className="hover:text-black">
             <i className="fas fa-user">
-              <FontAwesomeIcon icon={faUser} className="fas fa-user" />
+              <FontAwesomeIcon icon={faUser} className="fas fa-user mx-2" />
             </i>
             <span>ACCOUNT</span>
           </a>
