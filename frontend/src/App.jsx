@@ -8,7 +8,7 @@ import Account from "./pages/Account";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import OrderConfirmation from "./pages/ThankYou";
-
+import { AuthContextProvider } from "./contexts/AuthContext";
 import NavBar from "./components/NavBar";
 import Subscribe from "./components/Subscribe";
 import Footer from "./components/Footer";
@@ -20,6 +20,7 @@ import "./index.css";
 function App() {
   return (
     <CartContextProvider>
+      <AuthContextProvider> 
       <OrderHistoryProvider>
         <div className="font-serif">
           <Router>
@@ -38,6 +39,7 @@ function App() {
           </Router>
         </div>
       </OrderHistoryProvider>
+      </AuthContextProvider>
     </CartContextProvider>
   );
 }
