@@ -8,5 +8,3 @@ export { default as Drink } from "./Drink";
 export { default as Subscribe } from "./Subscribe";
 export { default as FAQ } from "./FAQ";
 export { default as RelatedDrinks } from "./RelatedDrinks";
-export { default as PrivateRoute } from "./PrivateRoute";
-export { default as AgeVerificationPopup } from "./AgeVerification";
