@@ -8,11 +8,10 @@ import Account from "./pages/Account";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import OrderConfirmation from "./pages/ThankYou";
-
+import { AuthContextProvider } from "./contexts/AuthContext";
 import NavBar from "./components/NavBar";
 import Subscribe from "./components/Subscribe";
 import Footer from "./components/Footer";
-import PrivateRoute from "./components/PrivateRoute";
 import { CartContextProvider } from "./contexts/CartContext";
 import { OrderHistoryProvider } from "./contexts/OrderHistoryContext";
 import "tailwindcss/tailwind.css";
@@ -21,6 +20,7 @@ import "./index.css";
 function App() {
   return (
     <CartContextProvider>
+      <AuthContextProvider> 
       <OrderHistoryProvider>
         <div className="font-serif">
           <Router>
@@ -29,7 +29,7 @@ function App() {
               <Route path="/" exact component={Home} />
               <Route path="/drinks/:id" exact component={Product} />
               <Route path="/login" exact component={Login} />
-              <PrivateRoute path="/account" exact component={Account} />
+              <Route path="/account" exact component={Account} />
               <Route path="/cart" exact component={Cart} />
               <Route path="/checkout" exact component={Checkout} />
               <Route path="/thank-you" exact component={OrderConfirmation} />
@@ -39,6 +39,7 @@ function App() {
           </Router>
         </div>
       </OrderHistoryProvider>
+      </AuthContextProvider>
     </CartContextProvider>
   );
 }

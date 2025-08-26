@@ -1,27 +1,32 @@
 import { useOrderHistory } from "../contexts/OrderHistoryContext";
 import { useEffect } from "react";
+import { useAuth } from "../contexts/AuthContext";
 
 function Account() {
-  const userEmail = localStorage.getItem("userEmail");
-
-  useEffect(() => {
-    if (!userEmail) {
-      window.location.href = "/login";
-    }
-  }, [userEmail]);
-
-  const Name = userEmail ? userEmail.slice(0, userEmail.indexOf("@")) : "";
-  const Email = userEmail || "";
+  const { user, signOut } = useAuth();
   const { orderHistory } = useOrderHistory();
 
-  const handleLogout = () => {
-    localStorage.clear();
-    window.location.href = "/";
+  useEffect(() => {
+    if (!user) {
+      window.location.href = "/login";
+    }
+  }, [user]);
+
+  const handleLogout = async () => {
+    try {
+      await signOut();
+      window.location.href = "/";
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
   };
 
-  if (!userEmail) {
-    return null; // Prevents rendering if userEmail is null, the useEffect will redirect to login
+  if (!user) {
+    return null;
   }
+
+  const Name = user.email ? user.email.slice(0, user.email.indexOf("@")) : "";
+  const Email = user.email || "";
 
   return (
     <div className="bg-white p-4 sm:p-8 mx-auto max-w-6xl my-16">

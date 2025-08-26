@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <footer className="bg-gray-800 text-white text-center py-4">
       <div className="container mx-auto">
-        <p>&copy; 2024 CronyGlasses</p>
+        <p>&copy; 2025 CronyGlasses</p>
         <ul className="flex justify-center mt-2">
           <li className="mx-2">
             <a href="/" className="text-white hover:text-gray-300">

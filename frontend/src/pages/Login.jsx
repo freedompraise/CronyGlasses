@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "sonner";
+import { useAuth } from "../contexts/AuthContext";
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -11,11 +12,17 @@ function Login() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const { signIn } = useAuth();
 
-  const onSubmit = (data) => {
-    localStorage.setItem("userEmail", data.email);
-    toast.success("Logged in successfully");
-    window.location.href = "/account";
+  const onSubmit = async (data) => {
+    try {
+      const { error } = await signIn(data.email, data.password);
+      if (error) throw error;
+      toast.success("Logged in successfully");
+      window.location.href = "/account";
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   const togglePasswordVisibility = () => {
